@@ -1,0 +1,160 @@
+@extends('dashboard.layouts.app')
+@section('content')
+    <div class="content-body">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)"> {{ __('site.dashboard') }}</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> {{ __('site.products') }}</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="container-fluid">
+            <div class="row justify-content-between mb-3">
+                <div class="col-12 ">
+                    <h2 class="page-heading">{{ __('site.list') }} {{ __('site.products') }}</h2>
+                    <p class="mb-0">{{ __('site.count') }} {{ __('site.products') }} : {{ $products->total() }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-header row">
+                                <div class="col-md-6">
+                                    <a href="create.html" class="btn btn-primary mb-2">{{ __('site.create') }}</a>
+                                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
+                                        data-target="#filterModal">{{ __('site.filter') }}</button>
+                                    <form action="{{ route('dashboard.products.destroy', 'delete') }}" method="post"
+                                        style="display: inline;">
+                                        {{ csrf_field() }}
+                                        {{ method_field('delete') }}
+                                        <input type="hidden" value="" name="mass_delete" id="mass-delete">
+                                        <button type="submit" id="btn-mass-delete" class="btn btn-danger mb-2"
+                                            disabled>{{ __('site.mass_delete') }}</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table verticle-middle table-responsive-lg mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">{{ __('site.name') }}</th>
+                                            <th scope="col">{{ __('site.price') }}</th>
+                                            <th scope="col">{{ __('site.stock') }}</th>
+                                            <th scope="col">{{ __('site.country') }}</th>
+                                            <th scope="col">{{ __('site.start_year') }}</th>
+                                            <th scope="col">{{ __('site.end_year') }}</th>
+                                            <th scope="col">Edit</th>
+                                            <th scope="col"><input type="checkbox" value=""
+                                                    id="check-box-delete-all"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($products as $index => $product)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td><a href="#">{{ $product->name }}</a></td>
+                                                <td>{{ $product->price }}</td>
+                                                <td>{{ $product->stock }}</td>
+                                                <td>{{ $product->country }}</td>
+                                                <td>{{ $product->start_year }}</td>
+                                                <td>{{ $product->end_year }}</td>
+                                                <td>
+                                                    <span>
+                                                        <a href="{{ route('dashboard.products.edit', $product->id) }}"
+                                                            class="mr-4" data-toggle="tooltip" data-placement="top"
+                                                            title="" data-original-title="Edit"><i
+                                                                class="fa fa-pencil color-muted"></i> </a>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        <input type="checkbox" value="{{ $product->id }}"
+                                                            class="check-box-delete">
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <nav>
+                                <ul class="pagination pagination-sm pagination-style-2">
+                                    @php
+                                        $append_url = '';
+                                        if (isset(request()->query()['search'])) {
+                                            $append_url = '&category_id=' . request()->query()['category_id'] . '&search=' . request()->query()['search'];
+                                        }
+                                    @endphp
+                                    <li class="page-item page-indicator {{ $products->onFirstPage() ? 'disabled' : '' }}">
+                                        <a class="page-link" href="{{ $products->previousPageUrl() . $append_url }}">
+                                            <i class="icon-arrow-left"></i></a>
+                                    </li>
+                                    @foreach ($products->getUrlRange(1, $products->lastPage()) as $num_page => $url_page)
+                                        <li class="page-item {{ $num_page === $products->currentPage() ? 'active' : '' }}">
+                                            <a class="page-link"
+                                                href="{{ $url_page . $append_url }}">{{ $num_page }}</a>
+                                        </li>
+                                    @endforeach
+                                    <li class="page-item page-indicator {{ $products->hasMorePages() ? '' : 'disabled' }}">
+                                        <a class="page-link " href="{{ $products->nextPageUrl() . $append_url }}">
+                                            <i class="icon-arrow-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@push('modal')
+    <div class="modal fade" id="filterModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('site.filter') }} {{ __('site.products') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('dashboard.products.index') }}" method="GET" id="filter-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="search" placeholder="@lang('site.search')"
+                                value="{{ request()->search }}">
+                        </div>
+                        <div class="form-group">
+                            <select name="category_id" class="form-control">
+                                <option value="" selected>@lang('site.all_categories')</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}"
+                                        {{ request()->category_id == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">{{ __('site.close') }}</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="event.preventDefault();
+                document.getElementById('filter-form').submit();">{{ __('site.filter') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endpush
+@push('js')
+    <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script>
+@endpush
