@@ -16,6 +16,7 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('check-permissions', 'read_admins');
         $admins = Admin::when($request->search,function ($query) use ($request){
             return $query->where('name','Like','%'.$request->search.'%');
         })->latest()->paginate(10);
@@ -29,6 +30,7 @@ class AdminController extends Controller
      */
     public function create()
     {
+        $this->authorize('check-permissions', 'create_admins');
         return view('dashboard.admins.create');
     }
 
@@ -40,7 +42,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        $this->authorize('check-permissions', 'create_admins');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
@@ -74,7 +76,7 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        //
+        $this->authorize('check-permissions', 'update_admins');
     }
 
     /**
@@ -86,7 +88,7 @@ class AdminController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
-        //
+        $this->authorize('check-permissions', 'update_admins');
     }
 
     /**
@@ -97,17 +99,19 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        //
+        $this->authorize('check-permissions', 'delete_admins');
     }
     public function editPermissions(Admin $admin)
     {
-    //    dd($admin);
-    $permissions = Permission::all();
-    // dd($admin->permissions->find(33) ? 'true':'false');
-    return view('dashboard.admins.permissions.index', compact('permissions','admin'));
+        $this->authorize('check-permissions', 'update_admin');
+
+        $permissions = Permission::all();
+
+        return view('dashboard.admins.permissions.index', compact('permissions','admin'));
     }
     public function updatePermissions(Request $request,Admin $admin)
     {
+        $this->authorize('check-permissions', 'update_admins');
         $request->validate([
             'permissions' => 'required|array',
         ]);
@@ -119,7 +123,7 @@ class AdminController extends Controller
         foreach($request->permissions as $permission_id){
         $admin->permissions()->syncWithoutDetaching($permission_id);
         }
-    session()->flash('success', __('site.added_successfully'));
-    return redirect()->back();
+        session()->flash('success', __('site.added_successfully'));
+        return redirect()->back();
     }
 }

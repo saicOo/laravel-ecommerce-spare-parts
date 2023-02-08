@@ -18,9 +18,11 @@ class FactoryCarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $factory_cars = FactoryCar::all();
+        $factory_cars = FactoryCar::when($request->search,function ($query) use ($request){
+            return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
+        })->paginate(10);
         return view('dashboard.factory-cars.index', compact('factory_cars'));
     }
 
@@ -70,7 +72,7 @@ class FactoryCarController extends Controller
      */
     public function edit(FactoryCar $factoryCar)
     {
-        //
+        return view('dashboard.factory-cars.edit',compact('factoryCar'));
     }
 
     /**
@@ -82,7 +84,13 @@ class FactoryCarController extends Controller
      */
     public function update(Request $request, FactoryCar $factoryCar)
     {
-        //
+        $request->validate([
+            'name_ar' => 'required|max:50|unique:factory_cars,name_ar,' . $factoryCar->id,
+            'name_en' => 'required|max:50|unique:factory_cars,name_en,' . $factoryCar->id,
+        ]);
+        $factoryCar->update($request->all());
+        session()->flash('success', __('site.added_successfully'));
+        return redirect()->route('dashboard.factory-cars.index');
     }
 
     /**
@@ -91,8 +99,12 @@ class FactoryCarController extends Controller
      * @param  \App\Models\FactoryCar  $factoryCar
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FactoryCar $factoryCar)
+    public function destroy($factoryCar,Request $request)
     {
-        //
+        $factoryCars_arr = explode(",",$request->mass_delete);
+        $factoryCars = FactoryCar::whereIn('id', $factoryCars_arr);
+        $factoryCars->delete();
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route('dashboard.factory-cars.index');
     }
 }

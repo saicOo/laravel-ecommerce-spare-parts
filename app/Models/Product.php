@@ -10,6 +10,9 @@ class Product extends Model
     use HasFactory;
     protected $guarded = [];
     protected $appends = ['name','description'];
+    protected $casts = [
+        'image' => 'array',
+    ];
 
     public function brand()
     {

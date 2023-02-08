@@ -36,6 +36,7 @@ function(){
         Route::resource('brands', 'BrandController');
         Route::resource('factory-cars', 'FactoryCarController');
         Route::resource('cars', 'CarController');
+        Route::post('/cars/ajax', 'CarController@ajaxIndex')->name('cars.ajax');
         Route::resource('products', 'ProductController');
     });
 

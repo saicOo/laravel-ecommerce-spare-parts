@@ -27,19 +27,12 @@ class PermissionsTableSeeder extends Seeder
     {
         $permissions = [];
         $maps = ['create','read','update','delete'];
-        $models = ['admin','category','product','brand','car'];
+        $models = ['admins','users','orders','categories','products','brands','cars'];
         foreach($models as $model){
             foreach($maps as $map){
                 $permissions[] = $map . '_' . $model;
             }
         }
-        //     $permissions = [
-        //         [
-        //         'name' => 'create',
-        //         'display_name_en' => 'اكسسوارات',
-        //         'display_name_ar' => 'primary_permission',
-        //     ],
-        // ];
         return $permissions;
     }
 }

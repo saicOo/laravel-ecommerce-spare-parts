@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <div class="card-header row">
                                 <div class="col-md-6">
-                                    <a href="create.html" class="btn btn-primary mb-2">{{ __('site.create') }}</a>
+                                    <a href="{{route('dashboard.products.create')}}" class="btn btn-primary mb-2">{{ __('site.create') }}</a>
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
                                     <form action="{{ route('dashboard.products.destroy', 'delete') }}" method="post"
@@ -49,7 +49,7 @@
                                             <th scope="col">{{ __('site.country') }}</th>
                                             <th scope="col">{{ __('site.start_year') }}</th>
                                             <th scope="col">{{ __('site.end_year') }}</th>
-                                            <th scope="col">Edit</th>
+                                            <th scope="col">{{__('site.action')}}</th>
                                             <th scope="col"><input type="checkbox" value=""
                                                     id="check-box-delete-all"></th>
                                         </tr>
@@ -58,8 +58,8 @@
                                         @foreach ($products as $index => $product)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td><a href="#">{{ $product->name }}</a></td>
-                                                <td>{{ $product->price }}</td>
+                                                <td><a href="{{route('dashboard.products.show',$product->id)}}">{{ $product->name }}</a></td>
+                                                <td>${{ $product->price }}</td>
                                                 <td>{{ $product->stock }}</td>
                                                 <td>{{ $product->country }}</td>
                                                 <td>{{ $product->start_year }}</td>

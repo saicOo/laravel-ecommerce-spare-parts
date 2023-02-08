@@ -47,7 +47,7 @@
                                             <th scope="col">{{ __('site.email') }}</th>
                                             <th scope="col">{{ __('site.role') }}</th>
                                             <th scope="col">{{ __('site.phone') }}</th>
-                                            <th scope="col">Edit</th>
+                                            <th scope="col">{{__('site.action')}}</th>
                                             <th scope="col"><input type="checkbox" value=""
                                                     id="check-box-delete-all"></th>
                                         </tr>

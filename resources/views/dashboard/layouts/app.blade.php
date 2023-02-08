@@ -16,7 +16,7 @@
     <!-- Chartist -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/chartist/css/chartist.min.css') }}">
     <link href="{{ asset('dashboard/assets/css/style.css') }}" rel="stylesheet">
-
+    @stack('css')
 </head>
 
 <body>

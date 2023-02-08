@@ -18,10 +18,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $categories = Category::all();
-        $categories = Category::where('category_type','primary_category')->with('subCategories')->get();
+        $categories = Category::with('subCategories')->when($request->search,function ($query) use ($request){
+            return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
+        })->paginate(10);
         return view('dashboard.categories.index', compact('categories'));
     }
 
@@ -32,7 +33,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('dashboard.categories.create');
+        $primary_categories = Category::where('category_type','primary_category')->get();
+        return view('dashboard.categories.create',compact('primary_categories'));
     }
 
     /**
@@ -43,11 +45,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'name_ar' => 'required|max:50|unique:categories,name_ar',
             'name_en' => 'required|max:50|unique:categories,name_en',
-        ]);
-        Category::create($request->all());
+            'category_type' => 'required|in:sub_category,primary_category',
+        ];
+        if($request->category_type === 'sub_category'){
+            $rules += ['category_id' => 'required',];
+            $request_data = $request->all();
+        }else{
+            $request_data = $request->except(['category_id']);
+        }
+        $request->validate($rules);
+        Category::create($request_data);
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.categories.index');
     }
@@ -60,7 +70,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+
     }
 
     /**
@@ -71,7 +81,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $primary_categories = Category::where('category_type','primary_category')->get();
+        return view('dashboard.categories.edit',compact('category','primary_categories'));
     }
 
     /**
@@ -83,7 +94,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name_ar' => 'required|max:50|unique:categories,name_ar,' . $category->id,
+            'name_en' => 'required|max:50|unique:categories,name_ar,' . $category->id,
+        ]);
+        $category->update($request->all());
+        session()->flash('success', __('site.added_successfully'));
+        return redirect()->route('dashboard.categories.index');
     }
 
     /**
@@ -92,8 +109,12 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($category,Request $request)
     {
-        //
+        $categories_arr = explode(",",$request->mass_delete);
+        $categories = Category::whereIn('id', $categories_arr);
+        $categories->delete();
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route('dashboard.categories.index');
     }
 }

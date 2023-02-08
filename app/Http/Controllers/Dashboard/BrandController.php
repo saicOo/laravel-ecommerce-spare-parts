@@ -18,9 +18,11 @@ class BrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $brands = Brand::all();
+        $brands = Brand::when($request->search,function ($query) use ($request){
+            return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
+        })->paginate(10);
         return view('dashboard.brands.index', compact('brands'));
     }
 
@@ -31,7 +33,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('dashboard.brans.create');
+        return view('dashboard.brands.create');
     }
 
     /**
@@ -70,7 +72,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        return view('dashboard.brands.edit',compact('brand'));
     }
 
     /**
@@ -82,7 +84,13 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $request->validate([
+            'name_ar' => 'required|max:50|unique:brands,name_ar,' . $brand->id,
+            'name_en' => 'required|max:50|unique:brands,name_en,' . $brand->id,
+        ]);
+        $brand->update($request->all());
+        session()->flash('success', __('site.added_successfully'));
+        return redirect()->route('dashboard.brands.index');
     }
 
     /**
@@ -91,8 +99,12 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy($brand,Request $request)
     {
-        //
+        $brands_arr = explode(",",$request->mass_delete);
+        $brands = Brand::whereIn('id', $brands_arr);
+        $brands->delete();
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route('dashboard.brands.index');
     }
 }

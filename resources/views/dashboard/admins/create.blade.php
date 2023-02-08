@@ -44,7 +44,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label>@lang('site.role')</label>
-                                            <select class="custom-select mr-sm-2 @error('email') is-invalid @enderror" id="inlineFormCustomSelect" class="form-control @error('role') is-invalid @enderror" name="role">
+                                            <select class="custom-select mr-sm-2 @error('role') is-invalid @enderror" id="inlineFormCustomSelect" name="role">
                                                 <option  value="" selected>@lang('site.choose') @lang('site.role')...</option>
                                                 <option value="suber_admin">@lang('site.suber_admin')</option>
                                                 <option value="accountant">@lang('site.accountant')</option>

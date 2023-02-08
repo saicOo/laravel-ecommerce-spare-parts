@@ -20,6 +20,16 @@ class Category extends Model
         return $this->hasMany(Category::class, 'category_id', 'id');
     }
 
+    public function subCategory()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function getNameAttribute(){
         return app()->getLocale() == 'ar' ? $this->name_ar : $this->name_en;
     }

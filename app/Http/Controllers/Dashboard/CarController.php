@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Car;
+use App\Models\FactoryCar;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -94,5 +95,11 @@ class CarController extends Controller
     public function destroy(Car $car)
     {
         //
+    }
+    public function ajaxIndex(Request $request)
+    {
+        $car_id = $request->car_id;
+    $data['ModelCar'] = Car::find($car_id);
+    return json_encode($data);
     }
 }
