@@ -22,7 +22,7 @@ class BrandController extends Controller
     {
         $brands = Brand::when($request->search,function ($query) use ($request){
             return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
-        })->paginate(10);
+        })->latest('id')->paginate(10);
         return view('dashboard.brands.index', compact('brands'));
     }
 
@@ -99,11 +99,18 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy($brand,Request $request)
+    public function destroy($test,Request $request)
     {
         $brands_arr = explode(",",$request->mass_delete);
-        $brands = Brand::whereIn('id', $brands_arr);
-        $brands->delete();
+        $brands_in = Brand::whereIn('id', $brands_arr);
+        $brands = $brands_in->with('products')->get();
+        foreach($brands as $brand){
+            if(isset($brand->products[0])){
+                return redirect()->back()->withErrors(__('site.cannot_delete'));
+            }else{
+                $brand->delete();
+            }
+        }
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.brands.index');
     }

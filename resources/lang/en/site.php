@@ -8,6 +8,8 @@ return [
     'remember_me' => 'remember_me',
     'password' => 'password',
     'password_confirmation' => 'password confirmation',
+    'current' => 'current',
+    'new' => 'new',
     // genral panel
     'dashboard' => 'dashboard',
     'settings' => 'settings',
@@ -18,6 +20,7 @@ return [
     'deleted_successfully' => 'deleted successfully',
     'archive_successfully' => 'archive successfully',
     'restore_successfully' => 'restore successfully',
+    'cannot_delete' => 'Cannot Delete',
     'no_data_found' => 'no data found',
     'no_records' => 'no records',
     'ar' => [

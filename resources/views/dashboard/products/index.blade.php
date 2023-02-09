@@ -1,4 +1,8 @@
 @extends('dashboard.layouts.app')
+@push('css')
+<!-- Select 2 -->
+<link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/select2/css/select2.min.css') }}">
+@endpush
 @section('content')
     <div class="content-body">
         <div class="row page-titles mx-0">
@@ -132,12 +136,14 @@
                                 value="{{ request()->search }}">
                         </div>
                         <div class="form-group">
-                            <select name="category_id" class="form-control">
-                                <option value="" selected>@lang('site.all_categories')</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{ request()->category_id == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}</option>
+                            <select  name="category_id" class="dropdown-groups @error('category_id') is-invalid @enderror">
+                                <option value="" disabled selected>@lang('site.choose') @lang('site.category')...
+                                @foreach ($primary_categories as $primary_category)
+                                <optgroup label="{{ $primary_category->name }}">
+                                    @foreach ($primary_category->subCategories as $sub_category)
+                                    <option value="{{$sub_category->id}}" {{ request()->category_id == $sub_category->id ? 'selected':''}}>{{ $sub_category->name }}</option>
+                                    @endforeach
+                                </optgroup>
                                 @endforeach
                             </select>
                         </div>
@@ -157,4 +163,9 @@
 @endpush
 @push('js')
     <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script>
+    <!-- Select 2 -->
+    <script src="{{ asset('dashboard/assets/plugins/select2/js/select2.full.min.js') }}"></script>
+    <!-- Select 2 init -->
+    <script src="{{ asset('dashboard/assets/js/plugins-init/select2-init.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/js/custom-init/select2-init.js') }}"></script>
 @endpush

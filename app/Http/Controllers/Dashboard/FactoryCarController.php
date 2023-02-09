@@ -22,7 +22,7 @@ class FactoryCarController extends Controller
     {
         $factory_cars = FactoryCar::when($request->search,function ($query) use ($request){
             return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
-        })->paginate(10);
+        })->latest('id')->paginate(10);
         return view('dashboard.factory-cars.index', compact('factory_cars'));
     }
 
@@ -99,11 +99,18 @@ class FactoryCarController extends Controller
      * @param  \App\Models\FactoryCar  $factoryCar
      * @return \Illuminate\Http\Response
      */
-    public function destroy($factoryCar,Request $request)
+    public function destroy($test,Request $request)
     {
         $factoryCars_arr = explode(",",$request->mass_delete);
-        $factoryCars = FactoryCar::whereIn('id', $factoryCars_arr);
-        $factoryCars->delete();
+        $factoryCars_in = FactoryCar::whereIn('id', $factoryCars_arr);
+        $factoryCars = $factoryCars_in->with('cars')->get();
+        foreach($factoryCars as $factoryCar){
+            if(isset($factoryCar->cars[0])){
+                return redirect()->back()->withErrors(__('site.cannot_delete'));
+            }else{
+                $factoryCar->delete();
+            }
+        }
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.factory-cars.index');
     }

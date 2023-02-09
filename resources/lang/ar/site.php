@@ -8,6 +8,8 @@ return [
     'remember_me' => 'تذكرني',
     'password' => 'كلمه المرور',
     'password_confirmation' => 'تاكيد كلمه المرور',
+    'current' => 'حالي',
+    'new' => 'جديد',
     // genral panel
     'dashboard' => 'الرئيسيه',
     'settings' => 'الاعدادات',
@@ -18,6 +20,7 @@ return [
     'deleted_successfully' => 'تم حذف البيانات بنجاح',
     'archive_successfully' => 'تم ارشفة البيانات بنجاح',
     'restore_successfully' => 'تم استرجاع البيانات بنجاح',
+    'cannot_delete' => 'لا يمكن الحذف',
     'no_data_found' => 'للاسف لا يوجد اي سجلات',
     'no_records' => 'للاسف لا يوجد اي سجلات',
     'ar' => [

@@ -11,7 +11,7 @@ class Product extends Model
     protected $guarded = [];
     protected $appends = ['name','description'];
     protected $casts = [
-        'image' => 'array',
+        'images' => 'array',
     ];
 
     public function brand()

@@ -163,21 +163,21 @@
                                             <textarea name="description_en" id="summernote-description-en">{{ old('description_en') }}</textarea>
                                         </div>
                                     </div>
-                                    {{-- image area --}}
+                                    {{-- images area --}}
                                     <div class="col-lg-6 mb-4">
-                                        <input type="file" class="dropify" name="image[]" data-default-file="" />
+                                        <input type="file" class="dropify" name="images[]" data-default-file="" />
                                     </div>
                                     <div class="col-lg-6 mb-4">
-                                        <input type="file" class="dropify" name="image[]" data-default-file="" />
+                                        <input type="file" class="dropify" name="images[]" data-default-file="" />
                                     </div>
                                     <div class="col-lg-6 mb-4 mb-lg-0">
-                                        <input type="file" class="dropify" name="image[]" data-default-file="" />
+                                        <input type="file" class="dropify" name="images[]" data-default-file="" />
                                     </div>
                                     <div class="col-lg-6">
-                                        <input type="file" class="dropify" name="image[]" data-default-file="" />
+                                        <input type="file" class="dropify" name="images[]" data-default-file="" />
                                     </div>
                                     <br>
-                                    {{-- image area.// --}}
+                                    {{-- images area.// --}}
                                     <div class="col-12 pt-3">
                                         <div class="form-group text-center">
                                             <button type="submit"

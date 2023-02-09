@@ -24,13 +24,13 @@ class CreateProductsTable extends Migration
             $table->integer('stock');
             $table->year('start_year')->nullable();
             $table->year('end_year')->nullable();
-            $table->text('image')->nullable();
+            $table->text('images')->default('["default.png"]');
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedBigInteger('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands');
             $table->unsignedBigInteger('car_id')->nullable();
-            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
+            $table->foreign('car_id')->references('id')->on('cars');
             $table->timestamps();
         });
     }

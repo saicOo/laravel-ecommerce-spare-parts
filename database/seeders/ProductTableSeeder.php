@@ -32,7 +32,7 @@ class ProductTableSeeder extends Seeder
                 'country' => $country[rand(0,2)],
                 'start_year' => 2000,
                 'end_year' => 2020,
-                'category_id' => Category::inRandomOrder()->first()->id,
+                'category_id' => Category::where('category_type','sub_category')->inRandomOrder()->first()->id,
                 'brand_id' => Brand::inRandomOrder()->first()->id,
                 'car_id' => Car::inRandomOrder()->first()->id,
             ]);

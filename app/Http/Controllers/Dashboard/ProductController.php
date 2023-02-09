@@ -26,13 +26,13 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::all();
+        $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
         $products = Product::with('category')->when($request->search,function ($query) use ($request){
             return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
         })->when($request->category_id,function ($q) use ($request){
             return $q->where('category_id', $request->category_id);
         })->latest()->paginate(10);
-        return view('dashboard.products.index', compact('products','categories'));
+        return view('dashboard.products.index', compact('products','primary_categories'));
     }
 
     /**
@@ -66,29 +66,31 @@ class ProductController extends Controller
             'brand_id' => 'required',
             'price' => 'required|numeric|max:100000',
             'stock' => 'required|integer',
-            'image' => 'required|array|min:4|max:4',
-            'image.*' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
+            'images' => 'array|max:4',
+            'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg',
         ];
         if(isset($request->car_id) || isset($request->start_year) || isset($request->end_year)){
             $rules += [
                 'car_id' => 'required',
-                'start_year' => 'required',
-                'end_year' => 'required',
+                'start_year' => 'required|digits:4|integer|min:1900|max:'.$request->end_year,
+                'end_year' => 'required|digits:4|integer|min:1900'
             ];
         }
         $request->validate($rules);
 
     $request_data = $request->all();
-    $images = [];
-    foreach($request->image as $image){
-
-        $imageName = Str::random(20) . uniqid()  . '.webp';
-            Image::make($image)->encode('webp', 65)->resize(600, null, function ($constraint) {
-                $constraint->aspectRatio();
-                })->save(public_path('uploads/products/'.$imageName));
-                array_push($images, $imageName);
+    if($request->images){
+        $images = [];
+        foreach($request->images as $image){
+            $imageName = Str::random(20) . uniqid()  . '.webp';
+                Image::make($image)->encode('webp', 65)->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    })->save(public_path('uploads/products/'.$imageName));
+                    array_push($images, $imageName);
+        }
+        $request_data['images']  = $images;
     }
-    $request_data['image']  = $images;
+
             Product::create($request_data);
             session()->flash('success', __('site.added_successfully'));
             return redirect()->route('dashboard.products.index');
@@ -139,35 +141,33 @@ class ProductController extends Controller
             'brand_id' => 'required',
             'price' => 'required|numeric|max:100000',
             'stock' => 'required|integer',
+            'images' => 'array|max:4',
+            'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg',
         ];
-        if(isset($request->image)){
-            $rules += [
-                'image' => 'required|array|min:4|max:4',
-                'image.*' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
-            ];
-        }
         if(isset($request->car_id) || isset($request->start_year) || isset($request->end_year)){
             $rules += [
                 'car_id' => 'required',
-                'start_year' => 'required',
-                'end_year' => 'required',
+                'start_year' => 'required|digits:4|integer|min:1900|max:'.$request->end_year,
+                'end_year' => 'required|digits:4|integer|min:1900'
             ];
         }
         $request->validate($rules);
         $request_data = $request->all();
-    if ($request->image) {
+    if ($request->images) {
     $images = [];
-    foreach($product->image as $imageName){
-        File::delete(public_path('uploads/products/'.$imageName));
+    foreach($product->images as $imageName){
+        if($imageName != "default.png"){
+            File::delete(public_path('uploads/products/'.$imageName));
+        }
     }
-    foreach($request->image as $image){
+    foreach($request->images as $image){
         $imageName = Str::random(20) . uniqid()  . '.webp';
             Image::make($image)->encode('webp', 65)->resize(600, null, function ($constraint) {
                 $constraint->aspectRatio();
                 })->save(public_path('uploads/products/'.$imageName));
                 array_push($images, $imageName);
     }
-    $request_data['image']  = $images;
+    $request_data['images']  = $images;
     }
     $product->update($request_data);
             session()->flash('success', __('site.added_successfully'));
@@ -180,16 +180,17 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($product,Request $request)
+    public function destroy($test,Request $request)
     {
         $products_arr = explode(",",$request->mass_delete);
         $products = Product::whereIn('id', $products_arr);
-        foreach($products->select('image')->get() as $product_images){
-                if($product_images->image){
-                foreach($product_images->image as $imageName){
-                    File::delete(public_path('uploads/products/'.$imageName));
+        $images_arr = $products->pluck('images')->toArray();
+        foreach($images_arr as $image_arr){
+            foreach($image_arr as $imageName){
+                    if($imageName != "default.png"){
+                        File::delete(public_path('uploads/products/'.$imageName));
+                    }
                 }
-            }
         }
         $products->delete();
         session()->flash('success', __('site.deleted_successfully'));

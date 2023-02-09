@@ -20,7 +20,7 @@ class CreateCarsTable extends Migration
             $table->year('start_year');
             $table->year('end_year');
             $table->unsignedBigInteger('factory_car_id');
-            $table->foreign('factory_car_id')->references('id')->on('factory_cars')->onDelete('cascade');
+            $table->foreign('factory_car_id')->references('id')->on('factory_cars');
         });
     }
 

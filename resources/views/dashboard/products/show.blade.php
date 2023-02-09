@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="owl-carousel offer_card_carousel" id="offer_card_carousel">
-                                    @foreach ($product->image as $image)
+                                    @foreach ($product->images as $image)
                                         <img src="{{ asset('uploads/products') . '/' . $image }}" class="img-fluid" style="height: 450px"
                                             alt="{{ $image }}">
                                     @endforeach

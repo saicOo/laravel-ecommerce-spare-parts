@@ -77,6 +77,7 @@ class AdminController extends Controller
     public function edit(Admin $admin)
     {
         $this->authorize('check-permissions', 'update_admins');
+        return view('dashboard.admins.edit',compact('admin'));
     }
 
     /**
@@ -89,6 +90,31 @@ class AdminController extends Controller
     public function update(Request $request, Admin $admin)
     {
         $this->authorize('check-permissions', 'update_admins');
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            "phone"=>"required|digits:11",
+            'role' => ['string', 'in:suber_admin,accountant,customer_service,data_entry'],
+        ];
+        if(isset($request->password)){
+            $rules += [
+                'password' => ['string','min:8','max:20', 'confirmed'],
+            ];
+        }
+        $request->validate($rules);
+
+        $request_data = $request->all();
+        if($request->password){
+            $request_data = $request->except(['password','password_confirmation','current_password']);
+            if(password_verify($request->current_password, $admin->password)){
+               //success
+               $request_data['password'] = bcrypt($request->password);
+            }else{
+                return redirect()->back()->withErrors("The current password does not match")->withInput();
+            }
+        }
+        $admin->update($request_data);
+        session()->flash('success', __('site.updated_successfully'));
+        return redirect()->route('dashboard.admins.index');
     }
 
     /**

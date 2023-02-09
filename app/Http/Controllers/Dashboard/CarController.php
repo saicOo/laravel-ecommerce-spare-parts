@@ -19,10 +19,15 @@ class CarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cars = Car::all();
-        return view('dashboard.cars.index', compact('cars'));
+        $factoryCars = FactoryCar::all();
+        $cars = Car::with('FactoryCar')->when($request->search,function ($query) use ($request){
+            return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
+        })->when($request->factory_car_id,function ($q) use ($request){
+            return $q->where('factory_car_id', $request->factory_car_id);
+        })->latest('id')->paginate(10);
+        return view('dashboard.cars.index', compact('cars','factoryCars'));
     }
 
     /**
@@ -32,7 +37,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('dashboard.cars.create');
+        $factory_cars = FactoryCar::all();
+        return view('dashboard.cars.create',compact('factory_cars'));
     }
 
     /**
@@ -44,12 +50,14 @@ class CarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_ar' => 'required|max:50|unique:cars,name_ar',
-            'name_en' => 'required|max:50|unique:cars,name_en',
+            'name_ar' => 'required|max:50',
+            'name_en' => 'required|max:50',
+            'start_year' => 'required|digits:4|integer|min:1900|max:'.$request->end_year,
+            'end_year' => 'required|digits:4|integer|min:1900|max:'.date("Y"),
         ]);
         Car::create($request->all());
         session()->flash('success', __('site.added_successfully'));
-        return redirect()->route('cars.index');
+        return redirect()->route('dashboard.cars.index');
     }
 
     /**
@@ -71,7 +79,8 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        //
+        $factory_cars = FactoryCar::all();
+        return view('dashboard.cars.edit',compact('factory_cars','car'));
     }
 
     /**
@@ -83,7 +92,15 @@ class CarController extends Controller
      */
     public function update(Request $request, Car $car)
     {
-        //
+        $request->validate([
+            'name_ar' => 'required|max:50',
+            'name_en' => 'required|max:50',
+            'start_year' => 'required|digits:4|integer|min:1900|max:'.$request->end_year,
+            'end_year' => 'required|digits:4|integer|min:1900|max:'.date("Y"),
+        ]);
+        $car->update($request->all());
+        session()->flash('success', __('site.updated_successfully'));
+        return redirect()->route('dashboard.cars.index');
     }
 
     /**
@@ -92,9 +109,20 @@ class CarController extends Controller
      * @param  \App\Models\Car  $car
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Car $car)
+    public function destroy($test,Request $request)
     {
-        //
+        $cars_arr = explode(",",$request->mass_delete);
+        $cars_in = Car::whereIn('id', $cars_arr);
+        $cars = $cars_in->with('products')->get();
+        foreach($cars as $car){
+            if(isset($car->products[0])){
+                return redirect()->back()->withErrors(__('site.cannot_delete'));
+            }else{
+                $car->delete();
+            }
+        }
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route('dashboard.cars.index');
     }
     public function ajaxIndex(Request $request)
     {

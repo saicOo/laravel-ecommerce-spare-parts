@@ -22,7 +22,7 @@ class CategoryController extends Controller
     {
         $categories = Category::with('subCategories')->when($request->search,function ($query) use ($request){
             return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
-        })->paginate(10);
+        })->latest('id')->paginate(10);
         return view('dashboard.categories.index', compact('categories'));
     }
 
@@ -109,11 +109,18 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($category,Request $request)
+    public function destroy($test,Request $request)
     {
         $categories_arr = explode(",",$request->mass_delete);
-        $categories = Category::whereIn('id', $categories_arr);
-        $categories->delete();
+        $categories_in = Category::whereIn('id', $categories_arr);
+        $categories = $categories_in->with(['subCategories','products'])->get();
+        foreach($categories as $category){
+            if(isset($category->subCategories[0]) || isset($category->products[0])){
+                return redirect()->back()->withErrors(__('site.cannot_delete'));
+            }else{
+                    $category->delete();
+            }
+        }
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.categories.index');
     }

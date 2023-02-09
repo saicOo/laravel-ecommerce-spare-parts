@@ -29,8 +29,8 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <div class="form-check mb-2">
-                                                <input type="checkbox" class="check-box-permission" id="check1" name="permissions[]" {{$admin->permissions->find($permission->id) ? 'checked':''}}
-                                                value="{{$permission->id}}">
+                                                <input type="checkbox" class="check-box-permission" id="check1" name="permissions[]" {{ $admin->role == "suber_admin" ? 'disabled' : ''}} {{$admin->permissions->find($permission->id) ? 'checked':''}}
+                                                    value="{{$permission->id}}">
                                                 <label class="form-check-label" for="check1">{{ __('site.'.explode('_', $permission->name)[0]) }} {{ __('site.'.explode('_', $permission->name)[1]) }}</label>
                                             </div>
                                         </div>

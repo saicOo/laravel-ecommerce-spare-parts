@@ -11,7 +11,7 @@ class Car extends Model
     protected $guarded = [];
 
     public $timestamps = false;
-    
+
     protected $appends = ['name'];
 
     public function factoryCar()
@@ -19,6 +19,10 @@ class Car extends Model
         return $this->belongsTo(FactoryCar::class);
     }//end of factory Car
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
     public function getNameAttribute(){
         return app()->getLocale() == 'ar' ? $this->name_ar : $this->name_en;
     }

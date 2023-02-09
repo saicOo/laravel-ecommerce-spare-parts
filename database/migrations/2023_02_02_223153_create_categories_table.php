@@ -19,8 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('name_ar');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->enum('category_type', ['primary_category', 'sub_category']);
-            $table->foreign('category_id')->references('id')->on('categories')
-                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
