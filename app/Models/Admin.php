@@ -34,5 +34,5 @@ class Admin extends Authenticatable
     {
         return $this->belongsToMany(Permission::class, 'permission_admin');
 
-    }//end of products
+    }//end of permissions
 }

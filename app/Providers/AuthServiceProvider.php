@@ -29,16 +29,13 @@ class AuthServiceProvider extends ServiceProvider
             if($admin->role == 'suber_admin'){
                 return true;
             }else{
-                foreach($admin->permissions as $admin_permission){
-                    if($admin_permission->name == $permission){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                }
+                $checkAdmin = $admin->permissions->firstWhere('name',$permission);
+                if($checkAdmin){
+                            return true;
+                        }else{
+                            return false;
+                        }
             }
-
-            // return $admin->id === $post->user_id;
         });
     }
 }
