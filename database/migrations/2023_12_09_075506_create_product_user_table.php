@@ -17,10 +17,8 @@ class CreateProductUserTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
             $table->integer('quantity')->default(1);
-            $table->float('price', 8, 2);
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->float('total_price', 8, 2)->nullable();
         });
     }
 

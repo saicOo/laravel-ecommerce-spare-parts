@@ -15,8 +15,14 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => LaravelLocalization::setLocale(),
 'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]],
 function(){
-Auth::routes();
+    Auth::routes();
 
 
-Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
+    Route::get('/products', 'ProductController@index')->name('products.index');
+    Route::get('/products/{product}', 'ProductController@show')->name('products.show');
+
+
+    Route::resource('carts', 'CartController');
+Route::resource('orders', 'OrderController');
 });

@@ -17,11 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,7 +40,16 @@ class User extends Authenticatable
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_user')->withPivot(['quantity','price']);
+        return $this->belongsToMany(Product::class, 'product_user',)->withPivot(['quantity']);
 
     }//end of products
+    // /**
+    //  * The roles that belong to the User
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    //  */
+    // public function roles(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Role::class, 'role_user_table', 'user_id', 'role_id');
+    // }
 }

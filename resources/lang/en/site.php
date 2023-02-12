@@ -12,6 +12,7 @@ return [
     'new' => 'new',
     // genral panel
     'dashboard' => 'dashboard',
+    'home' => 'Home',
     'settings' => 'settings',
 
     //  messages
@@ -22,6 +23,7 @@ return [
     'restore_successfully' => 'restore successfully',
     'cannot_delete' => 'Cannot Delete',
     'no_data_found' => 'no data found',
+    'no_cart_product_found' => 'Unfortunately, there are no products in the cart',
     'no_records' => 'no records',
     'ar' => [
         'name' => 'The name is in Arabic',
@@ -63,6 +65,9 @@ return [
     'list' => 'List',
     'count' => 'Count',
     'choose' => 'Choose',
+    'add_to_cart' => 'Add to cart',
+    'sold_out' => 'Sold out',
+    'showing' => 'Showing',
     // information users
     'clients' => 'clients',
     'client' => 'client',

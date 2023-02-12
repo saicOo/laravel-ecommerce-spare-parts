@@ -12,6 +12,7 @@ return [
     'new' => 'جديد',
     // genral panel
     'dashboard' => 'الرئيسيه',
+    'home' => 'الرئيسيه',
     'settings' => 'الاعدادات',
 
     //  messages
@@ -22,6 +23,7 @@ return [
     'restore_successfully' => 'تم استرجاع البيانات بنجاح',
     'cannot_delete' => 'لا يمكن الحذف',
     'no_data_found' => 'للاسف لا يوجد اي سجلات',
+    'no_cart_product_found' => 'للاسف لا يوجد منتجات في العربة',
     'no_records' => 'للاسف لا يوجد اي سجلات',
     'ar' => [
         'name' => 'الاسم بالغه العربيه',
@@ -63,6 +65,9 @@ return [
     'list' => 'قائمة',
     'count' => 'عدد',
     'choose' => 'اختر',
+    'add_to_cart' => 'أضف الي عربة التسوق',
+    'sold_out' => 'نفذ',
+    'showing' => 'عرض',
     // information users
     'clients' => 'العملاء',
     'client' => 'عميل',
