@@ -127,13 +127,7 @@
                                     <span
                                         class="col-6 col-sm-6 cart__subtotal-title cart__subtotal text-end"><b>${{ number_format($total_price, 2) }}</b></span>
                                 </div>
-                                <form action="#" method="post" class="coupon-code">
-                                    <div class="form-group">
-                                        <input type="text" name="coupon" id="coupon"
-                                            placeholder="ENTER COUPON CODE HERE" class="rounded-2 form-control">
-                                    </div>
-                                </form>
-                                <a href="checkout.html"
+                                <a href="{{route('checkout.create')}}"
                                     class="btn btn-lg btn-primary rounded-pill my-4 checkout w-100">Proceed To Checkout</a>
                                 <p><img class="blur-up lazyloaded" src="{{asset('front/assets/images/garauntee-img.png')}}"
                                         data-src="{{asset('front/assets/images/garauntee-img.png')}}" alt="Guaranteed Safe Checkout"></p>

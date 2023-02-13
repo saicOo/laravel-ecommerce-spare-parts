@@ -43,13 +43,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class, 'product_user',)->withPivot(['quantity']);
 
     }//end of products
-    // /**
-    //  * The roles that belong to the User
-    //  *
-    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    //  */
-    // public function roles(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Role::class, 'role_user_table', 'user_id', 'role_id');
-    // }
+
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

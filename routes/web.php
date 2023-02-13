@@ -25,4 +25,5 @@ function(){
     Route::resource('users', 'UserController');
     Route::resource('carts', 'CartController')->only(['index','store','update']);
     Route::resource('orders', 'OrderController');
+    Route::resource('checkout', 'CheckoutController');
 });

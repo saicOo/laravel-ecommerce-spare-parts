@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +22,8 @@ class UserController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('front.user.index',compact('user'));
+        $orders = auth()->user()->orders;
+        return view('front.user.index',compact('user','orders'));
     }
 
     public function update(Request $request, User $user)

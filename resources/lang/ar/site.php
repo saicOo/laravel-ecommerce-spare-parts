@@ -95,6 +95,8 @@ return [
     'accountant' => 'محاسب' ,
     'customer_service' => 'خدمة عملاء' ,
     'data_entry' => 'مدخل بيانات' ,
+    'cash_on_delivery' => 'الدفع عند الاستلام' ,
+    'online_payment' => 'الدفع بواسطة بطاقة الائتمان',
     // information company
     'company_name' => 'اسم الشركة',
     'company_address' => 'عنوان الشركة',

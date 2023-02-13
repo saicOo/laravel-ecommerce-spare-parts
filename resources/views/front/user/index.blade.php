@@ -64,7 +64,6 @@
                                             <thead class="alt-font">
                                                 <tr>
                                                     <th>Order #</th>
-                                                    <th>Product</th>
                                                     <th>Date</th>
                                                     <th class="status">Status</th>
                                                     <th>Total</th>
@@ -72,51 +71,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($orders as $order)
                                                 <tr>
-                                                    <td>001</td>
-                                                    <td>Hankook DynaPro AT-m RF10</td>
-                                                    <td>March 04, 2018</td>
-                                                    <td class="alert-danger">Canceled</td>
-                                                    <td>$165.00</td>
+                                                    <td>#{{$order->id}}</td>
+                                                    <td>{{$order->updated_at->format('M d, Y')}}</td>
+                                                    <td class="alert-danger">{{$order->status}}</td>
+                                                    <td>${{number_format($order->total_price,2)}}</td>
                                                     <td class="text-center"><a class="view" href="#;"><u>View</u></a>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>014</td>
-                                                    <td>Carbon Steering Wheel</td>
-                                                    <td>May 19, 2018</td>
-                                                    <td class="alert-primary">In progress</td>
-                                                    <td>$150.00</td>
-                                                    <td class="text-center"><a class="view" href="#;"><u>View</u></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>016</td>
-                                                    <td>Air Filter</td>
-                                                    <td>May 19, 2018</td>
-                                                    <td class="alert-warning">Delayed</td>
-                                                    <td>$79.00</td>
-                                                    <td class="text-center"><a class="view" href="#;"><u>View</u></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>085</td>
-                                                    <td>Adapter Car Hands</td>
-                                                    <td>May 19, 2018</td>
-                                                    <td class="alert-success">Delivered</td>
-                                                    <td>$99.00</td>
-                                                    <td class="text-center"><a class="view" href="#;"><u>View</u></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>099</td>
-                                                    <td>Road Warrior Hub pilot</td>
-                                                    <td>May 19, 2018</td>
-                                                    <td class="alert-success">Delivered</td>
-                                                    <td>$69.00</td>
-                                                    <td class="text-center"><a class="view" href="#;"><u>View</u></a>
-                                                    </td>
-                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

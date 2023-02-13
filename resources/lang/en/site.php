@@ -93,8 +93,10 @@ return [
     'role' => 'Role',
     'suber_admin' => 'Suber Admin' ,
     'accountant' => 'Accountant' ,
-    'customer_service' => 'Customer Service' ,
-    'data_entry' => 'Data Entry' ,
+    'customer_service' => 'Customer Service',
+    'data_entry' => 'Data Entry',
+    'cash_on_delivery' => 'Cash On Delivery',
+    'online_payment' => 'Online Payment',
     // information company
     'company_name' => 'Company Name',
     'company_address' => 'Company Address',
