@@ -13,6 +13,7 @@ return [
     // genral panel
     'dashboard' => 'dashboard',
     'home' => 'Home',
+    'profile' => 'Profile',
     'settings' => 'settings',
 
     //  messages
@@ -21,6 +22,7 @@ return [
     'deleted_successfully' => 'deleted successfully',
     'archive_successfully' => 'archive successfully',
     'restore_successfully' => 'restore successfully',
+    'password_match' => 'The current password does not match',
     'cannot_delete' => 'Cannot Delete',
     'no_data_found' => 'no data found',
     'no_cart_product_found' => 'Unfortunately, there are no products in the cart',
@@ -68,6 +70,7 @@ return [
     'add_to_cart' => 'Add to cart',
     'sold_out' => 'Sold out',
     'showing' => 'Showing',
+    'joined' => 'Joined',
     // information users
     'clients' => 'clients',
     'client' => 'client',

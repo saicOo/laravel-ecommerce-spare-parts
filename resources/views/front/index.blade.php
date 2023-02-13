@@ -5,7 +5,6 @@
     @endsection
     @section('content')
         <main id="page-content">
-
             <!--Homepage Slideshow-->
             <div class="slideshow home-slideshow p-0">
                 <div class="slide">

@@ -22,7 +22,7 @@ function(){
     Route::get('/products', 'ProductController@index')->name('products.index');
     Route::get('/products/{product}', 'ProductController@show')->name('products.show');
 
-
-    Route::resource('carts', 'CartController');
-Route::resource('orders', 'OrderController');
+    Route::resource('users', 'UserController');
+    Route::resource('carts', 'CartController')->only(['index','store','update']);
+    Route::resource('orders', 'OrderController');
 });

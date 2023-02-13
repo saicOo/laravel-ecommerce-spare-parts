@@ -20,7 +20,7 @@
                     <a href="javascript:void(0);"><i class="cp cp-user-circle"></i> <span class="label">{{Auth::user()->first_name}}</span></a>
                     <div id="settingsBox">
                         <ul>
-                            <li><a href="my-account.html">@lang('site.profile')</a></li>
+                            <li><a href="{{ route('users.index') }}">@lang('site.profile')</a></li>
                             <li><a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">@lang('site.logout')</a>

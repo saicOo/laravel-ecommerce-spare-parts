@@ -13,6 +13,7 @@ return [
     // genral panel
     'dashboard' => 'الرئيسيه',
     'home' => 'الرئيسيه',
+    'profile' => 'حسابك',
     'settings' => 'الاعدادات',
 
     //  messages
@@ -21,6 +22,7 @@ return [
     'deleted_successfully' => 'تم حذف البيانات بنجاح',
     'archive_successfully' => 'تم ارشفة البيانات بنجاح',
     'restore_successfully' => 'تم استرجاع البيانات بنجاح',
+    'password_match' => 'كلمة المرور الحالية غير مطابقة',
     'cannot_delete' => 'لا يمكن الحذف',
     'no_data_found' => 'للاسف لا يوجد اي سجلات',
     'no_cart_product_found' => 'للاسف لا يوجد منتجات في العربة',
@@ -68,6 +70,7 @@ return [
     'add_to_cart' => 'أضف الي عربة التسوق',
     'sold_out' => 'نفذ',
     'showing' => 'عرض',
+    'joined' => 'انضممت في',
     // information users
     'clients' => 'العملاء',
     'client' => 'عميل',
