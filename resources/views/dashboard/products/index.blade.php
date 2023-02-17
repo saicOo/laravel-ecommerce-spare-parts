@@ -89,30 +89,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <nav>
-                                <ul class="pagination pagination-sm pagination-style-2">
-                                    @php
-                                        $append_url = '';
-                                        if (isset(request()->query()['search'])) {
-                                            $append_url = '&category_id=' . request()->query()['category_id'] . '&search=' . request()->query()['search'];
-                                        }
-                                    @endphp
-                                    <li class="page-item page-indicator {{ $products->onFirstPage() ? 'disabled' : '' }}">
-                                        <a class="page-link" href="{{ $products->previousPageUrl() . $append_url }}">
-                                            <i class="icon-arrow-left"></i></a>
-                                    </li>
-                                    @foreach ($products->getUrlRange(1, $products->lastPage()) as $num_page => $url_page)
-                                        <li class="page-item {{ $num_page === $products->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link"
-                                                href="{{ $url_page . $append_url }}">{{ $num_page }}</a>
-                                        </li>
-                                    @endforeach
-                                    <li class="page-item page-indicator {{ $products->hasMorePages() ? '' : 'disabled' }}">
-                                        <a class="page-link " href="{{ $products->nextPageUrl() . $append_url }}">
-                                            <i class="icon-arrow-right"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            {{$products->appends(request()->query())->links("pagination::bootstrap-4")}}
                         </div>
                     </div>
                 </div>

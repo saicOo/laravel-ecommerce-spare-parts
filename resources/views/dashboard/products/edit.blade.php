@@ -18,7 +18,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)"> {{ __('site.dashboard') }}</a></li>
                     <li class="breadcrumb-item"><a href="javascript:void(0)"> {{ __('site.products') }}</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> {{ __('site.create') }}</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> {{ __('site.edit') }}</a></li>
                 </ol>
             </div>
         </div>
@@ -182,7 +182,7 @@
                                     <div class="col-12 pt-3">
                                         <div class="form-group text-center">
                                             <button type="submit"
-                                                class="btn btn-rounded btn-primary">@lang('site.add')</button>
+                                                class="btn btn-rounded btn-primary">@lang('site.update')</button>
                                         </div>
                                     </div>
                                 </div>

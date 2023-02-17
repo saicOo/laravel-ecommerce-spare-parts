@@ -84,33 +84,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <nav>
-                                <ul class="pagination pagination-sm pagination-style-2">
-                                    @php
-                                        $append_url = '';
-                                        if (isset(request()->query()['search'])) {
-                                            $append_url = '&search=' . request()->query()['search'];
-                                        }
-                                    @endphp
-                                    <li
-                                        class="page-item page-indicator {{ $categories->onFirstPage() ? 'disabled' : '' }}">
-                                        <a class="page-link" href="{{ $categories->previousPageUrl() . $append_url }}">
-                                            <i class="icon-arrow-left"></i></a>
-                                    </li>
-                                    @foreach ($categories->getUrlRange(1, $categories->lastPage()) as $num_page => $url_page)
-                                        <li
-                                            class="page-item {{ $num_page === $categories->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link"
-                                                href="{{ $url_page . $append_url }}">{{ $num_page }}</a>
-                                        </li>
-                                    @endforeach
-                                    <li
-                                        class="page-item page-indicator {{ $categories->hasMorePages() ? '' : 'disabled' }}">
-                                        <a class="page-link " href="{{ $categories->nextPageUrl() . $append_url }}">
-                                            <i class="icon-arrow-right"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            {{$categories->appends(request()->query())->links("pagination::bootstrap-4")}}
                         </div>
                     </div>
                 </div>

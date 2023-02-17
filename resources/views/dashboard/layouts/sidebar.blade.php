@@ -4,18 +4,18 @@
             <li class="nav-label">{{__('site.dashboard')}}</li>
             <li><a href="{{route('dashboard.index')}}" aria-expanded="false"><i class="icon-speedometer"></i> <span class="nav-text">{{__('site.dashboard')}}</span></a></li>
             @can('check-permissions','read_admins')
-            <li><a href="#" aria-expanded="false"><i class="icon-settings"></i> <span class="nav-text">{{__('site.settings')}}</span></a></li>
+            <li><a href="{{route('dashboard.settings.index')}}" aria-expanded="false"><i class="icon-settings"></i> <span class="nav-text">{{__('site.settings')}}</span></a></li>
             @endcan
             <li class="nav-label">{{__('site.people')}}</li>
             @can('check-permissions','read_admins')
             <li><a href="{{route('dashboard.admins.index')}}" aria-expanded="false"><i class="icon-user"></i> <span class="nav-text">{{__('site.admins')}}</span></a></li>
             @endcan
             @can('check-permissions','read_users')
-            <li><a href="#" aria-expanded="false"><i class="icon-user"></i> <span class="nav-text">{{__('site.clients')}}</span></a></li>
+            <li><a href="{{route('dashboard.clients.index')}}" aria-expanded="false"><i class="icon-user"></i> <span class="nav-text">{{__('site.clients')}}</span></a></li>
             @endcan
             <li class="nav-label">{{__('site.orders')}}</li>
             @can('check-permissions','read_orders')
-            <li><a href="#" aria-expanded="false"><i class="icon-basket"></i> <span class="nav-text">{{__('site.orders')}}</span></a></li>
+            <li><a href="{{route('dashboard.orders.index')}}" aria-expanded="false"><i class="icon-basket"></i> <span class="nav-text">{{__('site.orders')}}</span></a></li>
             @endcan
             <li class="nav-label">{{__('site.categories')}}</li>
             @can('check-permissions','read_categories')

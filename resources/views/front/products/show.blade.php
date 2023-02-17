@@ -197,7 +197,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="section-title col-12 text-left">
-                            <h2 class="title text-uppercase">You may also like this</h2>
+                            <h2 class="title text-uppercase">@lang('site.like_this')</h2>
                         </div>
                     </div>
                     <div class="productSlider grid-products products-grid">

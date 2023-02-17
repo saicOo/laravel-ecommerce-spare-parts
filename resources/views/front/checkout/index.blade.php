@@ -11,13 +11,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h1 class="text-uppercase">Checkout Style1</h1>
+                            <h1 class="text-uppercase">@lang('site.checkout')</h1>
                             <!--Breadcrums-->
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center mb-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a> <span><i
+                                    <li class="breadcrumb-item"><a href="index.html">@lang('site.home')</a> <span><i
                                                 class="cps cp-caret-right"></i></span></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Checkout Style1</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@lang('site.checkout')</li>
                                 </ol>
                             </nav>
                             <!--End Breadcrums-->
@@ -35,13 +35,19 @@
                             <!--Order Summary-->
                             <div class="block mb-3 order-summary">
                                 <div class="block-content">
-                                    <h2 class="title text-uppercase">Your order</h2>
+                                    <h2 class="title text-uppercase">@lang('site.order')</h2>
+                                    @error('missing_data')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                        <a href="{{route('users.index')}}"> !!@lang('site.profile')!!</a>
+                                      </div>
+                                    @enderror
                                     <div class="table-responsive-sm order-table">
                                         <table class="table table-hover text-center">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-start">Product</th>
-                                                    <th class="text-start">Subtotal</th>
+                                                    <th class="text-start">@lang('site.product')</th>
+                                                    <th class="text-start">@lang('site.subTotal')</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -56,15 +62,19 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td class="text-start text-uppercase"><b>Subtotal</b></td>
-                                                    <td class="text-start">${{ number_format($total_price, 2) }}</td>
+                                                    <td class="text-start text-uppercase"><b>@lang('site.subTotal')</b></td>
+                                                    <td class="text-start">${{ number_format($sub_total, 2) }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-start text-uppercase"><b>Shipping</b></td>
-                                                    <td class="text-start">Flat rate: $10.00</td>
+                                                    <td class="text-start text-uppercase"><b>Tax</b></td>
+                                                    <td class="text-start">${{ number_format($tax_amount, 2) }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-start text-uppercase"><b>Total</b></td>
+                                                    <td class="text-start text-uppercase"><b>@lang('site.shipping')</b></td>
+                                                    <td class="text-start">{{$setting->shipping > 0 ? '$'.$setting->shipping : __('site.free') .' '.__('site.shipping')}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-start text-uppercase"><b>@lang('site.total')</b></td>
                                                     <td class="text-start red-text">
                                                         <b>${{ number_format($total_price, 2) }}</b>
                                                     </td>
@@ -74,7 +84,7 @@
                                     </div>
 
                                     <div class="your-payment mt-4">
-                                        <h2 class="title text-uppercase">payment method</h2>
+                                        <h2 class="title text-uppercase">@lang('site.payment_method')</h2>
                                         <div class="payment-method">
                                             <form action="{{ route('checkout.store') }}" method="post">
                                                 @csrf
@@ -85,14 +95,13 @@
                                                         <label for="option-1" class="mx-2">@lang('site.cash_on_delivery') </label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="input-payment" name="selector" value="online">
-                                                        <label for="input-payment" class="mx-2">@lang('site.online_payment')</label>
+                                                        <input type="radio" id="option-2" name="selector" value="online">
+                                                        <label for="option-2" class="mx-2">@lang('site.online_payment')</label>
                                                     </li>
                                                 </ul>
                                                 <div class="order-button-payment mt-4 clearfix">
-                                                    <button type="submit" id="btn-checkout"
-                                                        class="btn btn-primary btn-lg rounded-pill w-100">Place
-                                                        order</button>
+                                                    <button type="submit"
+                                                        class="btn btn-primary btn-lg rounded-pill w-100">@lang('site.place_order')</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -108,25 +117,4 @@
 
         </main>
     @endsection
-    @push('js')
-        <script src="{{ asset('front/assets/js/paymob.js') }}"></script>
-        <script>
-            $(document).ready(function() {
 
-
-
-                //delete
-                $('#btn-checkout').click(function(e) {
-
-                    e.preventDefault();
-
-                    if ($('#input-payment').prop("checked")) {
-                        firstStep();
-                    } else {
-                        $(this).closest('form').submit();
-                    }
-
-                }); //end of delete
-            }); //end of ready
-        </script>
-    @endpush

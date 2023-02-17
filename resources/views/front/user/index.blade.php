@@ -11,13 +11,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h1 class="text-uppercase">My Accounts</h1>
+                            <h1 class="text-uppercase">@lang('site.my_account')</h1>
                             <!--Breadcrums-->
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center mb-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a> <span><i
+                                    <li class="breadcrumb-item"><a href="index.html">@lang('site.home')</a> <span><i
                                                 class="cps cp-caret-right"></i></span></li>
-                                    <li class="breadcrumb-item active" aria-current="page">My Accounts</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@lang('site.my_account')</li>
                                 </ol>
                             </nav>
                             <!--End Breadcrums-->
@@ -34,8 +34,8 @@
                             <div class="nav-box mb-4">
                                 <div class="profile-content">
                                     <div class="d-flex align-items-center mb-4">
-                                        <img class="blur-up lazyload rounded-pill" src="assets/images/photo1.jpg"
-                                            data-src="assets/images/photo1.jpg" alt="" title="" />
+                                        <img class="blur-up lazyload rounded-pill" src="{{asset('front/assets/images/photo1.jpg')}}"
+                                            data-src="{{asset('front/assets/images/photo1.jpg')}}" alt="" title="" />
                                         <div class="detail mx-3">
                                             <h3 class="text-uppercase mb-0">{{ $user->first_name . ' '. $user->last_name }}</h3>
                                             <p class="mb-0">@lang('site.joined') {{ $user->created_at->format('M d, Y') }}</p>
@@ -44,10 +44,10 @@
                                 </div>
                                 <!-- Nav tabs -->
                                 <ul class="nav flex-column dashboard-list" role="tablist">
-                                    <li><a class="nav-link active" data-bs-toggle="tab" href="#orders">Orders</a></li>
-                                    <li><a class="nav-link" data-bs-toggle="tab" href="#profile">Profile</a></li>
-                                    <li><a class="nav-link" data-bs-toggle="tab" href="#address">Addresses</a></li>
-                                    <li><a class="nav-link" href="login-register.html">Logout</a></li>
+                                    <li><a class="nav-link active" data-bs-toggle="tab" href="#orders">@lang('site.orders')</a></li>
+                                    <li><a class="nav-link" data-bs-toggle="tab" href="#profile">@lang('site.profile')</a></li>
+                                    <li><a class="nav-link" data-bs-toggle="tab" href="#address">@lang('site.address')</a></li>
+                                    <li><a class="nav-link" href="login-register.html">@lang('site.logout')</a></li>
                                 </ul>
                                 <!-- End Nav tabs -->
                             </div>
@@ -58,16 +58,17 @@
                             <div class="tab-content dashboard-content">
                                 <!-- Orders -->
                                 <div id="orders" class="product-order tab-pane fade active show">
-                                    <h3>Orders</h3>
+                                    <h3>@lang('site.orders')</h3>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="alt-font">
                                                 <tr>
-                                                    <th>Order #</th>
-                                                    <th>Date</th>
-                                                    <th class="status">Status</th>
-                                                    <th>Total</th>
-                                                    <th class="text-center">Actions</th>
+                                                    <th>@lang('site.order') #</th>
+                                                    <th>@lang('site.date')</th>
+                                                    <th class="status">@lang('site.status')</th>
+                                                    <th>@lang('site.method')</th>
+                                                    <th>@lang('site.total')</th>
+                                                    <th class="text-center">@lang('site.action')</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -75,9 +76,17 @@
                                                 <tr>
                                                     <td>#{{$order->id}}</td>
                                                     <td>{{$order->updated_at->format('M d, Y')}}</td>
-                                                    <td class="alert-danger">{{$order->status}}</td>
+                                                    @if ($order->payment_status == 1)
+                                                    <td class="alert-success">@lang('site.paid')</td>
+                                                    @elseif($order->payment_status == 2)
+                                                    <td class="alert-warning">@lang('site.waiting')</td>
+                                                    @elseif($order->payment_status == 3)
+                                                    <td class="alert-danger">@lang('site.unpaid')</td>
+                                                    @else
+                                                    @endif
+                                                    <td>{{$order->payment_method ? __('site.online') : __('site.cash')}}</td>
                                                     <td>${{number_format($order->total_price,2)}}</td>
-                                                    <td class="text-center"><a class="view" href="#;"><u>View</u></a>
+                                                    <td class="text-center"><a class="view" href="{{route('orders.show',$order->id)}}"><u>View</u></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -89,7 +98,7 @@
 
                                 <!-- profile -->
                                 <div id="profile" class="product-order tab-pane fade">
-                                    <h3>Profile</h3>
+                                    <h3>@lang('site.profile')</h3>
                                     <form method="post" action="{{ route('users.update', Auth::user()->id) }}"
                                         class="profile-form">
                                         {{ csrf_field() }}
@@ -137,7 +146,7 @@
                                                 <div class="form-group">
                                                     <label for="phone">@lang('site.phone')</label>
                                                     <input id="phone" type="text" name="phone"
-                                                        placeholder="Phone Number"
+
                                                         class="form-control @error('phone') is-invalid @enderror"
                                                         value="{{ $user->phone }}">
                                                     @error('phone')
@@ -208,7 +217,7 @@
 
                                 <!-- Address -->
                                 <div id="address" class="address tab-pane">
-                                    <h3>Contact Address</h3>
+                                    <h3>@lang('site.contact_address')</h3>
                                     <form method="post" action="{{ route('users.update', Auth::user()->id) }}"
                                         class="profile-form">
                                         {{ csrf_field() }}
@@ -216,30 +225,30 @@
                                         <div class="row">
 
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
-                                                <label for="address_governorate" class="form-label">@lang('site.governorate')
+                                                <label for="address_state" class="form-label">@lang('site.state')
                                                     <span class="required">*</span></label>
-                                                <select id="address_governorate" name="governorate"
+                                                <select id="address_state" name="state"
                                                     data-default="United States"
-                                                    class="form-control  @error('governorate') is-invalid @enderror">
-                                                    <option value="" label="Select a country" selected="selected">
-                                                        Select a country</option>
-                                                        <option value="vdsf" {{$user->governorate == 'vdsf' ? 'selected' : ''}}>vdsf</option>
-                                                        <option value="fjfjfhj" {{$user->governorate == 'fjfjfhj' ? 'selected' : ''}}>fjfjfhj</option>
-                                                        <option value="Algerfia" {{$user->governorate == 'Algerfia' ? 'selected' : ''}}>Algerfia</option>
+                                                    class="form-control  @error('state') is-invalid @enderror">
+                                                    <option value="" selected="selected">
+                                                        @lang('site.select') @lang('site.state')</option>
+                                                        <option value="vdsf" {{$user->state == 'vdsf' ? 'selected' : ''}}>vdsf</option>
+                                                        <option value="fjfjfhj" {{$user->state == 'fjfjfhj' ? 'selected' : ''}}>fjfjfhj</option>
+                                                        <option value="Algerfia" {{$user->state == 'Algerfia' ? 'selected' : ''}}>Algerfia</option>
                                                 </select>
-                                                @error('governorate')
+                                                @error('state')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
-                                                <label for="address_city" class="form-label">Town / City <span
+                                                <label for="address_city" class="form-label">@lang('site.city') <span
                                                         class="required">*</span></label>
                                                 <select id="address_city" name="city" data-default=""
                                                     class="form-control @error('city') is-invalid @enderror">
-                                                    <option value="" label="Select a city" selected="selected">
-                                                        Select a city</option>
+                                                    <option value="" selected="selected">
+                                                        @lang('site.select') @lang('site.city')</option>
                                                     <option value="AR" {{$user->city == 'AR' ? 'selected' : ''}}>AR</option>
                                                     <option value="CA" {{$user->city == 'CA' ? 'selected' : ''}}>CA</option>
                                                     <option value="DE" {{$user->city == 'DE' ? 'selected' : ''}}>DE</option>
@@ -259,7 +268,7 @@
                                                     <input name="street" value="{{ $user->street }}" id="input-street"
                                                         type="text"
                                                         class="form-control @error('street') is-invalid @enderror"
-                                                        placeholder="street">
+                                                        >
                                                     @error('street')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -269,13 +278,13 @@
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
                                                 <div class="form-group">
-                                                    <label for="input-build-num" class="form-label">@lang('site.build_num')
+                                                    <label for="input-build-num" class="form-label">@lang('site.building')
                                                         <span class="required">*</span></label>
-                                                    <input name="build_num" value="{{ $user->build_num }}"
+                                                    <input name="building" value="{{ $user->building }}"
                                                         id="input-build-num" type="text"
-                                                        class="form-control @error('build_num') is-invalid @enderror"
-                                                        placeholder="build number">
-                                                    @error('build_num')
+                                                        class="form-control @error('building') is-invalid @enderror"
+                                                        >
+                                                    @error('building')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -287,12 +296,12 @@
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
                                                 <div class="form-group">
                                                     <label for="input-apartment-num"
-                                                        class="form-label">@lang('site.apartment_num')</label>
-                                                    <input name="apartment_num" value="{{ $user->apartment_num }}"
+                                                        class="form-label">@lang('site.apartment')</label>
+                                                    <input name="apartment" value="{{ $user->apartment }}"
                                                         id="input-apartment-num" type="text"
-                                                        placeholder="apartment number"
-                                                        class="form-control @error('apartment_num') is-invalid @enderror">
-                                                    @error('apartment_num')
+
+                                                        class="form-control @error('apartment') is-invalid @enderror">
+                                                    @error('apartment')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -302,11 +311,11 @@
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
                                                 <div class="form-group">
                                                     <label for="input-floor-num"
-                                                        class="form-label">@lang('site.floor_num')</label>
-                                                    <input name="floor_num" value="{{ $user->floor_num }}"
-                                                        id="input-floor-num" type="text" placeholder="floor-number"
-                                                        class="form-control @error('floor_num') is-invalid @enderror">
-                                                    @error('floor_num')
+                                                        class="form-label">@lang('site.floor')</label>
+                                                    <input name="floor" value="{{ $user->floor }}"
+                                                        id="input-floor-num" type="text"
+                                                        class="form-control @error('floor') is-invalid @enderror">
+                                                    @error('floor')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -323,7 +332,7 @@
                                         </div> --}}
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-end">
                                                 <input type="submit" class="btn btn-lg btn-primary rounded-pill"
-                                                    name="updateAddress" value="Update Address">
+                                                    name="updateAddress" value="{{__('site.update') .' ' .__('site.address')}}">
                                             </div>
                                         </div>
                                     </form>
@@ -335,11 +344,23 @@
                     </div>
                 </div>
             </div>
-
         </main>
     @endsection
     @push('js')
-        <script type="text/javascript">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+    //start sweetalert
+    @switch($success)
+    @case('1')
+    swal ( "{{__('site.good_job')}}" ,  "{{__('site.order_successfully')}}" , "success" );
+        @break
+    @case('0')
+    swal("{{__('site.oops')}}", "{{__('site.order_wrong')}}", "error");
+        @break
+    @default
+    @endswitch
+
+    //end sweetalert
             $(document).ready(function() {
                 $("body").on("change", "#checkbox-password", function() {
                     let deleteId = $(this).val();

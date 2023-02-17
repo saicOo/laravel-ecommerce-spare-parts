@@ -76,33 +76,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <nav>
-                                <ul class="pagination pagination-sm pagination-style-2">
-                                    @php
-                                        $append_url = '';
-                                        if (isset(request()->query()['search'])) {
-                                            $append_url = '&search=' . request()->query()['search'];
-                                        }
-                                    @endphp
-                                    <li
-                                        class="page-item page-indicator {{ $factory_cars->onFirstPage() ? 'disabled' : '' }}">
-                                        <a class="page-link" href="{{ $factory_cars->previousPageUrl() . $append_url }}">
-                                            <i class="icon-arrow-left"></i></a>
-                                    </li>
-                                    @foreach ($factory_cars->getUrlRange(1, $factory_cars->lastPage()) as $num_page => $url_page)
-                                        <li
-                                            class="page-item {{ $num_page === $factory_cars->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link"
-                                                href="{{ $url_page . $append_url }}">{{ $num_page }}</a>
-                                        </li>
-                                    @endforeach
-                                    <li
-                                        class="page-item page-indicator {{ $factory_cars->hasMorePages() ? '' : 'disabled' }}">
-                                        <a class="page-link " href="{{ $factory_cars->nextPageUrl() . $append_url }}">
-                                            <i class="icon-arrow-right"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            {{$factory_cars->appends(request()->query())->links("pagination::bootstrap-4")}}
                         </div>
                     </div>
                 </div>

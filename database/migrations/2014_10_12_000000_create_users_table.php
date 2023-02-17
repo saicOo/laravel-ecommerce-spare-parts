@@ -19,13 +19,14 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('phone')->nullable();
             $table->string('city')->nullable();
-            $table->string('governorate')->nullable();
+            $table->string('state')->nullable();
             $table->string('street')->nullable();
-            $table->string('apartment_num')->nullable();
-            $table->string('floor_num')->nullable();
-            $table->string('build_num')->nullable();
+            $table->string('building')->nullable();
+            $table->string('apartment')->nullable();
+            $table->string('floor')->nullable();
             $table->string('image')->nullable();
             $table->string('email')->unique();
+            $table->integer('payment_callback')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

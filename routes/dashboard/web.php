@@ -38,6 +38,9 @@ function(){
         Route::resource('cars', 'CarController');
         Route::post('/cars/ajax', 'CarController@ajaxIndex')->name('cars.ajax');
         Route::resource('products', 'ProductController');
+        Route::resource('orders', 'OrderController');
+        Route::resource('clients', 'ClientController');
+        Route::resource('settings', 'SettingController');
     });
 
 });

@@ -9,7 +9,7 @@
     <meta name="description" content="description">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Tacko - Auto Parts eCommerce Bootstrap5 Html Template</title>
+    <title>{{$setting->name}}</title>
     <!--Favicon Icon-->
     <link rel="shortcut icon" href="{{ asset('front/assets/images/favicon.png') }}" />
     <!--Google Fonts-->
@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="{{ asset('front/assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/responsive.css') }}">
     @endif
-
+    @stack('css')
 </head>
 
 

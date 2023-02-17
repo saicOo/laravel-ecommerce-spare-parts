@@ -11,13 +11,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h1 class="text-uppercase">Shopping Cart Style3</h1>
+                            <h1 class="text-uppercase">@lang('site.shopping') @lang('site.cart')</h1>
                             <!--Breadcrums-->
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center mb-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a> <span><i
+                                    <li class="breadcrumb-item"><a href="index.html">@lang('site.home')</a> <span><i
                                                 class="cps cp-caret-right"></i></span></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Shopping Cart Style3</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@lang('site.shopping') @lang('site.cart')</li>
                                 </ol>
                             </nav>
                             <!--End Breadcrums-->
@@ -71,7 +71,7 @@
                                                     ${{ number_format($product->price, 2) }}</td>
                                                 <td class="product-quantity" data-title="Quantity">
                                                     <div class="qtyField">
-                                                        <label class="screen-reader-text">Quantity</label>
+                                                        <label class="screen-reader-text">@lang('site.quantity')</label>
                                                         <a class="qtyBtn minus" href="javascript:void(0);"><i
                                                                 class="cps cp-minus"></i></a>
                                                         <input type="text" name="quantity[]"
@@ -96,39 +96,39 @@
                                 </table>
                                 <div class="d-flex justify-content-between button-set-bottom">
                                     <a href="{{ route('products.index') }}"
-                                        class="btn btn-secondary rounded-3 cart-continue">Continue shopping</a>
+                                        class="btn btn-secondary rounded-3 cart-continue">@lang('site.continue') @lang('site.shopping')</a>
                                     <button type="submit" name="clear"
-                                        class="btn btn-border rounded-3 small--hide mx-4">Clear Shoping Cart</button>
+                                        class="btn btn-border rounded-3 small--hide mx-4">@lang('site.clear') @lang('site.shopping') @lang('site.cart')</button>
                                     <button type="submit" name="update"
-                                        class="btn btn-border rounded-3 cart-continue">UPDATE SHOPPING CART</button>
+                                        class="btn btn-border rounded-3 cart-continue">@lang('site.update') @lang('site.shopping') @lang('site.cart')</button>
                                 </div>
                             </form>
                             <!--End Cart Table-->
                         </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                             <div class="solid-border cart-total rounded-3">
-                                <h5 class="text-uppercase">Summary</h5>
+                                <h5 class="text-uppercase">@lang('site.summary')</h5>
                                 <div class="row pb-2">
-                                    <span class="col-6 col-sm-6 text-uppercase"><b>Subtotal</b></span>
+                                    <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.subTotal')</b></span>
                                     <span class="col-6 col-sm-6 text-end"><span
-                                            class="money">${{ number_format($total_price, 2) }}</span></span>
+                                            class="money">${{ number_format($sub_total, 2) }}</span></span>
                                 </div>
                                 <div class="row pb-2 pt-2">
                                     <span class="col-6 col-sm-6 text-uppercase"><b>Tax</b></span>
-                                    <span class="col-6 col-sm-6 text-end">$10.00</span>
+                                    <span class="col-6 col-sm-6 text-end">${{ number_format($tax_amount, 2) }}</span>
                                 </div>
                                 <div class="row border-bottom pb-2 pt-2">
-                                    <span class="col-6 col-sm-6 text-uppercase"><b>Shipping</b></span>
-                                    <span class="col-6 col-sm-6 text-end small text-uppercase">Free shipping</span>
+                                    <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.shipping')</b></span>
+                                    <span class="col-6 col-sm-6 text-end small text-uppercase">{{$setting->shipping > 0 ? '$'.$setting->shipping : __('site.free') .' '.__('site.shipping')}}</span>
                                 </div>
                                 <div class="row pb-2 pt-2">
                                     <span
-                                        class="col-6 col-sm-6 cart__subtotal-title text-uppercase"><strong>Total</strong></span>
+                                        class="col-6 col-sm-6 cart__subtotal-title text-uppercase"><strong>@lang('site.total')</strong></span>
                                     <span
                                         class="col-6 col-sm-6 cart__subtotal-title cart__subtotal text-end"><b>${{ number_format($total_price, 2) }}</b></span>
                                 </div>
                                 <a href="{{route('checkout.create')}}"
-                                    class="btn btn-lg btn-primary rounded-pill my-4 checkout w-100">Proceed To Checkout</a>
+                                    class="btn btn-lg btn-primary rounded-pill my-4 checkout w-100">@lang('site.proceed_to_checkout')</a>
                                 <p><img class="blur-up lazyloaded" src="{{asset('front/assets/images/garauntee-img.png')}}"
                                         data-src="{{asset('front/assets/images/garauntee-img.png')}}" alt="Guaranteed Safe Checkout"></p>
                             </div>
@@ -142,7 +142,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="section-title col-12 text-left">
-                            <h2 class="title text-uppercase">May You Like This</h2>
+                            <h2 class="title text-uppercase">@lang('site.like_this')</h2>
                         </div>
                     </div>
                     <div class="productSlider grid-products products-grid">

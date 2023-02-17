@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Drora - Bootstrap Restaurant Admin Dashboard HTML Template</title>
+    <title>{{$setting->name}}</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('dashboard/assets/images/favicon.png') }}">
     <!-- Custom Stylesheet -->
@@ -43,8 +43,8 @@
         <div class="nav-header">
             <div class="brand-logo">
                 <a href="index.html">
-                    <b class="logo-abbr">D</b>
-                    <span class="brand-title"><b>Drora</b></span>
+                    <b class="logo-abbr">{{$setting->name[0]}}</b>
+                    <span class="brand-title"><b>{{$setting->name}}</b></span>
                 </a>
             </div>
             <div class="nav-control">

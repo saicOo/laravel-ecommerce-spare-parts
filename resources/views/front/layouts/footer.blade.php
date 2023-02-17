@@ -66,7 +66,7 @@
                         <ul>
                             <li><a href="mailto:info@example.com"><i class="cps cp-envelope-open"></i>
                                     info@example.com</a></li>
-                            <li><a href="tel:309-437-4122"><i class="cps cp-phone"></i> 309-437-4122</a>
+                            <li><a href="tel:{{$setting->phone}}"><i class="cps cp-phone"></i> {{$setting->phone}}</a>
                             </li>
                             <li><i class="cps cp-map-marker"></i> 343 Coburn Hollow Road<br>Peoria, Illinois -
                                 61602</li>

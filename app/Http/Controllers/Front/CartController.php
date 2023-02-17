@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -22,10 +23,13 @@ class CartController extends Controller
      */
     public function index()
     {
+        $setting = Setting::first();
         $products_silder = Product::inRandomOrder()->limit(6)->get();
         $products = auth()->user()->products;
-        $total_price = auth()->user()->products()->sum(\DB::raw('products.price * product_user.quantity'));
-        return view('front.cart.index',compact('products','total_price','products_silder'));
+        $sub_total = auth()->user()->products()->sum(\DB::raw('products.price * product_user.quantity'));
+        $tax_amount = $sub_total * ($setting->tax / 100);
+        $total_price = $sub_total + $tax_amount + $setting->shipping;
+        return view('front.cart.index',compact('products','tax_amount','sub_total','total_price','products_silder'));
     }
 
     public function store(Request $request)
@@ -42,17 +46,18 @@ class CartController extends Controller
 
     public function update(Request $request,User $user)
     {
+        $products = $request->products ? $request->products : [];
         if($request->exists('clear')){
             auth()->user()->products()->detach();
         }
 
         if ($request->exists('update')) {
             foreach(auth()->user()->products as $product){
-            if(!in_array($product->id,$request->products)){
+            if(!in_array($product->id,$products)){
                 auth()->user()->products()->detach($product->id);
             }
             }
-            foreach($request->products as $index => $product_id){
+            foreach($products as $index => $product_id){
                 auth()->user()->products()->updateExistingPivot($product_id,[
                     'quantity'=> $request->quantity[$index],
                 ]);

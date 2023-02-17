@@ -19,11 +19,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
-        $orders = auth()->user()->orders;
-        return view('front.user.index',compact('user','orders'));
+        $orders = auth()->user()->orders()->latest()->get();
+        $success = 404;
+        if($request->exists('success')){
+            $success = json_decode($request->success);
+        }
+        return view('front.user.index',compact('user','orders','success'));
     }
 
     public function update(Request $request, User $user)
@@ -61,12 +65,12 @@ class UserController extends Controller
     private function validatorAddress($request)
     {
         return Validator::make($request, [
-            'governorate' => ['required', 'string', 'max:255'],
+            'state' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'street' => ['required', 'string', 'max:255'],
-            'build_num' => ['required', 'integer', 'max:1000'],
-            'apartment_num' => ['required', 'integer', 'max:100'],
-            'floor_num' => ['required', 'integer', 'max:50'],
+            'building' => ['required', 'integer', 'max:1000'],
+            'apartment' => ['required', 'integer', 'max:100'],
+            'floor' => ['required', 'integer', 'max:50'],
         ]);
     }
 
@@ -89,12 +93,12 @@ class UserController extends Controller
     private function updateAddress(array $data)
     {
         auth()->user()->update( [
-            'governorate' => $data['governorate'],
+            'state' => $data['state'],
             'city' => $data['city'],
             'street' => $data['street'],
-            'build_num' => $data['build_num'],
-            'apartment_num' => $data['apartment_num'],
-            'floor_num' => $data['floor_num'],
+            'building' => $data['building'],
+            'apartment' => $data['apartment'],
+            'floor' => $data['floor'],
         ]);
     }
     private function updatePassword(array $data)

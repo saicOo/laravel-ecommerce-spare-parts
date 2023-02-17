@@ -26,4 +26,6 @@ function(){
     Route::resource('carts', 'CartController')->only(['index','store','update']);
     Route::resource('orders', 'OrderController');
     Route::resource('checkout', 'CheckoutController');
+    Route::get('/callback', 'CheckoutController@callback')->name('callback');
+
 });

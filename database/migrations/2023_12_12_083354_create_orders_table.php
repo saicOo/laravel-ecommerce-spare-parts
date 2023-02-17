@@ -15,12 +15,19 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->double('total_price', 8, 2)->nullable();
-            $table->enum('status', ['مكتمل', 'غير مكتمل'])->default('غير مكتمل');
+            $table->float('total_price', 8, 2)->nullable();
+            $table->float('sub_total', 8, 2)->nullable();
+            $table->float('tax')->nullable();
+            $table->float('shipping')->nullable();
+            $table->boolean('payment_status')->default(2)->comment('1=>paid ,2=>waiting ,3=>unpaid');
+            $table->boolean('payment_method')->default(0)->comment('0=>cash ,1=>online');
+            $table->smallInteger('tracking')->default(1)->comment('1=>Ordered ,2=>Pending ,3=>Accept ,4=>Delivery ,5=>Received');
+            $table->string('building')->nullable();
+            $table->string('apartment')->nullable();
+            $table->string('floor')->nullable();
+            $table->text('address')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('transaction_id')->nullable();
-            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
             $table->timestamps();
         });
     }
