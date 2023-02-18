@@ -11,13 +11,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h2 class="text-uppercase page-title">Product Detail Page layout 3</h2>
+                            <h2 class="text-uppercase page-title">@lang('site.product')</h2>
                             <!--Breadcrums-->
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center mb-0">
-                                    <li class="breadcrumb-item"><a href="index.html">@lang('site.home')</a> <span><i
+                                    <li class="breadcrumb-item"><a href="{{ url('/') }}">@lang('site.home')</a> <span><i
                                                 class="cps cp-caret-right"></i></span></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Product Detail Page layout 3</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@lang('site.product')</li>
                                 </ol>
                             </nav>
                             <!--End Breadcrums-->

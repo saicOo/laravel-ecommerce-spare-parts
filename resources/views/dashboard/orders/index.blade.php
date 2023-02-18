@@ -28,14 +28,14 @@
                                     <a href="{{route('dashboard.orders.create')}}" class="btn btn-primary mb-2">{{ __('site.create') }}</a>
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
-                                    <form action="{{ route('dashboard.orders.destroy', 'delete') }}" method="post"
+                                    {{-- <form action="{{ route('dashboard.orders.destroy', 'delete') }}" method="post"
                                         style="display: inline;">
                                         {{ csrf_field() }}
                                         {{ method_field('delete') }}
                                         <input type="hidden" value="" name="mass_delete" id="mass-delete">
                                         <button type="submit" id="btn-mass-delete" class="btn btn-danger mb-2"
                                             disabled>{{ __('site.mass_delete') }}</button>
-                                    </form>
+                                    </form> --}}
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -45,13 +45,13 @@
                                             <th scope="col">#</th>
                                             <th scope="col">{{ __('site.order') }}</th>
                                             <th scope="col">{{ __('site.client') }}</th>
-                                            <th scope="col">{{ __('site.date') }}</th>
                                             <th scope="col">{{ __('site.method') }}</th>
                                             <th scope="col">{{ __('site.total') }}</th>
                                             <th scope="col">{{ __('site.status') }}</th>
+                                            <th scope="col">{{ __('site.date') }}</th>
                                             <th scope="col">{{__('site.action')}}</th>
-                                            <th scope="col"><input type="checkbox" value=""
-                                                    id="check-box-delete-all"></th>
+                                            {{-- <th scope="col"><input type="checkbox" value=""
+                                                    id="check-box-delete-all"></th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -60,8 +60,7 @@
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>#{{$order->id}}</td>
                                                 <td>{{$order->user->first_name .' '. $order->user->last_name}}</td>
-                                                <td>{{$order->updated_at->format('M d, Y')}}</td>
-                                                                                               <td>{{$order->payment_method ? __('site.online') : __('site.cash')}}</td>
+                                                <td>{{$order->payment_method ? __('site.online') : __('site.cash')}}</td>
                                                 <td>${{number_format($order->total_price,2)}}</td>
                                                 @if ($order->payment_status == 1)
                                                 <td><span class="rounded-pill bg-success text-white px-3 py-2">@lang('site.paid')</span></td>
@@ -71,6 +70,7 @@
                                                 <td><span class="rounded-pill bg-danger text-white px-3 py-2">@lang('site.unpaid')</span></td>
                                                 @else
                                                 @endif
+                                                <td>{{$order->updated_at->format('M d, Y')}}</td>
                                                 <td>
                                                     <span>
                                                         <a href="{{ route('dashboard.orders.show', $order->id) }}"
@@ -85,12 +85,12 @@
                                                                 class="fa fa-pencil color-muted"></i> </a>
                                                     </span>
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     <span>
                                                         <input type="checkbox" value="{{ $order->id }}"
                                                             class="check-box-delete">
                                                     </span>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -134,5 +134,5 @@
     </div>
 @endpush
 @push('js')
-    <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script>
+    {{-- <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script> --}}
 @endpush

@@ -15,7 +15,7 @@
                             <!--Breadcrums-->
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center mb-0">
-                                    <li class="breadcrumb-item"><a href="index.html">@lang('site.home')</a> <span><i
+                                    <li class="breadcrumb-item"><a href="{{ url('/') }}">@lang('site.home')</a> <span><i
                                                 class="cps cp-caret-right"></i></span></li>
                                     <li class="breadcrumb-item active" aria-current="page">@lang('site.checkout')</li>
                                 </ol>

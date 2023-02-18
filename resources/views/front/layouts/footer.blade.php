@@ -31,7 +31,7 @@
                     <div class="footer-col footer-links clearfix">
                         <h4 class="title">Quick Links</h4>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{{ url('/') }}">Home</a></li>
                             <li><a href="shop.html">Shop</a></li>
                             <li><a href="#">Products</a></li>
                             <li><a href="blog.html">Blog</a></li>

@@ -11,13 +11,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h1 class="text-uppercase">Shop No sidebar 4 column</h1>
+                            <h1 class="text-uppercase">@lang('site.products')</h1>
                             <!--Breadcrums-->
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center mb-0">
-                                    <li class="breadcrumb-item"><a href="index.html">@lang('site.home')</a> <span><i
+                                    <li class="breadcrumb-item"><a href="{{ url('/') }}">@lang('site.home')</a> <span><i
                                                 class="cps cp-caret-right"></i></span></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Shop No sidebar 4 column</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@lang('site.products')</li>
                                 </ol>
                             </nav>
                             <!--End Breadcrums-->
@@ -113,12 +113,6 @@
                             <!--Pagination-->
                             <div class="row">
                                 <div class="col-12">
-                                    @php
-                                        $append_url = '';
-                                        if (isset(request()->query()['search'])) {
-                                            $append_url = '&category_id=' . request()->query()['category_id'] . '&search=' . request()->query()['search'];
-                                        }
-                                    @endphp
                                     <div class="pagination">
                                         {{ $products->appends(request()->query())->links() }}
                                     </div>

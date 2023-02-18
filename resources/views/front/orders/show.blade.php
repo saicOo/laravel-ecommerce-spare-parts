@@ -21,7 +21,7 @@
                             <!--Breadcrums-->
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center mb-0">
-                                    <li class="breadcrumb-item"><a href="index.html">@lang('site.home')</a> <span><i
+                                    <li class="breadcrumb-item"><a href="{{ url('/') }}">@lang('site.home')</a> <span><i
                                                 class="cps cp-caret-right"></i></span></li>
                                     <li class="breadcrumb-item active" aria-current="page">@lang('site.order')</li>
                                 </ol>
@@ -43,10 +43,11 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-12">
                                     <ul id="progressbar" class="text-center">
-                                        <li class="step0 {{ $order->tracking >= 1 ? 'active' : '' }}"></li>
-                                        <li class="step0 {{ $order->tracking >= 2 ? 'active' : '' }}"></li>
-                                        <li class="step0 {{ $order->tracking >= 3 ? 'active' : '' }}"></li>
-                                        <li class="step0 {{ $order->tracking == 4 ? 'active' : '' }}"></li>
+                                        <li class="step0 {{ $order->tracking >= 1 ? 'active' : '' }}">@lang('site.ordered')</li>
+                                        <li class="step0 {{ $order->tracking >= 2 ? 'active' : '' }}">@lang('site.accept_order')</li>
+                                        <li class="step0 {{ $order->tracking >= 3 ? 'active' : '' }}">@lang('site.shipped_order')</li>
+                                        <li class="step0 {{ $order->tracking >= 4 ? 'active' : '' }}">@lang('site.delivery_order')</li>
+                                        <li class="step0 {{ $order->tracking == 5 ? 'active' : '' }}">@lang('site.received_order')</li>
                                     </ul>
                                 </div>
                             </div>
@@ -79,12 +80,12 @@
                                                     href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a>
                                             </td>
                                             <td class="product-price" data-title="Price">
-                                                ${{ number_format($product->price, 2) }}</td>
+                                                ${{ number_format($product->pivot->price, 2) }}</td>
                                             <td class="product-quantity" data-title="Quantity">
                                                 {{ $product->pivot->quantity }}
                                             </td>
                                             <td class="product-subtotal" data-title="Total">
-                                                ${{ number_format($product->price * $product->pivot->quantity, 2) }}
+                                                ${{ number_format($product->pivot->price * $product->pivot->quantity, 2) }}
                                             </td>
                                         </tr>
                                     @empty

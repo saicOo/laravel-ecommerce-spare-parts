@@ -13,11 +13,13 @@ class PaymentServices
     private $base_url;
     private $headers;
     private $request_client;
+    private $setting;
 
     public function __construct(Client $request_client)
     {
+        $this->setting = Setting::first();
         $this->request_client = $request_client;
-        $this->base_url = env('paymob_base_url');
+        $this->base_url = $this->setting->payment_url;
         $this->headers = [
             'Content-Type' => 'application/json',
             // 'authorization' => 'Bearer ' . env('paymob_token')
@@ -52,7 +54,7 @@ class PaymentServices
     private function firstStep(User $user)
     {
         $data = [
-            "api_key" => 'ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2libUZ0WlNJNkltbHVhWFJwWVd3aUxDSndjbTltYVd4bFgzQnJJam8yTkRjME56WjkuTVp6N2llOEM2S3k5RHVCQTV2NzdTQ2J3REVNcFRmdjBROFFaaDBxWUxqX21FLWFiX2hCQ0NWa1ExZ2U5Y3hwQjJxWUluVWs4b19Vd1BNVzlPY0tUWEE=',
+            "api_key" => $this->setting->payment_token,
         ];
         $paymentToken = $this->buildRequest('auth/tokens', 'POST', $data);
         return $this->secondStep($user,$paymentToken['token']);
@@ -60,10 +62,9 @@ class PaymentServices
 
     private function secondStep(User $user,$token)
     {
-        $setting = Setting::first();
         $sub_total = $user->products()->sum(\DB::raw('products.price * product_user.quantity'));
-        $tax_amount = $sub_total * ($setting->tax / 100);
-        $total_price = $sub_total + $tax_amount + $setting->shipping;
+        $tax_amount = $sub_total * ($this->setting->tax / 100);
+        $total_price = $sub_total + $tax_amount + $this->setting->shipping;
         $data = [
             "auth_token"=>  $token,
             "delivery_needed"=> "false",
@@ -102,7 +103,7 @@ class PaymentServices
                 "state"=> $user->state
             ],
             "currency"=> "EGP",
-            "integration_id"=> env('paymob_integration_id')
+            "integration_id"=> $this->setting->payment_integration_id
         ];
         return $response = $this->buildRequest('acceptance/payment_keys', 'POST', $data);
     }

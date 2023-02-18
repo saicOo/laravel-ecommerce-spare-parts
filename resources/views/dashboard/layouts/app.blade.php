@@ -16,6 +16,13 @@
     <!-- Chartist -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/chartist/css/chartist.min.css') }}">
     <link href="{{ asset('dashboard/assets/css/style.css') }}" rel="stylesheet">
+    @if (app()->getLocale() == 'ar')
+        <style>
+            body{
+                text-align: right;
+            }
+        </style>
+    @endif
     @stack('css')
 </head>
 
@@ -42,7 +49,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="index.html">
+                <a href="{{ url('/') }}">
                     <b class="logo-abbr">{{$setting->name[0]}}</b>
                     <span class="brand-title"><b>{{$setting->name}}</b></span>
                 </a>

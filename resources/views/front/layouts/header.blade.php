@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <!--Desktop Logo-->
-                    <a class="logo" href="{{ url('/') }}"><img src="{{ asset('front/assets/images/logo.png') }}"
+                    <a class="logo" href="{{ url('/') }}"><img src="{{ asset('uploads/company') . '/' . $setting->image }}"
                             alt="Tacko - Auto Parts eCommerce Bootstrap5 Html Template"
                             title="Tacko - Auto Parts eCommerce Bootstrap5 Html Template" /></a>
                     <!--End Desktop Logo-->
@@ -65,11 +65,11 @@
                                 class="cps cp-search align-middle"></i></a>
                     </div>
                     <div class="search-open d-none d-lg-flex">
-                        <form action="#" method="get">
+                        <form action="{{route('products.index')}}" method="get">
                             <div class="input-box d-flex">
-                                <input type="text" name="q" value="" placeholder="Search..."
+                                <input type="text" name="search" value="" placeholder="{{__('site.search')}}..."
                                     class="input-text">
-                                <button type="submit" title="Search" class="action search" disabled=""><i
+                                <button type="submit" title="Search" class="action search"><i
                                         class="icon cps cp-search"></i></button>
                             </div>
                         </form>

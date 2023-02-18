@@ -91,7 +91,7 @@ class AdminController extends Controller
     {
         $this->authorize('check-permissions', 'update_admins');
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255','regex:/^\S*$/u'],
             "phone"=>"required|digits:11",
             'role' => ['string', 'in:suber_admin,accountant,customer_service,data_entry'],
         ];

@@ -78,7 +78,8 @@ class CheckoutController extends Controller
             return redirect()->intended('https://accept.paymob.com/api/acceptance/iframes/708449?payment_token='.$paymentTokenUrl['token']);
         }else{
             $this->createOrder($user,$request->selector);
-            return redirect()->route('users.index',['success'=>1]);
+            session()->flash('order_success', __('site.order_successfully'));
+            return redirect()->route('users.index');
         }
     }
 
@@ -154,7 +155,12 @@ class CheckoutController extends Controller
         $request_string = $amount_cents.$created_at.$currency.$error_occured.$has_parent_transaction.$id.$integration_id.$is_3d_secure.$is_auth.$is_capture.$is_refunded.$is_standalone_payment.$is_voided.$order_id.$owner.$pending.$source_data_pan.$source_data_sub_type.$source_data_type.$success;
       $hased = hash_hmac('SHA512',$request_string,'F4DAB4EA98064BBF28508BE6DFEBCD04');
         if($hased === $hmac){
-            return redirect()->route('users.index',['success'=>$success]);
+            if($success){
+                session()->flash('order_success', __('site.order_successfully'));
+            }else{
+                session()->flash('order_wrong', __('site.order_wrong'));
+            }
+            return redirect()->route('users.index');
             // return view('state',compact('id','order_id','success','pending','hmac'));
         }
     }

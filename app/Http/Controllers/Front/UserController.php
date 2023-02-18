@@ -23,11 +23,7 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $orders = auth()->user()->orders()->latest()->get();
-        $success = 404;
-        if($request->exists('success')){
-            $success = json_decode($request->success);
-        }
-        return view('front.user.index',compact('user','orders','success'));
+        return view('front.user.index',compact('user','orders'));
     }
 
     public function update(Request $request, User $user)
@@ -56,8 +52,8 @@ class UserController extends Controller
     private function validatorProfile($request)
     {
         return Validator::make($request, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255','regex:/^\S*$/u'],
+            'last_name' => ['required', 'string', 'max:255','regex:/^\S*$/u'],
             "phone"=>   ['required','digits:11'],
         ]);
     }

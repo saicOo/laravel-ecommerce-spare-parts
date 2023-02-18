@@ -91,7 +91,7 @@ class SettingController extends Controller
         $request_data = $request->all();
 
         if ($request->image) {
-            if($request->image != "default.png"){
+            if($setting->image != "default.png"){
                 File::delete(public_path('uploads/company/'.$setting->image));
             }
             $imageName = Str::random(10) . uniqid()  . '.webp';

@@ -28,7 +28,7 @@
                             <div class="card-header">
                                 <div class="nav-header position-relative  text-center w-100">
                                     <div class="brand-logo">
-                                        <a href="index.html">
+                                        <a href="{{ url('/') }}">
                                             <b class="logo-abbr">D</b>
                                             <span class="brand-title"><b>Drora</b></span>
                                         </a>

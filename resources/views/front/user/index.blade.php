@@ -15,7 +15,7 @@
                             <!--Breadcrums-->
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center mb-0">
-                                    <li class="breadcrumb-item"><a href="index.html">@lang('site.home')</a> <span><i
+                                    <li class="breadcrumb-item"><a href="{{ url('/') }}">@lang('site.home')</a> <span><i
                                                 class="cps cp-caret-right"></i></span></li>
                                     <li class="breadcrumb-item active" aria-current="page">@lang('site.my_account')</li>
                                 </ol>
@@ -345,22 +345,17 @@
                 </div>
             </div>
         </main>
+
     @endsection
     @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @if (session('order_success'))
+    <script>swal ( "{{__('site.good_job')}}" ,  "{{ session('order_success') }}" , "success" );</script>
+    @endif
+    @if (session('order_wrong'))
+    <script>swal("{{__('site.oops')}}", "{{ session('order_wrong') }}", "error");</script>
+    @endif
     <script type="text/javascript">
-    //start sweetalert
-    @switch($success)
-    @case('1')
-    swal ( "{{__('site.good_job')}}" ,  "{{__('site.order_successfully')}}" , "success" );
-        @break
-    @case('0')
-    swal("{{__('site.oops')}}", "{{__('site.order_wrong')}}", "error");
-        @break
-    @default
-    @endswitch
-
-    //end sweetalert
             $(document).ready(function() {
                 $("body").on("change", "#checkbox-password", function() {
                     let deleteId = $(this).val();
