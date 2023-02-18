@@ -25,17 +25,8 @@
                         <div class="card-body">
                             <div class="card-header row">
                                 <div class="col-md-6">
-                                    <a href="{{route('dashboard.clients.create')}}" class="btn btn-primary mb-2">{{ __('site.create') }}</a>
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
-                                    <form action="{{ route('dashboard.clients.destroy', 'delete') }}" method="post"
-                                        style="display: inline;">
-                                        {{ csrf_field() }}
-                                        {{ method_field('delete') }}
-                                        <input type="hidden" value="" name="mass_delete" id="mass-delete">
-                                        <button type="submit" id="btn-mass-delete" class="btn btn-danger mb-2"
-                                            disabled>{{ __('site.mass_delete') }}</button>
-                                    </form>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -49,8 +40,6 @@
                                             <th scope="col">{{ __('site.phone') }}</th>
                                             <th scope="col">{{ __('site.orders') }}</th>
                                             <th scope="col">{{__('site.action')}}</th>
-                                            <th scope="col"><input type="checkbox" value=""
-                                                    id="check-box-delete-all"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -68,12 +57,6 @@
                                                             class="mr-4" data-toggle="tooltip" data-placement="top"
                                                             title="" data-original-title="Show"><i
                                                                 class="fa fa-external-link color-muted"></i> </a>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        <input type="checkbox" value="{{ $client->id }}"
-                                                            class="check-box-delete">
                                                     </span>
                                                 </td>
                                             </tr>
@@ -117,7 +100,4 @@
             </div>
         </div>
     </div>
-@endpush
-@push('js')
-    <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script>
 @endpush

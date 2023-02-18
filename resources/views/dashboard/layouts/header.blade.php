@@ -1,20 +1,6 @@
 <div class="header">
     <div class="header-content clearfix">
 
-        <div class="header-left">
-            <div class="input-group icons">
-                <div class="input-group-prepend">
-                    <span class="input-group-text bg-transparent border-0" id="basic-addon1"><i
-                            class="icon-magnifier"></i></span>
-                </div>
-                <input type="search" class="border-0" placeholder="Search Dashboard" aria-label="Search Dashboard">
-                <div class="drop-down animated flipInX d-md-none">
-                    <form action="#">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </form>
-                </div>
-            </div>
-        </div>
         <div class="header-right">
 
             <ul class="clearfix">

@@ -203,4 +203,15 @@ return [
     'barcode' => 'barcode',
     'deleted_product' => 'It will be returned to the store!',
     'return' => 'Return',
+
+    // global site
+    'shop_now' => 'Shop Now',
+    'activity' => 'Activity',
+    'our_Journey' => "It's Our Journey",
+    'account?' => "Don't have an account?",
+    'register_now' => 'Register Now',
+    'have_account' => 'If you have an account with us, please log in.',
+    'Remember Me' => 'Remember Me',
+    'Log in Your Account' => 'Log in Your Account',
+
 ];

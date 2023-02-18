@@ -29,8 +29,8 @@
                                 <div class="nav-header position-relative  text-center w-100">
                                     <div class="brand-logo">
                                         <a href="{{ url('/') }}">
-                                            <b class="logo-abbr">D</b>
-                                            <span class="brand-title"><b>Drora</b></span>
+                                            <b class="logo-abbr">{{ $setting->name[0] }}</b>
+                                            <span class="brand-title"><b>{{ $setting->name }}</b></span>
                                         </a>
                                     </div>
                                 </div>
@@ -42,21 +42,21 @@
                                         <input type="email" name="email"
                                             class="form-control rounded-0 bg-transparent @error('email') is-invalid @enderror"
                                             value="{{ old('email') }}" placeholder="Email">
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="form-group mb-4">
                                         <input type="password" name="password"
                                             class="form-control rounded-0 bg-transparent @error('password') is-invalid @enderror"
                                             value="{{ old('password') }}" placeholder="Password">
-                                            @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group ml-3 mb-5">

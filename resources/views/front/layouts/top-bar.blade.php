@@ -13,7 +13,7 @@
                     </ul>
                 </span>
             </div>
-            <div class="col-xl-4 d-md-flex d-none justify-content-center p-0"><div class="shipping-msg"><b>15%</b> every products we have a great offer for you. <a href="#" class="btn btn-secondary btn--small rounded-pill">Shop Now</a></div></div>
+            <div class="col-xl-4 d-md-flex d-none justify-content-center p-0"></div>
             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 justify-content-end d-none d-lg-flex">
                 @if (Auth::user())
                 <div class="setting-link">

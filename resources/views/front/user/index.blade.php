@@ -34,8 +34,6 @@
                             <div class="nav-box mb-4">
                                 <div class="profile-content">
                                     <div class="d-flex align-items-center mb-4">
-                                        <img class="blur-up lazyload rounded-pill" src="{{asset('front/assets/images/photo1.jpg')}}"
-                                            data-src="{{asset('front/assets/images/photo1.jpg')}}" alt="" title="" />
                                         <div class="detail mx-3">
                                             <h3 class="text-uppercase mb-0">{{ $user->first_name . ' '. $user->last_name }}</h3>
                                             <p class="mb-0">@lang('site.joined') {{ $user->created_at->format('M d, Y') }}</p>
@@ -47,7 +45,13 @@
                                     <li><a class="nav-link active" data-bs-toggle="tab" href="#orders">@lang('site.orders')</a></li>
                                     <li><a class="nav-link" data-bs-toggle="tab" href="#profile">@lang('site.profile')</a></li>
                                     <li><a class="nav-link" data-bs-toggle="tab" href="#address">@lang('site.address')</a></li>
-                                    <li><a class="nav-link" href="login-register.html">@lang('site.logout')</a></li>
+                                    <li><a class="nav-link" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                  document.getElementById('logout-form').submit();">@lang('site.logout')</a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form></li>
                                 </ul>
                                 <!-- End Nav tabs -->
                             </div>
@@ -108,7 +112,6 @@
                                                 <div class="form-group">
                                                     <label for="CustomerFirstName">@lang('site.first_name')</label>
                                                     <input id="CustomerFirstName" type="text" name="first_name"
-                                                        placeholder="First Name"
                                                         class="form-control  @error('first_name') is-invalid @enderror"
                                                         value="{{ $user->first_name }}">
                                                     @error('first_name')
@@ -122,7 +125,6 @@
                                                 <div class="form-group">
                                                     <label for="CustomerLastName">@lang('site.last_name')</label>
                                                     <input id="CustomerLastName" type="text" name="last_name"
-                                                        placeholder="Last Name"
                                                         class="form-control  @error('last_name') is-invalid @enderror"
                                                         value="{{ $user->last_name }}">
                                                     @error('last_name')
@@ -137,8 +139,7 @@
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
                                                 <div class="form-group">
                                                     <label for="CustomerEmail1">@lang('site.email')</label>
-                                                    <input id="CustomerEmail1" type="email" name="email"
-                                                        placeholder="Email Address" class="form-control"
+                                                    <input id="CustomerEmail1" type="email" name="email" class="form-control"
                                                         value="{{ $user->email }}" disabled>
                                                 </div>
                                             </div>
@@ -163,7 +164,7 @@
                                                     <label for="CustomerCurrentPassword">@lang('site.current')
                                                         @lang('site.password')</label>
                                                     <input id="CustomerCurrentPassword" type="password"
-                                                        name="current_password" placeholder="Password"
+                                                        name="current_password"
                                                         class="form-control @error('current_password') is-invalid @enderror disabled-password"
                                                         disabled>
                                                     @error('current_password')
@@ -178,7 +179,6 @@
                                                     <label for="CustomerPassword">@lang('site.new')
                                                         @lang('site.password')</label>
                                                     <input id="CustomerPassword" type="password" name="password"
-                                                        placeholder="Password"
                                                         class="form-control @error('password') is-invalid @enderror disabled-password"
                                                         disabled>
                                                     @error('password')
@@ -192,7 +192,7 @@
                                                 <div class="form-group">
                                                     <label for="CustomerConfirmPassword">@lang('site.password_confirmation')</label>
                                                     <input id="CustomerConfirmPassword" type="Password"
-                                                        name="password_confirmation" placeholder="Confirm Password"
+                                                        name="password_confirmation"
                                                         class="form-control disabled-password" disabled>
                                                 </div>
                                             </div>
@@ -208,7 +208,7 @@
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-end">
                                                 <input type="submit" class="btn btn-lg btn-primary rounded-pill"
-                                                    name="updateProfile" value="Update Profile">
+                                                    name="updateProfile" value="{{__('site.update') .' ' .__('site.profile')}}">
                                             </div>
                                         </div>
                                     </form>

@@ -14,24 +14,10 @@ class CheckoutController extends Controller
     private $paymentServices;
     public function __construct(PaymentServices $paymentServices)
     {
-        // $this->middleware('auth');
+        $this->middleware('auth')->except('callbackApi');
         $this->paymentServices = $paymentServices;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $user = auth()->user();
@@ -48,12 +34,7 @@ class CheckoutController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -83,12 +64,7 @@ class CheckoutController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function createOrder(User $user,$payment_method)
     {
         $order = $user->orders()->create();

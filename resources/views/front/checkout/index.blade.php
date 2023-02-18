@@ -37,10 +37,10 @@
                                 <div class="block-content">
                                     <h2 class="title text-uppercase">@lang('site.order')</h2>
                                     @error('missing_data')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                        <a href="{{route('users.index')}}"> !!@lang('site.profile')!!</a>
-                                      </div>
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                            <a href="{{ route('users.index') }}"> !!@lang('site.profile')!!</a>
+                                        </div>
                                     @enderror
                                     <div class="table-responsive-sm order-table">
                                         <table class="table table-hover text-center">
@@ -71,7 +71,9 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="text-start text-uppercase"><b>@lang('site.shipping')</b></td>
-                                                    <td class="text-start">{{$setting->shipping > 0 ? '$'.$setting->shipping : __('site.free') .' '.__('site.shipping')}}</td>
+                                                    <td class="text-start">
+                                                        {{ $setting->shipping > 0 ? '$' . $setting->shipping : __('site.free') . ' ' . __('site.shipping') }}
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-start text-uppercase"><b>@lang('site.total')</b></td>
@@ -90,8 +92,7 @@
                                                 @csrf
                                                 <ul class="mb-20 list-unstyled">
                                                     <li>
-                                                        <input type="radio" id="option-1" name="selector" value="cash"
-                                                            checked>
+                                                        <input type="radio" id="option-1" name="selector" value="cash">
                                                         <label for="option-1" class="mx-2">@lang('site.cash_on_delivery') </label>
                                                     </li>
                                                     <li>
@@ -117,4 +118,3 @@
 
         </main>
     @endsection
-

@@ -25,7 +25,7 @@
                                     <div class="wrap-caption animation style1">
                                         <h2 class="mega-title white-text text-uppercase">Easy way to find the right<br>
                                             car Parts &amp; Service</h2>
-                                        <a href="#" class="btn rounded-pill">Shop Now</a>
+                                        <a href="{{ route('products.index') }}" class="btn rounded-pill">@lang('site.shop_now')</a>
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                     <div class="wrap-caption animation style1">
                                         <h2 class="mega-title white-text text-uppercase">Customize, Modify,
                                             Upgrade,<br>Repair &amp; Replace any parts.</h2>
-                                        <a href="#" class="btn rounded-pill">Shop Now</a>
+                                        <a href="{{ route('products.index') }}" class="btn rounded-pill">@lang('site.shop_now')</a>
                                     </div>
                                 </div>
                             </div>
@@ -157,8 +157,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h2 class="title mb-1 text-uppercase">Activity</h2>
-                            <h1 class="text-uppercase yellow-title">It's Our Journey.</h1>
+                            <h2 class="title mb-1 text-uppercase">@lang('site.activity')</h2>
+                            <h1 class="text-uppercase yellow-title">@lang('site.our_Journey').</h1>
                         </div>
                     </div>
                 </div>
@@ -240,7 +240,7 @@
                                     <div class="detail leftCenter">
                                         <h4 class="text-uppercase mb-0">Custom</h4>
                                         <h3 class="title text-uppercase mb-1">Interior</h3>
-                                        <a href="#" class="btn btn-primary rounded-pill">Shop Now</a>
+                                        <a href="{{ route('products.index') }}" class="btn btn-primary rounded-pill">@lang('site.shop_now')</a>
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +259,7 @@
                                     <div class="detail leftCenter">
                                         <h4 class="text-uppercase mb-0">Custom</h4>
                                         <h3 class="title text-uppercase mb-1">Wheels</h3>
-                                        <a href="#" class="btn btn-primary rounded-pill">Shop Now</a>
+                                        <a href="{{ route('products.index') }}" class="btn btn-primary rounded-pill">@lang('site.shop_now')</a>
                                     </div>
                                 </div>
                             </div>
@@ -278,7 +278,7 @@
                                     <div class="detail leftCenter">
                                         <h4 class="text-uppercase mb-0">Custom</h4>
                                         <h3 class="title text-uppercase mb-1">Paint</h3>
-                                        <a href="#" class="btn btn-primary rounded-pill">Shop Now</a>
+                                        <a href="{{ route('products.index') }}" class="btn btn-primary rounded-pill">@lang('site.shop_now')</a>
                                     </div>
                                 </div>
                             </div>
@@ -292,7 +292,7 @@
                                     <div class="detail leftCenter">
                                         <h4 class="text-uppercase mb-0">Custom</h4>
                                         <h3 class="title text-uppercase mb-1">Tail Lights</h3>
-                                        <a href="#" class="btn btn-primary rounded-pill">Shop Now</a>
+                                        <a href="{{ route('products.index') }}" class="btn btn-primary rounded-pill">@lang('site.shop_now')</a>
                                     </div>
                                 </div>
                             </div>

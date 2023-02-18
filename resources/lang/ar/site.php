@@ -13,7 +13,7 @@ return [
     // genral panel
     'dashboard' => 'الرئيسيه',
     'home' => 'الرئيسيه',
-    'profile' => 'ملف التعريفي',
+    'profile' => 'الملف التعريفي',
     'my_account' => 'حسابي',
     'settings' => 'الاعدادات',
 
@@ -203,4 +203,13 @@ return [
     'deleted_product' => 'سيتم ارجاعه الي المخزن !',
     'return' => 'ارجاع',
 
+    // global site
+    'shop_now' => 'تسوق الان',
+    'activity' => 'نشاط',
+    'our_Journey' => "إنها رحلتنا",
+    'account?' => "ليس لديك حساب؟",
+    'register_now' => 'سجل الان',
+    'have_account' => 'إذا كان لديك حساب معنا ، يرجى تسجيل الدخول.',
+    'Remember Me' => 'تذكرني',
+    'Log in Your Account' => 'تسجيل الدخول إلى حسابك',
 ];

@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration
             $table->string('building')->nullable();
             $table->string('apartment')->nullable();
             $table->string('floor')->nullable();
-            $table->string('image')->nullable();
             $table->string('email')->unique();
             $table->integer('payment_callback')->nullable();
             $table->timestamp('email_verified_at')->nullable();
