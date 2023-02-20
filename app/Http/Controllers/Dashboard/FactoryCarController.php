@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\FactoryCar;
+// Exel Factory Car
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportFactoryCar;
+use App\Exports\ExportFactoryCar;
+// ./
 use Illuminate\Http\Request;
 
 class FactoryCarController extends Controller
@@ -114,4 +119,18 @@ class FactoryCarController extends Controller
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.factory-cars.index');
     }
+
+    public function import(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+        Excel::import(new ImportFactoryCar,
+                    $request->file('file')->store('files'));
+        return redirect()->back();
+    }
+
+    public function exportfactoryCars(Request $request){
+        return Excel::download(new ExportFactoryCar, 'factoryCars.xlsx');
+    }
+
 }

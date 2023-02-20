@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+// Exel Category
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportCategory;
+use App\Exports\ExportCategory;
+// ./
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -123,5 +128,19 @@ class CategoryController extends Controller
         }
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.categories.index');
+    }
+
+
+    public function import(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+        Excel::import(new ImportCategory,
+                    $request->file('file')->store('files'));
+        return redirect()->back();
+    }
+
+    public function exportCategories(Request $request){
+        return Excel::download(new ExportCategory, 'categories.xlsx');
     }
 }

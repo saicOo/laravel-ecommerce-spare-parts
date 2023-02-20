@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+// Exel Brand
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportBrand;
+use App\Exports\ExportBrand;
+// ./
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -114,4 +119,18 @@ class BrandController extends Controller
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.brands.index');
     }
+
+    public function import(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+        Excel::import(new ImportBrand,
+                    $request->file('file')->store('files'));
+        return redirect()->back();
+    }
+
+    public function exportBrands(Request $request){
+        return Excel::download(new ExportBrand, 'brands.xlsx');
+    }
+
 }

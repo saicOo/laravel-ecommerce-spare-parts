@@ -82,6 +82,8 @@ return [
     'sold_out' => 'Sold out',
     'showing' => 'Showing',
     'joined' => 'Joined',
+    'import' => 'Import',
+    'export' => 'Export',
     // information users
     'clients' => 'clients',
     'client' => 'client',

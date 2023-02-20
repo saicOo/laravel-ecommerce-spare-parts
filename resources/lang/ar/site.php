@@ -82,6 +82,8 @@ return [
     'sold_out' => 'نفذ',
     'showing' => 'عرض',
     'joined' => 'انضممت في',
+    'import' => 'استرداد',
+    'export' => 'تصدير',
     // information users
     'clients' => 'العملاء',
     'client' => 'عميل',

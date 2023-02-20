@@ -10,6 +10,11 @@ use App\Models\FactoryCar;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+// Exel Product
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportProduct;
+use App\Exports\ExportProduct;
+// ./
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -19,11 +24,7 @@ class ProductController extends Controller
         $this->middleware('auth:admin');
 
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
@@ -35,11 +36,7 @@ class ProductController extends Controller
         return view('dashboard.products.index', compact('products','primary_categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
@@ -48,12 +45,7 @@ class ProductController extends Controller
         return view('dashboard.products.create',compact('primary_categories','brands','factory_cars'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $rules= [
@@ -96,24 +88,13 @@ class ProductController extends Controller
             return redirect()->route('dashboard.products.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Product $product)
     {
 
         return view('dashboard.products.show', compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Product $product)
     {
         $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
@@ -122,13 +103,7 @@ class ProductController extends Controller
         return view('dashboard.products.edit', compact('product','primary_categories','brands','factory_cars'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Product $product)
     {
         $rules= [
@@ -174,12 +149,7 @@ class ProductController extends Controller
             return redirect()->route('dashboard.products.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($test,Request $request)
     {
         $products_arr = explode(",",$request->mass_delete);
@@ -195,5 +165,18 @@ class ProductController extends Controller
         $products->delete();
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.products.index');
+    }
+
+    public function import(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+        Excel::import(new ImportProduct,
+                      $request->file('file')->store('files'));
+        return redirect()->back();
+    }
+
+    public function exportProducts(Request $request){
+        return Excel::download(new ExportProduct, 'products.xlsx');
     }
 }

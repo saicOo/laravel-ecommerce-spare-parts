@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.app')
 @push('css')
-<!-- Select 2 -->
-<link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/select2/css/select2.min.css') }}">
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/select2/css/select2.min.css') }}">
 @endpush
 @section('content')
     <div class="content-body">
@@ -29,9 +29,15 @@
                         <div class="card-body">
                             <div class="card-header row">
                                 <div class="col-md-6">
-                                    <a href="{{route('dashboard.products.create')}}" class="btn btn-primary mb-2">{{ __('site.create') }}</a>
+                                    <a href="{{ route('dashboard.products.create') }}"
+                                        class="btn btn-primary mb-2">{{ __('site.create') }}</a>
+                                        {{-- btn-filter --}}
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
+                                        {{-- btn-excel --}}
+                                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
+                                        data-target="#excelModal">Excel</button>
+                                        {{-- btn-mass-delete --}}
                                     <form action="{{ route('dashboard.products.destroy', 'delete') }}" method="post"
                                         style="display: inline;">
                                         {{ csrf_field() }}
@@ -53,7 +59,7 @@
                                             <th scope="col">{{ __('site.country') }}</th>
                                             <th scope="col">{{ __('site.start_year') }}</th>
                                             <th scope="col">{{ __('site.end_year') }}</th>
-                                            <th scope="col">{{__('site.action')}}</th>
+                                            <th scope="col">{{ __('site.action') }}</th>
                                             <th scope="col"><input type="checkbox" value=""
                                                     id="check-box-delete-all"></th>
                                         </tr>
@@ -62,7 +68,9 @@
                                         @foreach ($products as $index => $product)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td><a href="{{route('dashboard.products.show',$product->id)}}">{{ $product->name }}</a></td>
+                                                <td><a
+                                                        href="{{ route('dashboard.products.show', $product->id) }}">{{ $product->name }}</a>
+                                                </td>
                                                 <td>${{ $product->price }}</td>
                                                 <td>{{ $product->stock }}</td>
                                                 <td>{{ $product->country }}</td>
@@ -89,7 +97,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{$products->appends(request()->query())->links("pagination::bootstrap-4")}}
+                            {{ $products->appends(request()->query())->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>
@@ -98,6 +106,7 @@
     </div>
 @endsection
 @push('modal')
+    <!-- start filter modal -->
     <div class="modal fade" id="filterModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -113,15 +122,17 @@
                                 value="{{ request()->search }}">
                         </div>
                         <div class="form-group">
-                            <select  name="category_id" class="dropdown-groups @error('category_id') is-invalid @enderror">
+                            <select name="category_id" class="dropdown-groups @error('category_id') is-invalid @enderror">
                                 <option value="" disabled selected>@lang('site.choose') @lang('site.category')...
-                                @foreach ($primary_categories as $primary_category)
-                                <optgroup label="{{ $primary_category->name }}">
-                                    @foreach ($primary_category->subCategories as $sub_category)
-                                    <option value="{{$sub_category->id}}" {{ request()->category_id == $sub_category->id ? 'selected':''}}>{{ $sub_category->name }}</option>
+                                    @foreach ($primary_categories as $primary_category)
+                                        <optgroup label="{{ $primary_category->name }}">
+                                            @foreach ($primary_category->subCategories as $sub_category)
+                                                <option value="{{ $sub_category->id }}"
+                                                    {{ request()->category_id == $sub_category->id ? 'selected' : '' }}>
+                                                    {{ $sub_category->name }}</option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
-                                </optgroup>
-                                @endforeach
                             </select>
                         </div>
                     </form>
@@ -137,6 +148,39 @@
             </div>
         </div>
     </div>
+    <!-- end filter modal -->
+    <!-- start excel modal -->
+    <div class="modal fade" id="excelModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('dashboard.import-products') }}" method="POST" enctype="multipart/form-data" id="excel-form">
+                        @csrf
+                        <div class="form-group">
+                            <input type="file" name="file" class="form-control mb-2 @error('file') is-invalid @enderror">
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">{{ __('site.close') }}</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="event.preventDefault();
+                document.getElementById('excel-form').submit();">@lang('site.import')</button>
+                <a class="btn btn-warning" href="{{ route('dashboard.export-products') }}">
+                    @lang('site.export')
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end excel modal -->
 @endpush
 @push('js')
     <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script>

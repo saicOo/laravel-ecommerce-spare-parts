@@ -29,6 +29,10 @@
                                         class="btn btn-primary mb-2">{{ __('site.create') }}</a>
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
+                                        {{-- btn-excel --}}
+                                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
+                                    data-target="#excelModal">Excel</button>
+                                    {{-- btn-mass-delete --}}
                                     <form action="{{ route('dashboard.factory-cars.destroy', 'delete') }}" method="post"
                                         style="display: inline;">
                                         {{ csrf_field() }}
@@ -111,6 +115,38 @@
             </div>
         </div>
     </div>
+    <!-- start excel modal -->
+    <div class="modal fade" id="excelModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('dashboard.import-factoryCars') }}" method="POST" enctype="multipart/form-data" id="excel-form">
+                        @csrf
+                        <div class="form-group">
+                            <input type="file" name="file" class="form-control mb-2 @error('file') is-invalid @enderror">
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">{{ __('site.close') }}</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="event.preventDefault();
+                document.getElementById('excel-form').submit();">@lang('site.import')</button>
+                <a class="btn btn-warning" href="{{ route('dashboard.export-factoryCars') }}">
+                    @lang('site.export')
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end excel modal -->
 @endpush
 @push('js')
     <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script>

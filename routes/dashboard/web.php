@@ -29,18 +29,35 @@ function(){
 
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('/', 'DashboardController@index')->name('index');
+        // admins routes
         Route::get('/admins/{admin}/permissions', 'AdminController@editPermissions')->name('admins.permissions.edit');
         Route::post('/admins/{admin}/permissions', 'AdminController@updatePermissions')->name('admins.permissions.update');
         Route::resource('admins', 'AdminController');
-        Route::resource('categories', 'CategoryController');
-        Route::resource('brands', 'BrandController');
-        Route::resource('factory-cars', 'FactoryCarController');
         Route::resource('cars', 'CarController');
         Route::post('/cars/ajax', 'CarController@ajaxIndex')->name('cars.ajax');
-        Route::resource('products', 'ProductController');
         Route::resource('orders', 'OrderController');
         Route::resource('clients', 'ClientController');
         Route::resource('settings', 'SettingController');
+        // factory cars routes
+        Route::resource('factory-cars', 'FactoryCarController');
+        Route::post('/import-factoryCars','FactoryCarController@import')->name('import-factoryCars');
+        Route::get('/export-factoryCars','FactoryCarController@exportfactoryCars')->name('export-factoryCars');
+        // categories routes
+        Route::resource('categories', 'CategoryController');
+        Route::post('/import-categories','CategoryController@import')->name('import-categories');
+        Route::get('/export-categories','CategoryController@exportCategories')->name('export-categories');
+        // cars routes
+        Route::resource('cars', 'CarController');
+        Route::post('/import-cars','CarController@import')->name('import-cars');
+        Route::get('/export-cars','CarController@exportCars')->name('export-cars');
+        // brands routes
+        Route::resource('brands', 'BrandController');
+        Route::post('/import-brands','BrandController@import')->name('import-brands');
+        Route::get('/export-brands','BrandController@exportBrands')->name('export-brands');
+        // products routes
+        Route::resource('products', 'ProductController');
+        Route::post('/import-products','ProductController@import')->name('import-products');
+        Route::get('/export-products','ProductController@exportProducts')->name('export-products');
     });
 
 });

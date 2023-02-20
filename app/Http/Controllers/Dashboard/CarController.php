@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\FactoryCar;
+// Exel Car
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportCar;
+use App\Exports\ExportCar;
+// ./
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -129,5 +134,18 @@ class CarController extends Controller
         $car_id = $request->car_id;
     $data['ModelCar'] = Car::find($car_id);
     return json_encode($data);
+    }
+
+    public function import(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+        Excel::import(new ImportCar,
+                    $request->file('file')->store('files'));
+        return redirect()->back();
+    }
+
+    public function exportCars(Request $request){
+        return Excel::download(new ExportCar, 'cars.xlsx');
     }
 }
