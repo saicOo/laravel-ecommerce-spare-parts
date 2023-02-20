@@ -25,7 +25,6 @@
                         <div class="card-body">
                             <div class="card-header row">
                                 <div class="col-md-6">
-                                    <a href="{{route('dashboard.orders.create')}}" class="btn btn-primary mb-2">{{ __('site.create') }}</a>
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
                                     {{-- <form action="{{ route('dashboard.orders.destroy', 'delete') }}" method="post"
@@ -43,7 +42,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">{{ __('site.order') }}</th>
+                                            <th scope="col">{{ __('site.invoice_no') }}</th>
                                             <th scope="col">{{ __('site.client') }}</th>
                                             <th scope="col">{{ __('site.method') }}</th>
                                             <th scope="col">{{ __('site.total') }}</th>
@@ -58,7 +57,7 @@
                                         @foreach ($orders as $index => $order)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>#{{$order->id}}</td>
+                                                <td>#{{$order->invoice_no}}</td>
                                                 <td>{{$order->user->first_name .' '. $order->user->last_name}}</td>
                                                 <td>{{$order->payment_method ? __('site.online') : __('site.cash')}}</td>
                                                 <td>${{number_format($order->total_price,2)}}</td>

@@ -15,6 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_no')->unique();
             $table->float('total_price', 8, 2)->nullable();
             $table->float('sub_total', 8, 2)->nullable();
             $table->float('tax')->nullable();

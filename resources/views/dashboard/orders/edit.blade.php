@@ -100,8 +100,8 @@
                                                             <td>${{number_format($order->total_price,2)}}</td>
                                                             <td class="{{$product->pivot->return_status == true ? 'text-danger' : ''}}">{{$product->pivot->return_status == true ? __('site.return') : '-'}}</td>
                                                             <td>
-                                                                @if ($product->pivot->return_status)
-                                                                <input disabled="disabled" id="chk_3" type="checkbox" class="js-switch js-switch-1 js-switch-sm return-broduct" data-size="small" />
+                                                                @if ($product->pivot->return_status || $order->payment_status == 3)
+                                                                <input disabled="disabled" checked id="chk_3" type="checkbox" class="js-switch js-switch-1 js-switch-sm return-broduct" data-size="small" />
                                                                 @else
                                                                 <input onchange="this.checked == true ? alert('{{ $product->name . __('site.deleted_product') }}') : ''" name="products[]" value="{{$product->id}}" id="chk_3" type="checkbox" class="js-switch js-switch-1 js-switch-sm return-broduct" data-size="small" />
                                                                 @endif

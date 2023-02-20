@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <h4 class="text-uppercase">@lang('site.invoice')</h4>
-                                <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.order'):</span><span class="ml-1">#{{ $order->id }}</span></div>
+                                <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.invoice_no'):</span><span class="ml-1">#{{ $order->invoice_no }}</span></div>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.date'):</span><span class="ml-1">{{ $order->updated_at->format('M d, Y') }}</span></div>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.method'):</span><span class="ml-1">{{ $order->payment_method ? __('site.online') : __('site.cash') }}</span></div>
                                 @if ($order->transaction)

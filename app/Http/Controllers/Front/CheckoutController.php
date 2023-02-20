@@ -58,16 +58,36 @@ class CheckoutController extends Controller
             $paymentTokenUrl = $this->paymentServices->getPayment($user);
             return redirect()->intended('https://accept.paymob.com/api/acceptance/iframes/708449?payment_token='.$paymentTokenUrl['token']);
         }else{
-            $this->createOrder($user,$request->selector);
+            $this->createOrder($user,$request->selector,true);
             session()->flash('order_success', __('site.order_successfully'));
             return redirect()->route('users.index');
         }
     }
 
 
-    public function createOrder(User $user,$payment_method)
+    public function createOrder(User $user,$payment_method,$success)
     {
-        $order = $user->orders()->create();
+
+        $last_order = Order::latest()->first();
+        $firstInvoiceNumber = date('Y').date('m').str_pad(1,6,0,STR_PAD_LEFT); // 202302000001;
+        if(!$last_order){
+            $nextInvoiceNumber = $firstInvoiceNumber;
+        }else{
+            $splitNum = str_split($last_order->invoice_no,6);
+            $newInvoiceNo = $splitNum[1]+1;
+            //check first day in a month and year
+            if (date('Y-m-d',strtotime(date('Y-m-01'))) == date('Y-m-d') ){
+                $nextInvoiceNumber = $firstInvoiceNumber;
+            } else {
+            //increase 1 with last invoice number
+            $nextInvoiceNumber = date('Y').date('m').str_pad($newInvoiceNo,6,0,STR_PAD_LEFT);
+        }
+    }
+    // dd($nextInvoiceNumber);
+
+        $order = $user->orders()->create([
+            'invoice_no' => $nextInvoiceNumber,
+        ]);
         $sub_total = 0;
          // start foreach
          foreach ($user->products as $product) {
@@ -75,9 +95,11 @@ class CheckoutController extends Controller
             $order->products()->attach($product->id,['quantity' => $product->pivot->quantity,
             'price' => $product->price ]);
 
-            $product->update([
+            if($success){
+                $product->update([
                     'stock' => $product->stock - $product->pivot->quantity,
                             ]);
+            }
 
         $sub_total +=  $product->price * $product->pivot->quantity;
         } // end foeach
@@ -131,7 +153,7 @@ class CheckoutController extends Controller
         $request_string = $amount_cents.$created_at.$currency.$error_occured.$has_parent_transaction.$id.$integration_id.$is_3d_secure.$is_auth.$is_capture.$is_refunded.$is_standalone_payment.$is_voided.$order_id.$owner.$pending.$source_data_pan.$source_data_sub_type.$source_data_type.$success;
       $hased = hash_hmac('SHA512',$request_string,'F4DAB4EA98064BBF28508BE6DFEBCD04');
         if($hased === $hmac){
-            if($success){
+            if($success == 'true'){
                 session()->flash('order_success', __('site.order_successfully'));
             }else{
                 session()->flash('order_wrong', __('site.order_wrong'));
@@ -150,7 +172,7 @@ class CheckoutController extends Controller
                 $pending = $request['obj']['pending'];
                 $source_data = $request['obj']['source_data']['sub_type'];
                 $user = User::where('payment_callback',$order_id)->first();
-                $order = $this->createOrder($user,'online');
+                $order = $this->createOrder($user,'online',$success);
                 $order->update([
                     'payment_status' => $success ? 1 : 3,
                 ]);

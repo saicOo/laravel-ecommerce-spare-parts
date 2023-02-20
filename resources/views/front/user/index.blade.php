@@ -78,7 +78,7 @@
                                             <tbody>
                                                 @foreach ($orders as $order)
                                                 <tr>
-                                                    <td>#{{$order->id}}</td>
+                                                    <td>#{{$order->invoice_no}}</td>
                                                     <td>{{$order->updated_at->format('M d, Y')}}</td>
                                                     @if ($order->payment_status == 1)
                                                     <td class="alert-success">@lang('site.paid')</td>

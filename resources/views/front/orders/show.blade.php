@@ -103,9 +103,9 @@
                             <div class="solid-border cart-total rounded-3">
                                 <h5 class="text-uppercase">@lang('site.summary') @lang('site.invoice')</h5>
                                 <div class="row pb-2">
-                                    <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.order')</b></span>
+                                    <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.invoice_no')</b></span>
                                     <span class="col-6 col-sm-6 text-end"><span
-                                            class="money">#{{ $order->id }}</span></span>
+                                            class="money">#{{ $order->invoice_no }}</span></span>
                                 </div>
                                 <div class="row pb-2">
                                     <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.date')</b></span>

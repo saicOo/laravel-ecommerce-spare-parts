@@ -139,6 +139,7 @@ return [
     'updated_at' => 'updated at',
     'date' => 'Date',
     'invoice' => 'Invoice',
+    'invoice_no' => 'Invoice No',
     'from' => 'From',
     'to' => 'To',
     'summary' => 'Summary',
