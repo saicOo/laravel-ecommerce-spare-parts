@@ -25,6 +25,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('check-permissions', 'read_categories');
         $categories = Category::with('subCategories')->when($request->search,function ($query) use ($request){
             return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
         })->latest('id')->paginate(10);
@@ -38,6 +39,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize('check-permissions', 'create_categories');
         $primary_categories = Category::where('category_type','primary_category')->get();
         return view('dashboard.categories.create',compact('primary_categories'));
     }
@@ -50,6 +52,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('check-permissions', 'create_categories');
         $rules = [
             'name_ar' => 'required|max:50|unique:categories,name_ar',
             'name_en' => 'required|max:50|unique:categories,name_en',
@@ -67,25 +70,9 @@ class CategoryController extends Controller
         return redirect()->route('dashboard.categories.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $Category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Category $category)
     {
+        $this->authorize('check-permissions', 'update_categories');
         $primary_categories = Category::where('category_type','primary_category')->get();
         return view('dashboard.categories.edit',compact('category','primary_categories'));
     }
@@ -99,6 +86,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        $this->authorize('check-permissions', 'update_categories');
         $request->validate([
             'name_ar' => 'required|max:50|unique:categories,name_ar,' . $category->id,
             'name_en' => 'required|max:50|unique:categories,name_ar,' . $category->id,
@@ -116,6 +104,7 @@ class CategoryController extends Controller
      */
     public function destroy($test,Request $request)
     {
+        $this->authorize('check-permissions', 'delete_categories');
         $categories_arr = explode(",",$request->mass_delete);
         $categories_in = Category::whereIn('id', $categories_arr);
         $categories = $categories_in->with(['subCategories','products'])->get();
@@ -132,6 +121,7 @@ class CategoryController extends Controller
 
 
     public function import(Request $request){
+        $this->authorize('check-permissions', 'create_categories');
         $request->validate([
             'file' => 'required|mimes:xlsx',
         ]);
@@ -141,6 +131,7 @@ class CategoryController extends Controller
     }
 
     public function exportCategories(Request $request){
+        $this->authorize('check-permissions', 'create_categories');
         return Excel::download(new ExportCategory, 'categories.xlsx');
     }
 }

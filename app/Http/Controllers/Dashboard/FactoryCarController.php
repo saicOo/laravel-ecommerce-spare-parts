@@ -25,6 +25,7 @@ class FactoryCarController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('check-permissions', 'read_cars');
         $factory_cars = FactoryCar::when($request->search,function ($query) use ($request){
             return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
         })->latest('id')->paginate(10);
@@ -38,6 +39,7 @@ class FactoryCarController extends Controller
      */
     public function create()
     {
+        $this->authorize('check-permissions', 'create_cars');
         return view('dashboard.factory-cars.create');
     }
 
@@ -49,6 +51,7 @@ class FactoryCarController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('check-permissions', 'create_cars');
         $request->validate([
             'name_ar' => 'required|max:50|unique:factory_cars,name_ar',
             'name_en' => 'required|max:50|unique:factory_cars,name_en',
@@ -58,25 +61,9 @@ class FactoryCarController extends Controller
         return redirect()->route('dashboard.factory-cars.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\FactoryCar  $factoryCar
-     * @return \Illuminate\Http\Response
-     */
-    public function show(FactoryCar $factoryCar)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\FactoryCar  $factoryCar
-     * @return \Illuminate\Http\Response
-     */
     public function edit(FactoryCar $factoryCar)
     {
+        $this->authorize('check-permissions', 'update_cars');
         return view('dashboard.factory-cars.edit',compact('factoryCar'));
     }
 
@@ -89,6 +76,7 @@ class FactoryCarController extends Controller
      */
     public function update(Request $request, FactoryCar $factoryCar)
     {
+        $this->authorize('check-permissions', 'update_cars');
         $request->validate([
             'name_ar' => 'required|max:50|unique:factory_cars,name_ar,' . $factoryCar->id,
             'name_en' => 'required|max:50|unique:factory_cars,name_en,' . $factoryCar->id,
@@ -106,6 +94,7 @@ class FactoryCarController extends Controller
      */
     public function destroy($test,Request $request)
     {
+        $this->authorize('check-permissions', 'delete_cars');
         $factoryCars_arr = explode(",",$request->mass_delete);
         $factoryCars_in = FactoryCar::whereIn('id', $factoryCars_arr);
         $factoryCars = $factoryCars_in->with('cars')->get();
@@ -121,6 +110,7 @@ class FactoryCarController extends Controller
     }
 
     public function import(Request $request){
+        $this->authorize('check-permissions', 'create_cars');
         $request->validate([
             'file' => 'required|mimes:xlsx',
         ]);
@@ -130,6 +120,7 @@ class FactoryCarController extends Controller
     }
 
     public function exportfactoryCars(Request $request){
+        $this->authorize('check-permissions', 'create_cars');
         return Excel::download(new ExportFactoryCar, 'factoryCars.xlsx');
     }
 

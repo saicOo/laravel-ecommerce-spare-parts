@@ -33,25 +33,25 @@ function(){
         Route::get('/admins/{admin}/permissions', 'AdminController@editPermissions')->name('admins.permissions.edit');
         Route::post('/admins/{admin}/permissions', 'AdminController@updatePermissions')->name('admins.permissions.update');
         Route::resource('admins', 'AdminController');
-        Route::resource('cars', 'CarController');
-        Route::post('/cars/ajax', 'CarController@ajaxIndex')->name('cars.ajax');
-        Route::resource('orders', 'OrderController');
-        Route::resource('clients', 'ClientController');
-        Route::resource('settings', 'SettingController');
+        Route::resource('settings', 'SettingController')->only(['index','update']);
+        //routes users
+        Route::resource('clients', 'ClientController')->only(['index','show']);
+        Route::resource('orders', 'OrderController')->only(['index','show','edit','update']);
         // factory cars routes
-        Route::resource('factory-cars', 'FactoryCarController');
+        Route::resource('factory-cars', 'FactoryCarController')->except('show');
         Route::post('/import-factoryCars','FactoryCarController@import')->name('import-factoryCars');
         Route::get('/export-factoryCars','FactoryCarController@exportfactoryCars')->name('export-factoryCars');
         // categories routes
-        Route::resource('categories', 'CategoryController');
+        Route::resource('categories', 'CategoryController')->except('show');
         Route::post('/import-categories','CategoryController@import')->name('import-categories');
         Route::get('/export-categories','CategoryController@exportCategories')->name('export-categories');
+        Route::post('/cars/ajax', 'CarController@ajaxIndex')->name('cars.ajax');
         // cars routes
-        Route::resource('cars', 'CarController');
+        Route::resource('cars', 'CarController')->except('show');
         Route::post('/import-cars','CarController@import')->name('import-cars');
         Route::get('/export-cars','CarController@exportCars')->name('export-cars');
         // brands routes
-        Route::resource('brands', 'BrandController');
+        Route::resource('brands', 'BrandController')->except('show');
         Route::post('/import-brands','BrandController@import')->name('import-brands');
         Route::get('/export-brands','BrandController@exportBrands')->name('export-brands');
         // products routes

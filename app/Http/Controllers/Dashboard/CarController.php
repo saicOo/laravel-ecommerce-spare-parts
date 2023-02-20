@@ -26,6 +26,7 @@ class CarController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('check-permissions', 'read_cars');
         $factoryCars = FactoryCar::all();
         $cars = Car::with('FactoryCar')->when($request->search,function ($query) use ($request){
             return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
@@ -42,6 +43,7 @@ class CarController extends Controller
      */
     public function create()
     {
+        $this->authorize('check-permissions', 'create_cars');
         $factory_cars = FactoryCar::all();
         return view('dashboard.cars.create',compact('factory_cars'));
     }
@@ -54,6 +56,7 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('check-permissions', 'create_cars');
         $request->validate([
             'name_ar' => 'required|max:50',
             'name_en' => 'required|max:50',
@@ -65,25 +68,10 @@ class CarController extends Controller
         return redirect()->route('dashboard.cars.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Car  $car
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Car $car)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Car  $car
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Car $car)
     {
+        $this->authorize('check-permissions', 'update_cars');
+
         $factory_cars = FactoryCar::all();
         return view('dashboard.cars.edit',compact('factory_cars','car'));
     }
@@ -97,6 +85,8 @@ class CarController extends Controller
      */
     public function update(Request $request, Car $car)
     {
+        $this->authorize('check-permissions', 'update_cars');
+
         $request->validate([
             'name_ar' => 'required|max:50',
             'name_en' => 'required|max:50',
@@ -116,6 +106,7 @@ class CarController extends Controller
      */
     public function destroy($test,Request $request)
     {
+        $this->authorize('check-permissions', 'delete_admins');
         $cars_arr = explode(",",$request->mass_delete);
         $cars_in = Car::whereIn('id', $cars_arr);
         $cars = $cars_in->with('products')->get();
@@ -137,6 +128,7 @@ class CarController extends Controller
     }
 
     public function import(Request $request){
+        $this->authorize('check-permissions', 'create_admins');
         $request->validate([
             'file' => 'required|mimes:xlsx',
         ]);
@@ -146,6 +138,7 @@ class CarController extends Controller
     }
 
     public function exportCars(Request $request){
+        $this->authorize('check-permissions', 'create_admins');
         return Excel::download(new ExportCar, 'cars.xlsx');
     }
 }

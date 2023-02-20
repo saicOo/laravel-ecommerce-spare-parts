@@ -6,7 +6,7 @@
             @can('check-permissions','read_admins')
             <li><a href="{{route('dashboard.settings.index')}}" aria-expanded="false"><i class="icon-settings"></i> <span class="nav-text">{{__('site.settings')}}</span></a></li>
             @endcan
-            <li class="nav-label">{{__('site.people')}}</li>
+            <li class="nav-label">{{__('site.users')}}</li>
             @can('check-permissions','read_admins')
             <li><a href="{{route('dashboard.admins.index')}}" aria-expanded="false"><i class="icon-user"></i> <span class="nav-text">{{__('site.admins')}}</span></a></li>
             @endcan

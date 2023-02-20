@@ -11,6 +11,7 @@ class ClientController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize('check-permissions', 'read_users');
         $clients = User::with('orders')->when($request->search,function ($query) use ($request){
             return $query->where('name','Like','%'.$request->search.'%');
         })->latest()->paginate(10);
@@ -19,6 +20,7 @@ class ClientController extends Controller
 
     public function show(User $client)
     {
+        $this->authorize('check-permissions', 'read_users');
         return view('dashboard.clients.show', compact('client'));
     }
 

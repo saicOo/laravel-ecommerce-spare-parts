@@ -42,6 +42,11 @@
                                             <a href="{{ route('users.index') }}"> !!@lang('site.profile')!!</a>
                                         </div>
                                     @enderror
+                                    @error('selector')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                     <div class="table-responsive-sm order-table">
                                         <table class="table table-hover text-center">
                                             <thead>

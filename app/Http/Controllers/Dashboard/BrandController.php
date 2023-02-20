@@ -25,6 +25,7 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('check-permissions', 'read_brands');
         $brands = Brand::when($request->search,function ($query) use ($request){
             return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
         })->latest('id')->paginate(10);
@@ -38,6 +39,7 @@ class BrandController extends Controller
      */
     public function create()
     {
+        $this->authorize('check-permissions', 'create_brands');
         return view('dashboard.brands.create');
     }
 
@@ -49,6 +51,7 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('check-permissions', 'create_brands');
         $request->validate([
             'name_ar' => 'required|max:50|unique:brands,name_ar',
             'name_en' => 'required|max:50|unique:brands,name_en',
@@ -58,25 +61,10 @@ class BrandController extends Controller
         return redirect()->route('dashboard.brands.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Brand $brand)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Brand $brand)
     {
+        $this->authorize('check-permissions', 'update_brands');
         return view('dashboard.brands.edit',compact('brand'));
     }
 
@@ -89,6 +77,7 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
+        $this->authorize('check-permissions', 'update_brands');
         $request->validate([
             'name_ar' => 'required|max:50|unique:brands,name_ar,' . $brand->id,
             'name_en' => 'required|max:50|unique:brands,name_en,' . $brand->id,
@@ -106,6 +95,7 @@ class BrandController extends Controller
      */
     public function destroy($test,Request $request)
     {
+        $this->authorize('check-permissions', 'delete_brands');
         $brands_arr = explode(",",$request->mass_delete);
         $brands_in = Brand::whereIn('id', $brands_arr);
         $brands = $brands_in->with('products')->get();
@@ -121,6 +111,7 @@ class BrandController extends Controller
     }
 
     public function import(Request $request){
+        $this->authorize('check-permissions', 'create_brands');
         $request->validate([
             'file' => 'required|mimes:xlsx',
         ]);
@@ -130,6 +121,7 @@ class BrandController extends Controller
     }
 
     public function exportBrands(Request $request){
+        $this->authorize('check-permissions', 'create_brands');
         return Excel::download(new ExportBrand, 'brands.xlsx');
     }
 

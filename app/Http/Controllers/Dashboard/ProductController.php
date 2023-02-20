@@ -27,6 +27,8 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize('check-permissions', 'read_products');
+
         $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
         $products = Product::with('category')->when($request->search,function ($query) use ($request){
             return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
@@ -39,15 +41,19 @@ class ProductController extends Controller
 
     public function create()
     {
+        $this->authorize('check-permissions', 'create_products');
+
         $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
-        $brands = Brand::all();
+        $products = Brand::all();
         $factory_cars = FactoryCar::all();
-        return view('dashboard.products.create',compact('primary_categories','brands','factory_cars'));
+        return view('dashboard.products.create',compact('primary_categories','products','factory_cars'));
     }
 
 
     public function store(Request $request)
     {
+        $this->authorize('check-permissions', 'create_products');
+
         $rules= [
             'name_en' => 'required|max:50',
             'name_ar' => 'required|max:50',
@@ -91,21 +97,26 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        $this->authorize('check-permissions', 'read_products');
 
         return view('dashboard.products.show', compact('product'));
     }
 
     public function edit(Product $product)
     {
+        $this->authorize('check-permissions', 'update_products');
+
         $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
-        $brands = Brand::all();
+        $products = Brand::all();
         $factory_cars = FactoryCar::all();
-        return view('dashboard.products.edit', compact('product','primary_categories','brands','factory_cars'));
+        return view('dashboard.products.edit', compact('product','primary_categories','products','factory_cars'));
     }
 
 
     public function update(Request $request, Product $product)
     {
+        $this->authorize('check-permissions', 'update_products');
+
         $rules= [
             'name_en' => 'required|max:50',
             'name_ar' => 'required|max:50',
@@ -152,6 +163,8 @@ class ProductController extends Controller
 
     public function destroy($test,Request $request)
     {
+        $this->authorize('check-permissions', 'delete_products');
+
         $products_arr = explode(",",$request->mass_delete);
         $products = Product::whereIn('id', $products_arr);
         $images_arr = $products->pluck('images')->toArray();
@@ -168,6 +181,8 @@ class ProductController extends Controller
     }
 
     public function import(Request $request){
+        $this->authorize('check-permissions', 'create_products');
+
         $request->validate([
             'file' => 'required|mimes:xlsx',
         ]);
@@ -177,6 +192,8 @@ class ProductController extends Controller
     }
 
     public function exportProducts(Request $request){
+        $this->authorize('check-permissions', 'create_products');
+
         return Excel::download(new ExportProduct, 'products.xlsx');
     }
 }
