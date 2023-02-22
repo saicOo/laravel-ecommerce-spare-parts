@@ -120,12 +120,6 @@ class CarController extends Controller
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.cars.index');
     }
-    public function ajaxIndex(Request $request)
-    {
-        $car_id = $request->car_id;
-    $data['ModelCar'] = Car::find($car_id);
-    return json_encode($data);
-    }
 
     public function import(Request $request){
         $this->authorize('check-permissions', 'create_admins');

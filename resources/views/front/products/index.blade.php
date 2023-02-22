@@ -34,7 +34,9 @@
                         <!--Sidebar-->
                         @include('front.partials.filter')
                         <!--End Sidebar-->
-
+                        <!--YMM Dropdown-->
+                        @include('front.partials._ymm')
+                        <!--End YMM Dropdown-->
                         <!--Content-->
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
                             <!--Toolbar-->

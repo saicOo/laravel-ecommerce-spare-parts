@@ -88,7 +88,7 @@
             <div class="container">
                 <span class="closeSearch cps cp-times"></span>
                 <form class="form minisearch" id="header-search" action="#" method="get">
-                    <label class="label"><span>Search</span></label>
+                    <label class="label"><span>@lang('site.search')</span></label>
                     <div class="control">
                         <div class="searchField">
                             <div class="input-box">

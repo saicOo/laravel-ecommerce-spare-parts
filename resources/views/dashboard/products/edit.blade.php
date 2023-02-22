@@ -114,7 +114,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>@lang('site.choose') @lang('site.car')</label>
-                                            <select name="car_id" class="dropdown-groups disabled-car" id="car" disabled>
+                                            <select name="car_id" class="dropdown-groups disabled-car" id="t_model" disabled>
                                                 <option value="" disabled selected>@lang('site.choose') @lang('site.car')...
                                                 </option>
                                                 @foreach ($factory_cars as $factory_car)
@@ -233,29 +233,27 @@
         });
     </script>
     <script type="text/javascript">
-        $(document).on('change', '#car', function() {
-            car_id = $(this).val();
-            console.log(car_id);
+        $(document).on('change', '#t_model', function() {
+            var carId = $(this).val();
+            console.log(carId);
+            var url = `{{ route('api-car.show', ':carId') }}`;
+            url = url.replace(':carId', carId);
             $.ajax({
-                url: '{{ route('dashboard.cars.ajax') }}',
+                url: url,
                 dataType: "json",
-                data: {
-                    "car_id": car_id,
-                    "_token": "{{ csrf_token() }}"
-                },
-                method: "post",
+                method: "get",
                 success: function(data) {
+                    console.log(data);
                     var years =
                         '<option value="" disabled selected>{{ __('site.choose') }} {{ __('site.year') }}...</option>';
-                    var arr = data.ModelCar.length;
-                    var car = data.ModelCar;
-                    for (var i = car.end_year; i > car.start_year; i--) {
+                    var arr = data;
+                    for (var i = arr.end_year; i > arr.start_year; i--) {
                         years += '<option value="' + i + '">' + i + '</option>';
                     }
                     $(".car-year").html(years);
                     $(".car-year").attr("disabled", false);
                 }
             });
-        });
+        }); // change car
     </script>
 @endpush

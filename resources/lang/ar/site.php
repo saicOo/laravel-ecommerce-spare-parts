@@ -215,4 +215,6 @@ return [
     'have_account' => 'إذا كان لديك حساب معنا ، يرجى تسجيل الدخول.',
     'Remember Me' => 'تذكرني',
     'Log in Your Account' => 'تسجيل الدخول إلى حسابك',
+
+    'Select Your Vehicle' => 'اختر سيارتك',
 ];

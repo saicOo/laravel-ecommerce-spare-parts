@@ -18,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/callback', 'CheckoutController@callbackApi');
+Route::post('/callback', 'Front\CheckoutController@callbackApi');
+
+Route::group(['namespace' => 'Api'], function () {
+    Route::get('/cars/{car}','CarController@show')->name('api-car.show');
+    Route::get('/cars','CarController@index')->name('api-car.index');
+});

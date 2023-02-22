@@ -44,9 +44,9 @@ class ProductController extends Controller
         $this->authorize('check-permissions', 'create_products');
 
         $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
-        $products = Brand::all();
+        $brands = Brand::all();
         $factory_cars = FactoryCar::all();
-        return view('dashboard.products.create',compact('primary_categories','products','factory_cars'));
+        return view('dashboard.products.create',compact('primary_categories','brands','factory_cars'));
     }
 
 
@@ -107,9 +107,9 @@ class ProductController extends Controller
         $this->authorize('check-permissions', 'update_products');
 
         $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
-        $products = Brand::all();
+        $brands = Brand::all();
         $factory_cars = FactoryCar::all();
-        return view('dashboard.products.edit', compact('product','primary_categories','products','factory_cars'));
+        return view('dashboard.products.edit', compact('product','primary_categories','brands','factory_cars'));
     }
 
 

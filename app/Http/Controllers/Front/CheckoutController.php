@@ -158,31 +158,45 @@ class CheckoutController extends Controller
             }else{
                 session()->flash('order_wrong', __('site.order_wrong'));
             }
-            return redirect()->route('users.index');
-            // return view('state',compact('id','order_id','success','pending','hmac'));
-        }
-    }
-
-    public function callbackApi(Request $request)
-    {
-        if($request['obj']['order']['id']){
-            $order_id = $request['obj']['order']['id'];
-            $transaction_id = $request['obj']['id'];
-                $success = $request['obj']['success'];
-                $pending = $request['obj']['pending'];
-                $source_data = $request['obj']['source_data']['sub_type'];
                 $user = User::where('payment_callback',$order_id)->first();
                 $order = $this->createOrder($user,'online',$success);
                 $order->update([
                     'payment_status' => $success ? 1 : 3,
                 ]);
                 $order->transaction()->create([
-                    'transaction_id' => $transaction_id,
+                    'transaction_id' => $id,
                     'order_transaction_id' => $order_id,
-                    'pending' => $pending,
-                    'success' => $success,
-                    'source_type' => $source_data,
+                    'pending' => $pending ? 1 : 0,
+                    'success' => $success ? 1 : 0,
+                    'source_type' => $source_data_sub_type,
                 ]);
             }
+
+            return redirect()->route('users.index');
+            // return view('state',compact('id','order_id','success','pending','hmac'));
+        }
     }
-}
+
+    // public function callbackApi(Request $request)
+    // {
+    //     if($request['obj']['order']['id']){
+    //         $order_id = $request['obj']['order']['id'];
+    //         $transaction_id = $request['obj']['id'];
+    //             $success = $request['obj']['success'];
+    //             $pending = $request['obj']['pending'];
+    //             $source_data = $request['obj']['source_data']['sub_type'];
+    //             $user = User::where('payment_callback',$order_id)->first();
+    //             $order = $this->createOrder($user,'online',$success);
+    //             $order->update([
+    //                 'payment_status' => $success ? 1 : 3,
+    //             ]);
+    //             $order->transaction()->create([
+    //                 'transaction_id' => $transaction_id,
+    //                 'order_transaction_id' => $order_id,
+    //                 'pending' => $pending,
+    //                 'success' => $success,
+    //                 'source_type' => $source_data,
+    //             ]);
+    //         }
+    // }
+// }

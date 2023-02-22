@@ -216,5 +216,6 @@ return [
     'have_account' => 'If you have an account with us, please log in.',
     'Remember Me' => 'Remember Me',
     'Log in Your Account' => 'Log in Your Account',
+    'Select Your Vehicle' => 'Select Your Vehicle',
 
 ];

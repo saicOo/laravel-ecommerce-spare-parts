@@ -17,8 +17,8 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->integer('transaction_id');
             $table->integer('order_transaction_id');
-            $table->boolean('pending')->comment('0=>paid ,1=>pending');
-            $table->boolean('success')->comment('0=>filed ,1=>success');
+            $table->boolean('pending')->default(0)->comment('0=>paid ,1=>pending');
+            $table->boolean('success')->default(0)->comment('0=>filed ,1=>success');
             $table->string('source_type');
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

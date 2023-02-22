@@ -2,12 +2,12 @@
     <div class="closeFilter d-block"><i class="cps cp-times"></i></div>
     <div class="sidebar-filters">
         <div class="shopby-title text-uppercase">
-            <h3>Shop by</h3>
+            <h3>@lang('site.shop')</h3>
         </div>
         <!--Category Block-->
         <div class="block clearfix block-categories">
             <div class="block-title">
-                <h3>Categories</h3>
+                <h3>@lang('site.categories')</h3>
             </div>
             <div class="block-content">
                 <ul class="items">
@@ -28,7 +28,7 @@
         <!--Price Filter Block-->
         <div class="block filterBox filter-widget">
             <div class="block-title">
-                <h3>Price</h3>
+                <h3>@lang('site.price')</h3>
             </div>
             <form action="#" method="post" class="price-filter filterDD mt-3">
                 <div id="slider-range"
@@ -49,7 +49,7 @@
         <!--Brand Block-->
         <div class="block filterBox filter-widget size-swacthes brand-filter">
             <div class="block-title">
-                <h3 class="mb-0">Brands</h3>
+                <h3 class="mb-0">@lang('site.brands')</h3>
             </div>
             <div class="filterDD" style="">
                 <ul class="clearfix">
@@ -65,16 +65,18 @@
 
         <div class="block mb-0">
             <div class="block-title">
-                <h3>Filter</h3>
+                <h3>@lang('site.filter')</h3>
             </div>
             <div class="row">
                 <div class="col-12 text-center margin-25px-top">
-                    <form action="{{ route('products.index') }}" method="get">
-                        <input type="hidden" id="category_id" name="category_id">
-                        <input type="hidden" id="max_price" name="max_price">
-                        <input type="hidden" id="min_price" name="min_price">
-                        <input type="hidden" id="brand_id" name="brand_id">
-                        <button class="btn btn--small rounded">filter</button>
+                    <form action="{{ route('products.index') }}" method="get" id="filterForm">
+                        <input type="hidden" id="category_id" name="category_id" value="{{request()->category_id}}">
+                        <input type="hidden" id="max_price" name="max_price" value="{{request()->max_price}}">
+                        <input type="hidden" id="min_price" name="min_price" value="{{request()->min_price}}">
+                        <input type="hidden" id="brand_id" name="brand_id" value="{{request()->brand_id}}">
+                        <input type="hidden" id="f_car_id" name="car_id" value="{{request()->car_id}}">
+                        <input type="hidden" id="f_year" name="year" value="{{request()->year}}">
+                        <button class="btn btn--small rounded">@lang('site.filter')</button>
                     </form>
                 </div>
             </div>

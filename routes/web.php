@@ -17,15 +17,18 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
 function(){
     Auth::routes();
 
-
     Route::get('/', 'HomeController@index');
+    // products routes
     Route::get('/products', 'ProductController@index')->name('products.index');
     Route::get('/products/{product}', 'ProductController@show')->name('products.show');
-
-    Route::resource('users', 'UserController');
+    // users routes
+    Route::resource('users', 'UserController')->only(['index','update']);
+    // carts routes
     Route::resource('carts', 'CartController')->only(['index','store','update']);
-    Route::resource('orders', 'OrderController');
-    Route::resource('checkout', 'CheckoutController');
+    // order route get
+    Route::get('/orders/{order}', 'OrderController@show')->name('orders.show');
+    // checkout routes
+    Route::resource('checkout', 'CheckoutController')->only(['create','store']);
     Route::get('/callback', 'CheckoutController@callback')->name('callback');
 
 });
