@@ -164,8 +164,8 @@ class CheckoutController extends Controller
                     'payment_status' => $success ? 1 : 3,
                 ]);
                 $order->transaction()->create([
-                    'transaction_id' => $id,
-                    'order_transaction_id' => $order_id,
+                    'transaction_no' => $id,
+                    'order_transaction_no' => $order_id,
                     'pending' => $pending ? 1 : 0,
                     'success' => $success ? 1 : 0,
                     'source_type' => $source_data_sub_type,
@@ -181,7 +181,7 @@ class CheckoutController extends Controller
     // {
     //     if($request['obj']['order']['id']){
     //         $order_id = $request['obj']['order']['id'];
-    //         $transaction_id = $request['obj']['id'];
+    //         $transaction_no = $request['obj']['id'];
     //             $success = $request['obj']['success'];
     //             $pending = $request['obj']['pending'];
     //             $source_data = $request['obj']['source_data']['sub_type'];
@@ -191,8 +191,8 @@ class CheckoutController extends Controller
     //                 'payment_status' => $success ? 1 : 3,
     //             ]);
     //             $order->transaction()->create([
-    //                 'transaction_id' => $transaction_id,
-    //                 'order_transaction_id' => $order_id,
+    //                 'transaction_no' => $transaction_no,
+    //                 'order_transaction_no' => $order_id,
     //                 'pending' => $pending,
     //                 'success' => $success,
     //                 'source_type' => $source_data,

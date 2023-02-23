@@ -10,11 +10,7 @@
     <title>{{$setting->name}}</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('dashboard/assets/images/favicon.png') }}">
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/owl.carousel/dist/css/owl.carousel.min.css') }}">
-    <link href="{{ asset('dashboard/assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet') }}">
-    <!-- Chartist -->
-    <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/chartist/css/chartist.min.css') }}">
+    
     <link href="{{ asset('dashboard/assets/css/style.css') }}" rel="stylesheet">
     @if (app()->getLocale() == 'ar')
         <style>

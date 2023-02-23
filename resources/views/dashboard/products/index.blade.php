@@ -71,7 +71,7 @@
                                                 <td><a
                                                         href="{{ route('dashboard.products.show', $product->id) }}">{{ $product->name }}</a>
                                                 </td>
-                                                <td>${{ $product->price }}</td>
+                                                <td>${{number_format($product->price,2)}}</td>
                                                 <td>{{ $product->stock }}</td>
                                                 <td>{{ $product->country }}</td>
                                                 <td>{{ $product->start_year }}</td>

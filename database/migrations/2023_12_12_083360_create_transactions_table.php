@@ -15,8 +15,8 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->integer('transaction_id');
-            $table->integer('order_transaction_id');
+            $table->integer('transaction_no');
+            $table->integer('order_transaction_no');
             $table->boolean('pending')->default(0)->comment('0=>paid ,1=>pending');
             $table->boolean('success')->default(0)->comment('0=>filed ,1=>success');
             $table->string('source_type');

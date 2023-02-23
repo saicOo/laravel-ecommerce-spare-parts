@@ -124,14 +124,14 @@
                                 </div>
                                 @if ($order->transaction)
                                     <div class="row pb-2">
-                                        <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.transaction_id')</b></span>
+                                        <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.transaction_no')</b></span>
                                         <span class="col-6 col-sm-6 text-end"><span
-                                                class="money">#{{ $order->transaction->transaction_id }}</span></span>
+                                                class="money">#{{ $order->transaction->transaction_no }}</span></span>
                                     </div>
                                     <div class="row pb-2">
-                                        <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.order_transaction_id')</b></span>
+                                        <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.order_transaction_no')</b></span>
                                         <span class="col-6 col-sm-6 text-end"><span
-                                                class="money">#{{ $order->transaction->order_transaction_id }}</span></span>
+                                                class="money">#{{ $order->transaction->order_transaction_no }}</span></span>
                                     </div>
                                     <div class="row pb-2">
                                         <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.source_type')</b></span>
