@@ -23,4 +23,6 @@ Route::post('/callback', 'Front\CheckoutController@callbackApi');
 Route::group(['namespace' => 'Api'], function () {
     Route::get('/cars/{car}','CarController@show')->name('api-car.show');
     Route::get('/cars','CarController@index')->name('api-car.index');
+    Route::get('/products','ProductController@index')->name('api-product.index');
+    Route::get('/products/{product}','ProductController@show')->name('api-product.show');
 });

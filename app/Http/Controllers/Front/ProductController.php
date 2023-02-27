@@ -15,7 +15,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-       
+
         $brands = Brand::all();
         $factoryCars = FactoryCar::all();
         $products = Product::with(['category','brand'])

@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->text('description_en')->fulltext();
             $table->text('description_ar')->fulltext();
             $table->string('country');
+            $table->float('purchase_price', 8, 2);
             $table->float('price', 8, 2);
             $table->integer('stock');
             $table->year('start_year')->nullable();

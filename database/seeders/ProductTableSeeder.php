@@ -28,6 +28,7 @@ class ProductTableSeeder extends Seeder
                 'description_en' => $faker->sentence(20),
                 'description_ar' => $faker->sentence(20),
                 'price' => rand(50,800),
+                'purchase_price' => rand(20,500),
                 'stock' => rand(20,200),
                 'country' => $country[rand(0,2)],
                 'start_year' => 2000,

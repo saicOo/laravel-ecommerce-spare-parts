@@ -52,28 +52,21 @@
                                                 value="{{ $product->name_en }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.stock')</label>
                                             <input type="number" class="form-control @error('stock') is-invalid @enderror"
                                                 name="stock" value="{{ $product->stock }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label>@lang('site.purchase_price')</label>
-                                            <input type="number" class="form-control @error('purchase_price') is-invalid @enderror"
-                                                name="purchase_price" value="{{ $product->purchase_price }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label>@lang('site.sale_price')</label>
+                                            <label>@lang('site.price')</label>
                                             <input type="number" class="form-control @error('price') is-invalid @enderror"
                                                 name="price" value="{{ $product->price }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.country')</label>
                                             <input type="text"

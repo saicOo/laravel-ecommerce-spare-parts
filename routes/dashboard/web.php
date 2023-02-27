@@ -34,6 +34,10 @@ function(){
         Route::post('/admins/{admin}/permissions', 'AdminController@updatePermissions')->name('admins.permissions.update');
         Route::resource('admins', 'AdminController');
         Route::resource('settings', 'SettingController')->only(['index','update']);
+        //routes suppliers
+        Route::resource('suppliers', 'SupplierController')->except(['show']);
+        //routes purchases
+        Route::resource('purchases', 'PurchaseController');
         //routes users
         Route::resource('clients', 'ClientController')->only(['index','show']);
         Route::resource('orders', 'OrderController')->only(['index','show','edit','update']);

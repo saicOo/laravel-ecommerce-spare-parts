@@ -13,6 +13,13 @@
             @can('check-permissions','read_users')
             <li><a href="{{route('dashboard.clients.index')}}" aria-expanded="false"><i class="icon-user"></i> <span class="nav-text">{{__('site.clients')}}</span></a></li>
             @endcan
+            @can('check-permissions','read_users')
+            <li><a href="{{route('dashboard.suppliers.index')}}" aria-expanded="false"><i class="icon-user"></i> <span class="nav-text">{{__('site.suppliers')}}</span></a></li>
+            @endcan
+            <li class="nav-label">{{__('site.purchases')}}</li>
+            @can('check-permissions','read_orders')
+            <li><a href="{{route('dashboard.purchases.index')}}" aria-expanded="false"><i class="icon-basket"></i> <span class="nav-text">{{__('site.purchases')}}</span></a></li>
+            @endcan
             <li class="nav-label">{{__('site.orders')}}</li>
             @can('check-permissions','read_orders')
             <li><a href="{{route('dashboard.orders.index')}}" aria-expanded="false"><i class="icon-basket"></i> <span class="nav-text">{{__('site.orders')}}</span></a></li>

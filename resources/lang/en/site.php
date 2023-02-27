@@ -165,6 +165,7 @@ return [
     'delivery_order' => 'Delivery Order',
     'received_order' => 'Received Order',
     'sales' => 'sales',
+    'sale_price' => 'Sale Price',
     'amount_paid' => 'amount paid',
     'paid' => 'paid',
     'unpaid' => 'unpaid',
