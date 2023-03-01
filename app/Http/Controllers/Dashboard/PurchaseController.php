@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Purchase;
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Traits\InvoiceTrait;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
 {
+    use InvoiceTrait;
     /**
      * Display a listing of the resource.
      *
@@ -44,55 +46,43 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'supplier' => 'required',
-            'qyt' => 'required|array',
-            'qyt.*' => 'required|integer',
-            'price' => 'required|array',
-            'price.*' => 'required|numeric',
+            'products.*.quantity' => 'required|integer',
+            'products.*.price' => 'required|numeric',
             'products' => 'required|array',
             'products.*' => 'required',
+            'type' => 'required',
         ]);
-        $last_order = Purchase::latest()->first();
-        $firstInvoiceNumber = date('Y').date('m').str_pad(1,6,0,STR_PAD_LEFT); // 202302000001;
-        if(!$last_order){
-            $nextInvoiceNumber = $firstInvoiceNumber;
-        }else{
-            $splitNum = str_split($last_order->invoice_no,6);
-            $newInvoiceNo = $splitNum[1]+1;
-            //check first day in a month and year
-            if (date('Y-m-d',strtotime(date('Y-m-01'))) == date('Y-m-d') ){
-                $nextInvoiceNumber = $firstInvoiceNumber;
-            } else {
-            //increase 1 with last invoice number
-            $nextInvoiceNumber = date('Y').date('m').str_pad($newInvoiceNo,6,0,STR_PAD_LEFT);
-        }
-    }
+        $nextInvoiceNumber = $this->PurchaseInvoiceIncrement();
         $purchase = Purchase::create([
             'supplier_id' => $request->supplier,
             'invoice_no' => $nextInvoiceNumber,
         ]);
-
+        $purchase->products()->attach($request->products);
         $total_price = 0;
         // start foreach
-        foreach ($request->products as $index => $product_id) {
+        foreach ($request->products as $id => $purchase_product) {
 
-            $purchase->products()->attach($product_id,['quantity' => $request->qyt[$index],
-                                                        'price' => $request->price[$index] ]);
-            $product = Product::FindOrFail($product_id);
-            // pricing policy
-            $balance_value = $product->stock * $product->purchase_price;
-            $new_balance_value = $request->qyt[$index] * $request->price[$index];
-            $total_balance_value = $balance_value + $new_balance_value;
-            $total_quantity = $request->qyt[$index] + $product->stock;
-            // end
-            $product->update([
-                    'stock' => $product->stock + $request->qyt[$index],
-                    'purchase_price' => $total_balance_value / $total_quantity,
+            $product = Product::FindOrFail($id);
+            if($request->type == 1){
+                // pricing policy
+                $balance_value = $product->stock * $product->purchase_price;
+                $new_balance_value = $purchase_product['quantity'] * $purchase_product['price'];
+                $total_balance_value = $balance_value + $new_balance_value;
+                $total_quantity = $purchase_product['quantity'] + $product->stock;
+                // end
+                $product->update([
+                        'stock' => $product->stock + $purchase_product['quantity'],
+                        'purchase_price' => $total_balance_value / $total_quantity,
+                                ]);
+            }else{
+                $product->update([
+                    'stock' => $product->stock - $purchase_product['quantity'],
                             ]);
+            }
 
-        $total_price +=  $request->price[$index] * $request->qyt[$index];
+            $total_price +=  $purchase_product['price'] * $purchase_product['quantity'];
         }//end foreach
         // start update purchases data table
         $status = $total_price > $request->amount_paid ? 2 : 1;
@@ -100,6 +90,7 @@ class PurchaseController extends Controller
             'total_price' => $total_price,
             'amount_paid' => $request->amount_paid,
             'payment_status' => $status,
+            'type' => $request->type,
         ]);// start update purchases data table
 
         session()->flash('success', __('site.added_successfully'));

@@ -31,7 +31,7 @@
                             <form method="POST" action="{{ route('dashboard.purchases.store') }}">
                                 @csrf
                                 <div class="form-row">
-                                    <div class="col-sm-4 mx-auto">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.supplier')</label>
                                             <select class="single-select @error('supplier') is-invalid @enderror"
@@ -42,22 +42,42 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label>@lang('site.type')</label>
+                                            <select class="form-control @error('type') is-invalid @enderror"
+                                                name="type">
+                                                <option value="1">@lang('site.new')</option>
+                                                <option value="2">@lang('site.return')</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="form-row align-items-center">
-                                    <div class="col-sm-6">
+                                    <div class="col-lg-4 col-sm-6">
                                         <div class="form-group">
                                             <label>@lang('site.product')</label>
-                                            <select id="product-ajax" data-url="{{ route('api-product.index') }}"></select>
+                                            <select id="product-ajax" data-url-products="{{ route('api-product.index') }}" data-url-show="{{ route('api-product.show', ':productId') }}"></select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-lg-3 col-sm-6">
+                                        <label>@lang('site.price')</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                                <span class="input-group-text">0.00</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="price">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6">
                                         <div class="form-group">
                                             <label>@lang('site.quantity')</label>
                                             <input class="qyt" id="qyt" type="text" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-lg-2 col-sm-6 text-center">
                                         <div class="form-group">
                                             <input type="button" value="{{__('site.add')}}" class="btn btn-rounded btn-primary mt-4"
                                                 id="add-product" data-url="{{ route('api-product.show', ':productId') }}">

@@ -4,7 +4,7 @@ $(document).ready(function() {
         // minimumInputLength: 2,
         // templateResult: formatState,
         ajax: {
-            url: $("#product-ajax").data("url"),
+            url: $("#product-ajax").data("url-products"),
             dataType: 'json',
             type: "GET",
             data: function(term) {
@@ -13,7 +13,6 @@ $(document).ready(function() {
                 };
             },
             processResults: function(data) {
-                console.log(data);
                 return {
                     results: $.map(data, function(item) {
                         return {

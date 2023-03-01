@@ -48,6 +48,7 @@
                                             <th scope="col">{{ __('site.client') }}</th>
                                             <th scope="col">{{ __('site.total') }}</th>
                                             <th scope="col">{{ __('site.status') }}</th>
+                                            <th scope="col">{{ __('site.type') }}</th>
                                             <th scope="col">{{ __('site.date') }}</th>
                                             <th scope="col">{{__('site.action')}}</th>
                                             {{-- <th scope="col"><input type="checkbox" value=""
@@ -65,6 +66,12 @@
                                                 <td><span class="rounded-pill bg-success text-white px-3 py-2">@lang('site.paid')</span></td>
                                                 @elseif($purchase->payment_status == 2)
                                                 <td><span class="rounded-pill bg-warning text-white px-3 py-2">@lang('site.waiting')</span></td>
+                                                @else
+                                                @endif
+                                                @if ($purchase->type == 1)
+                                                <td><span class="rounded-pill bg-success text-white px-3 py-2">@lang('site.new')</span></td>
+                                                @elseif($purchase->type == 2)
+                                                <td><span class="rounded-pill bg-danger text-white px-3 py-2">@lang('site.return')</span></td>
                                                 @else
                                                 @endif
                                                 <td>{{$purchase->updated_at->format('M d, Y')}}</td>

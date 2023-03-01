@@ -19,6 +19,7 @@ class CreatePurchasesTable extends Migration
             $table->string('invoice_no')->unique();
             $table->double('total_price', 8, 2)->nullable();
             $table->double('amount_paid', 8, 2)->nullable();
+            $table->boolean('type')->default(1)->comment('1=>new ,2=>return');
             $table->boolean('payment_status')->default(2)->comment('1=>paid ,2=>pending');
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->timestamps();
