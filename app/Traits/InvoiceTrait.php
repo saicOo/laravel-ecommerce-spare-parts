@@ -16,7 +16,7 @@ Trait InvoiceTrait
             $splitNum = str_split($last_order->invoice_no,6);
             $newInvoiceNo = $splitNum[1]+1;
             //check first day in a month and year
-            if (date('Y-m-d',strtotime(date('Y-m-01'))) == date('Y-m-d') && !Purchase::whereDate('created_at',date('Y-m-01'))->first()){
+            if (date('Y-m-d',strtotime(date('Y-m-01'))) == date('Y-m-d') && Purchase::whereDate('created_at',date('Y-m-01'))->doesntExist()){
                 return $nextInvoiceNumber = $firstInvoiceNumber;
             } else {
             //increase 1 with last invoice number
