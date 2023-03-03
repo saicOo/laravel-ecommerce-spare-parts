@@ -15,8 +15,7 @@
         <div class="container-fluid">
             <div class="row justify-content-between mb-3">
                 <div class="col-12 ">
-                    {{-- <h2 class="page-heading">{{ __('site.list') }} {{ __('site.orders') }}</h2>
-                    <p class="mb-0">{{ __('site.count') }} {{ __('site.orders') }} : {{ $orders->total() }}</p> --}}
+                  
                 </div>
             </div>
             <div class="row">
@@ -27,7 +26,7 @@
                                 <h4 class="text-uppercase">@lang('site.invoice')</h4>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.invoice_no'):</span><span class="ml-1">#{{ $order->invoice_no }}</span></div>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.date'):</span><span class="ml-1">{{ $order->updated_at->format('M d, Y') }}</span></div>
-                                <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.method'):</span><span class="ml-1">{{ $order->payment_method ? __('site.online') : __('site.cash') }}</span></div>
+                                <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.method'):</span><span class="ml-1">{{ $order->method }}</span></div>
                                 @if ($order->transaction)
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.transaction_no'):</span><span class="ml-1">#{{ $order->transaction->transaction_no }}</span></div>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.order_transaction_no'):</span><span class="ml-1">#{{ $order->transaction->order_transaction_no }}</span></div>

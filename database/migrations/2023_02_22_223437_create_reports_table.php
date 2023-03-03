@@ -15,12 +15,10 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->float('sales',8,2);
-            $table->integer('orders_amount');
-            $table->integer('orders_amount_cash');
-            $table->integer('orders_amount_onlin');
-            $table->integer('amount_return_products');
-            $table->integer('test');
+            $table->double('orders_amount',8,2)->nullable();
+            $table->integer('orders_count')->nullable();
+            $table->double('purchases_amount',8,2)->nullable();
+            $table->integer('purchases_count')->nullable();
             $table->timestamps();
         });
     }

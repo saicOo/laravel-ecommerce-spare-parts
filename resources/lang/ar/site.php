@@ -16,7 +16,7 @@ return [
     'profile' => 'الملف التعريفي',
     'my_account' => 'حسابي',
     'settings' => 'الاعدادات',
-
+    'reports' => 'التقارير',
     //  messages
     'added_successfully' => 'تم أضافه البيانات بنجاح',
     'updated_successfully' => 'تم تعديل البيانات بنجاح',
@@ -169,6 +169,7 @@ return [
     'paid' => 'تم الدفع',
     'unpaid' => 'غير مدفوع',
     'waiting' => 'أنتظار',
+    'pending' => 'قيد الانتظار',
     'online' => 'اون لاين',
     'cash' => 'نقدي',
     'remaining_amount' => 'المبلغ المتبقي',
@@ -197,6 +198,8 @@ return [
     'products' => 'المنتجات',
     'product' => 'المنتج',
     'stock' => 'المخزن',
+    'Out Of Stock' => 'غير متوفر',
+    'In Stock' => 'متوفر',
     'attention_stock' => 'الحد الادني للتنبيه',
     'wholesale_unit' => 'الوحدة بالجملة',
     'retail_unit' => 'الوحدة بالتجزئة',

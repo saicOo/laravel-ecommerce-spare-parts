@@ -34,7 +34,7 @@
                                             <label>@lang('site.status')</label>
                                             <select class="form-control" name="payment_status">
                                                 <option value="1" {{ $order->payment_status == 1 ? 'selected' : '' }}>@lang('site.paid')</option>
-                                                <option value="2" {{ $order->payment_status == 2 ? 'selected' : '' }}>@lang('site.waiting')</option>
+                                                <option value="2" {{ $order->payment_status == 2 ? 'selected' : '' }}>@lang('site.pending')</option>
                                                 <option value="3" {{ $order->payment_status == 3 ? 'selected' : '' }}>@lang('site.unpaid')</option>
                                             </select>
                                         </div>

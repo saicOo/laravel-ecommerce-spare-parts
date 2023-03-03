@@ -33,14 +33,20 @@ function(){
         Route::get('/admins/{admin}/permissions', 'AdminController@editPermissions')->name('admins.permissions.edit');
         Route::post('/admins/{admin}/permissions', 'AdminController@updatePermissions')->name('admins.permissions.update');
         Route::resource('admins', 'AdminController');
+        // routes settings
         Route::resource('settings', 'SettingController')->only(['index','update']);
+        // routes reports
+        Route::resource('reports', 'ReportController')->only(['index','destroy']);
         //routes suppliers
         Route::resource('suppliers', 'SupplierController')->except(['show']);
         //routes purchases
         Route::resource('purchases', 'PurchaseController');
+        Route::get('/export-purchases','PurchaseController@exportPurchases')->name('export-purchases');
         //routes users
         Route::resource('clients', 'ClientController')->only(['index','show']);
-        Route::resource('orders', 'OrderController')->only(['index','show','edit','update']);
+        // routes orders
+        Route::resource('orders', 'OrderController');
+        Route::get('/export-orders','OrderController@exportOrders')->name('export-orders');
         // factory cars routes
         Route::resource('factory-cars', 'FactoryCarController')->except('show');
         Route::post('/import-factoryCars','FactoryCarController@import')->name('import-factoryCars');

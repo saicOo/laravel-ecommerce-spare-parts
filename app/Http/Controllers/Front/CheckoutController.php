@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Setting;
+use App\Traits\ReportTrait;
 use App\Http\Services\PaymentServices;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
+    use ReportTrait;
     private $paymentServices;
     public function __construct(PaymentServices $paymentServices)
     {
@@ -52,8 +54,6 @@ class CheckoutController extends Controller
             return redirect()->back()->withErrors(["missing_data" => __('site.missing_data')])->withInput();
         }
 
-
-
         if($request->selector == "online" ){
             $paymentTokenUrl = $this->paymentServices->getPayment($user);
             return redirect()->intended('https://accept.paymob.com/api/acceptance/iframes/708449?payment_token='.$paymentTokenUrl['token']);
@@ -82,7 +82,7 @@ class CheckoutController extends Controller
             //increase 1 with last invoice number
             $nextInvoiceNumber = date('Y').date('m').str_pad($newInvoiceNo,6,0,STR_PAD_LEFT);
         }
-    }
+        }
     // dd($nextInvoiceNumber);
 
         $order = $user->orders()->create([
@@ -91,7 +91,7 @@ class CheckoutController extends Controller
         $sub_total = 0;
          // start foreach
          foreach ($user->products as $product) {
-
+            $this->ReportSaleIncrement($product->price * $product->pivot->quantity,$product->pivot->quantity);
             $order->products()->attach($product->id,['quantity' => $product->pivot->quantity,
             'price' => $product->price ]);
 

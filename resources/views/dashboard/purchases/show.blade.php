@@ -27,7 +27,8 @@
                                 <h4 class="text-uppercase">@lang('site.invoice')</h4>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.invoice_no'):</span><span class="ml-1">#{{ $purchase->invoice_no }}</span></div>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.date'):</span><span class="ml-1">{{ $purchase->updated_at->format('M d, Y') }}</span></div>
-                                <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.method'):</span><span class="ml-1">{{ $purchase->payment_status == 1 ? __('site.paid') : __('site.unpaid') }}</span></div>
+                                <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.type'):</span><span class="ml-1">{{ $purchase->type_method }}</span></div>
+                                <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.status'):</span><span class="ml-1">{{ $purchase->status }}</span></div>
                             </div>
                             <div class="col-md-3">
                                 <h4 class="text-uppercase">@lang('site.from')</h4>
@@ -77,6 +78,10 @@
                                         <tr>
                                             <th>@lang('site.total')</th>
                                             <td>${{ number_format($purchase->total_price, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@lang('site.amount_paid')</th>
+                                            <td>${{ number_format($purchase->amount_paid, 2) }}</td>
                                         </tr>
                                     </table>
                                 </div>

@@ -73,7 +73,7 @@
                                                             @if ($order->payment_status == 1)
                                                                 <td class="text-success">@lang('site.paid')</td>
                                                             @elseif($order->payment_status == 2)
-                                                                <td class="text-warning">@lang('site.waiting')</td>
+                                                                <td class="text-warning">@lang('site.pending')</td>
                                                             @elseif($order->payment_status == 3)
                                                                 <td class="text-danger">@lang('site.unpaid')</td>
                                                             @else

@@ -1,4 +1,8 @@
 @extends('dashboard.layouts.app')
+@push('css')
+    <!-- Daterange picker -->
+    <link href="{{ asset('dashboard/assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+@endpush
 @section('content')
     <div class="content-body">
         <div class="row page-titles mx-0">
@@ -29,14 +33,17 @@
                                         class="btn btn-primary mb-2">{{ __('site.create') }}</a>
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
-                                    {{-- <form action="{{ route('dashboard.purchases.destroy', 'delete') }}" method="post"
+                                    <a class="btn btn-primary mb-2" href="{{ route('dashboard.export-purchases') }}">
+                                        @lang('site.export')
+                                    </a>
+                                    <form action="{{ route('dashboard.purchases.destroy', 'delete') }}" method="post"
                                         style="display: inline;">
                                         {{ csrf_field() }}
                                         {{ method_field('delete') }}
                                         <input type="hidden" value="" name="mass_delete" id="mass-delete">
                                         <button type="submit" id="btn-mass-delete" class="btn btn-danger mb-2"
                                             disabled>{{ __('site.mass_delete') }}</button>
-                                    </form> --}}
+                                    </form>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -50,31 +57,26 @@
                                             <th scope="col">{{ __('site.status') }}</th>
                                             <th scope="col">{{ __('site.type') }}</th>
                                             <th scope="col">{{ __('site.date') }}</th>
-                                            <th scope="col">{{__('site.action')}}</th>
-                                            {{-- <th scope="col"><input type="checkbox" value=""
-                                                    id="check-box-delete-all"></th> --}}
+                                            <th scope="col">{{ __('site.action') }}</th>
+                                            <th scope="col"><input type="checkbox" value=""
+                                                    id="check-box-delete-all"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($purchases as $index => $purchase)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>#{{$purchase->invoice_no}}</td>
-                                                <td>{{$purchase->supplier->name}}</td>
-                                                <td>${{number_format($purchase->total_price,2)}}</td>
-                                                @if ($purchase->payment_status == 1)
-                                                <td><span class="rounded-pill bg-success text-white px-3 py-2">@lang('site.paid')</span></td>
-                                                @elseif($purchase->payment_status == 2)
-                                                <td><span class="rounded-pill bg-warning text-white px-3 py-2">@lang('site.waiting')</span></td>
-                                                @else
-                                                @endif
-                                                @if ($purchase->type == 1)
-                                                <td><span class="rounded-pill bg-success text-white px-3 py-2">@lang('site.new')</span></td>
-                                                @elseif($purchase->type == 2)
-                                                <td><span class="rounded-pill bg-danger text-white px-3 py-2">@lang('site.return')</span></td>
-                                                @else
-                                                @endif
-                                                <td>{{$purchase->updated_at->format('M d, Y')}}</td>
+                                                <td>#{{ $purchase->invoice_no }}</td>
+                                                <td>{{ $purchase->supplier->name }}</td>
+                                                <td>${{ number_format($purchase->total_price, 2) }}</td>
+                                                <td>
+                                                    <span
+                                                        class="rounded-pill {{($purchase->payment_status == 1 ? 'bg-success' : ($purchase->payment_status == 2 ? 'bg-warning' : 'bg-danger'))}} text-white px-3 py-2">{{$purchase->status}}</span>
+                                                </td>
+                                                <td>
+                                                    {{$purchase->type_method}}
+                                                </td>
+                                                <td>{{ $purchase->updated_at->format('M d, Y') }}</td>
                                                 <td>
                                                     <span>
                                                         <a href="{{ route('dashboard.purchases.show', $purchase->id) }}"
@@ -89,12 +91,12 @@
                                                                 class="fa fa-pencil color-muted"></i> </a>
                                                     </span>
                                                 </td>
-                                                {{-- <td>
+                                                <td>
                                                     <span>
                                                         <input type="checkbox" value="{{ $purchase->id }}"
                                                             class="check-box-delete">
                                                     </span>
-                                                </td> --}}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -102,7 +104,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{$purchases->appends(request()->query())->links("pagination::bootstrap-4")}}
+                            {{ $purchases->appends(request()->query())->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>
@@ -125,10 +127,34 @@
                             <input type="text" class="form-control" name="search" placeholder="@lang('site.search')"
                                 value="{{ request()->search }}">
                         </div>
+                        <div class="form-group">
+                            <select name="status" class="form-control">
+                                <option disabled selected>@lang('site.select') @lang('site.status')</option>
+                                <option value="1" {{ request()->status == 1 ? 'selected' : '' }}>@lang('site.paid')
+                                </option>
+                                <option value="2" {{ request()->status == 2 ? 'selected' : '' }}>@lang('site.pending')
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select name="type" class="form-control">
+                                <option disabled selected>@lang('site.select') @lang('site.type')</option>
+                                <option value="1" {{ request()->type == 1 ? 'selected' : '' }}>@lang('site.new')
+                                </option>
+                                <option value="2" {{ request()->type == 2 ? 'selected' : '' }}>@lang('site.return')
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>@lang('site.date')</label>
+                            <input class="form-control input-daterange-datepicker" type="text" name="daterange">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('site.close') }}</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">{{ __('site.close') }}</button>
                     <button type="button" class="btn btn-primary"
                         onclick="event.preventDefault();
                 document.getElementById('filter-form').submit();">{{ __('site.filter') }}</button>
@@ -138,5 +164,11 @@
     </div>
 @endpush
 @push('js')
-    {{-- <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script> --}}
+    <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script>
+    <!-- Daterangepicker -->
+    <!-- momment js is must -->
+    <script src="{{ asset('dashboard/assets/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <!-- Daterangepicker -->
+    <script src="{{ asset('dashboard/assets/js/plugins-init/bs-daterange-picker-init.js') }}"></script>
 @endpush

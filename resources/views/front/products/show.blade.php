@@ -57,36 +57,46 @@
                                             <div class="product-thumb product-horizontal-thumb">
                                                 <div id="gallery" class="product-thumb-style1">
                                                     @foreach ($product->images as $index => $image)
-                                                    <a class="{{ $index == 0 ? 'active' : '' }}" data-image="{{ asset('uploads/products') . '/' . $image }}"
-                                                        data-zoom-image="{{ asset('uploads/products') . '/' . $image }}"
-                                                        data-slick-index="{{$index}}" aria-hidden="true" tabindex="-1">
-                                                        <img class="blur-up lazyload"
-                                                            data-src="{{ asset('uploads/products') . '/' . $image }}"
-                                                            src="{{ asset('uploads/products') . '/' . $image }}" alt="{{$product->name}}" />
-                                                    </a>
+                                                        <a class="{{ $index == 0 ? 'active' : '' }}"
+                                                            data-image="{{ asset('uploads/products') . '/' . $image }}"
+                                                            data-zoom-image="{{ asset('uploads/products') . '/' . $image }}"
+                                                            data-slick-index="{{ $index }}" aria-hidden="true"
+                                                            tabindex="-1">
+                                                            <img class="blur-up lazyload"
+                                                                data-src="{{ asset('uploads/products') . '/' . $image }}"
+                                                                src="{{ asset('uploads/products') . '/' . $image }}"
+                                                                alt="{{ $product->name }}" />
+                                                        </a>
                                                     @endforeach
 
                                                 </div>
                                             </div>
                                             <div class="lightboximages">
-                                                <a href="{{asset('front/assets/images/products/700x700.jpg')}}" data-size="700x700"></a>
+                                                <a href="{{ asset('front/assets/images/products/700x700.jpg') }}"
+                                                    data-size="700x700"></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                                         <div class="product-single-detail">
-                                            <h1 class="product-title text-uppercase">{{$product->name}}</h1>
+                                            <h1 class="product-title text-uppercase">{{ $product->name }}</h1>
                                             <div class="d-flex justify-content-between">
-                                                <div class="sku mb-1"><b>SKU:</b> #100210</div>
+                                                <div class="sku mb-1"><b>SKU:</b> #{{ $product->id }}</div>
                                             </div>
-
-                                            <div class="stock mb-1"><b><span class="inStock text-uppercase"><i
-                                                            class="cp cp-check-circle"></i> {{ $product->stock == 0 ? 'Out Of Stock' : 'In Stock' }}</span></b></div>
-                                            <div class="brands mb-1"><b>@lang('site.brand'):</b> {{$product->brand->name}}</div>
+                                            <div class="stock mb-1">
+                                                @if ($product->stock >= 1)
+                                                    <b><span class="inStock text-uppercase"><i
+                                                                class="cp cp-check-circle"></i>@lang('site.In Stock')</span></b>
+                                                @else
+                                                    <b><span class="text-uppercase text-danger"><i
+                                                                class="cp cp-check-circle"></i>@lang('site.Out Of Stock')</span></b>
+                                                @endif
+                                            </div>
+                                            <div class="brands mb-1"><b>@lang('site.brand'):</b> {{ $product->brand->name }}
+                                            </div>
                                             <div class="price-box">
                                                 <span class="visually-hidden">Regular price</span>
-                                                <span class="old-price">${{number_format($product->price,2)}}</span>
-                                                <span class="sale-price">${{number_format($product->price,2)}}</span>
+                                                <span class="sale-price">${{ number_format($product->price, 2) }}</span>
                                             </div>
 
                                             <div class="sort-description">
@@ -94,9 +104,10 @@
                                             </div>
                                             <hr>
                                             <!-- Product Form -->
-                                            <form method="post" action="{{route('carts.store')}}" id="product_form" class="product-form">
-                                                    @csrf
-                                                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                                            <form method="post" action="{{ route('carts.store') }}" id="product_form"
+                                                class="product-form">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                 <!-- Product Action -->
                                                 <div class="product-action w-100 clearfix">
                                                     <div class="d-flex w-100">
@@ -112,13 +123,14 @@
                                                         </div>
                                                         <div class="product-form-submit">
                                                             @if ($product->stock == 0)
-                                                            <button type="submit" class="btn rounded d-none"
-                                                            disabled="disabled">@lang('site.sold_out') </button>
+                                                                <button type="submit" class="btn rounded d-none"
+                                                                    disabled="disabled">@lang('site.sold_out') </button>
                                                             @else
-                                                            <button type="submit"
-                                                            class="btn rounded w-100 add-to-cart-btn"><i
-                                                                class="cp cp-shopping-cart"></i> <span>@lang('site.add_to_cart')
-                                                                </span></button>
+                                                                <button type="submit"
+                                                                    class="btn rounded w-100 add-to-cart-btn"><i
+                                                                        class="cp cp-shopping-cart"></i>
+                                                                    <span>@lang('site.add_to_cart')
+                                                                    </span></button>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -139,8 +151,9 @@
                                             <!--Guranteed Checkout-->
                                             <div class="guaranteed-safe-checkout">
                                                 <h4>Guaranteed Safe Checkout</h4>
-                                                <img class="fade-in lazyload" src="{{asset('front/assets/images/garauntee-img.png')}}"
-                                                    data-src="{{asset('front/assets/images/garauntee-img.png')}}"
+                                                <img class="fade-in lazyload"
+                                                    src="{{ asset('front/assets/images/garauntee-img.png') }}"
+                                                    data-src="{{ asset('front/assets/images/garauntee-img.png') }}"
                                                     alt="Guaranteed Safe Checkout">
                                             </div>
                                             <!--End Guranteed Checkout-->
@@ -180,9 +193,9 @@
                                 <!--Sidebar Banner-->
                                 <div class="sidebar-banner rounded-3 block border-0 p-0">
                                     <a href="#" class="d-block"><img class="blur-up lazyload rounded-3"
-                                            src="{{asset('front/assets/images/banner.jpg')}}"
-                                            data-src="{{asset('front/assets/images/banner.jpg')}}" alt="" title=""
-                                            width="300" height="400" /></a>
+                                            src="{{ asset('front/assets/images/banner.jpg') }}"
+                                            data-src="{{ asset('front/assets/images/banner.jpg') }}" alt=""
+                                            title="" width="300" height="400" /></a>
                                 </div>
                                 <!--End Sidebar Banner-->
                             </div>
@@ -202,41 +215,47 @@
                     </div>
                     <div class="productSlider grid-products products-grid">
                         @foreach ($products_silder as $product_silder)
-                        <!--Product Item-->
-                        <div class="item">
-                            <!--Product Image-->
-                            <div class="product-image">
-                                <a href="{{ route('products.show',$product_silder->id) }}" class="rounded-3 product-thumb">
-                                    <!--Image-->
-                                    <img class="primary blur-up lazyload rounded-3"
-                                        data-src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
-                                        src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}" alt="{{$product_silder->name}}" title="{{$product_silder->name}}" />
-                                    <!--End Image-->
-                                    <!--Hover Image-->
-                                    <img class="hover blur-up lazyload rounded-3"
-                                        data-src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
-                                        src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}" alt="{{$product_silder->name}}" title="{{$product_silder->name}}" />
-                                    <!--End Hover Image-->
-                                </a>
-                                <!--Button Action-->
-                                <div class="button-hover">
-                                    <a class="btn pro-addtocart-popup rounded btn-cart btn-primary"
-                                        href="{{ route('products.show',$product_silder->id) }}" title="{{__('site.add_to_cart')}}"><i
-                                            class="cps cp-shopping-cart"></i></a>
+                            <!--Product Item-->
+                            <div class="item">
+                                <!--Product Image-->
+                                <div class="product-image">
+                                    <a href="{{ route('products.show', $product_silder->id) }}"
+                                        class="rounded-3 product-thumb">
+                                        <!--Image-->
+                                        <img class="primary blur-up lazyload rounded-3"
+                                            data-src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
+                                            src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
+                                            alt="{{ $product_silder->name }}" title="{{ $product_silder->name }}" />
+                                        <!--End Image-->
+                                        <!--Hover Image-->
+                                        <img class="hover blur-up lazyload rounded-3"
+                                            data-src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
+                                            src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
+                                            alt="{{ $product_silder->name }}" title="{{ $product_silder->name }}" />
+                                        <!--End Hover Image-->
+                                    </a>
+                                    <!--Button Action-->
+                                    <div class="button-hover">
+                                        <a class="btn pro-addtocart-popup rounded btn-cart btn-primary"
+                                            href="{{ route('products.show', $product_silder->id) }}"
+                                            title="{{ __('site.add_to_cart') }}"><i class="cps cp-shopping-cart"></i></a>
+                                    </div>
+                                    <!--End Button Action-->
                                 </div>
-                                <!--End Button Action-->
-                            </div>
-                            <!--End Product Image-->
-                            <!--Product Detail-->
-                            <div class="product-details d-flex">
-                                <div class="product-details-in">
-                                    <div class="h3"><a href="{{ route('products.show',$product_silder->id) }}">{{$product_silder->name}}</a></div>
-                                    <div class="price-box"><span class="price">${{number_format($product_silder->price,2)}}</span></div>
+                                <!--End Product Image-->
+                                <!--Product Detail-->
+                                <div class="product-details d-flex">
+                                    <div class="product-details-in">
+                                        <div class="h3"><a
+                                                href="{{ route('products.show', $product_silder->id) }}">{{ $product_silder->name }}</a>
+                                        </div>
+                                        <div class="price-box"><span
+                                                class="price">${{ number_format($product_silder->price, 2) }}</span></div>
+                                    </div>
                                 </div>
+                                <!--End Product Detail-->
                             </div>
-                            <!--End Product Detail-->
-                        </div>
-                        <!--End Product Item-->
+                            <!--End Product Item-->
                         @endforeach
                     </div>
                 </div>

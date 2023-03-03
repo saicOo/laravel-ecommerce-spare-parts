@@ -120,7 +120,7 @@
                                 <div class="row pb-2">
                                     <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.method')</b></span>
                                     <span class="col-6 col-sm-6 text-end"><span
-                                            class="money">{{ $order->payment_method ? __('site.online') : __('site.cash') }}</span></span>
+                                            class="money">{{ $order->method }}</span></span>
                                 </div>
                                 @if ($order->transaction)
                                     <div class="row pb-2">
@@ -142,14 +142,7 @@
                                 <div class="row pb-2">
                                     <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.status')</b></span>
                                     <span class="col-6 col-sm-6 text-end">
-                                        @if ($order->payment_status == 1)
-                                            <span class="money text-success">@lang('site.paid')</span>
-                                        @elseif($order->payment_status == 2)
-                                            <span class="money text-warning">@lang('site.waiting')</span>
-                                        @elseif($order->payment_status == 3)
-                                            <span class="money text-danger">@lang('site.unpaid')</span>
-                                        @else
-                                        @endif
+                                            <span class="money {{($order->payment_status == 1 ? 'text-success' : ($order->payment_status == 2 ? 'text-warning' : 'text-danger'))}} ">{{$order->status}}</span>
                                     </span>
                                 </div>
 

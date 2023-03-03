@@ -1,4 +1,8 @@
 @extends('dashboard.layouts.app')
+@push('css')
+    <!-- Daterange picker -->
+    <link href="{{ asset('dashboard/assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+@endpush
 @section('content')
     <div class="content-body">
         <div class="row page-titles mx-0">
@@ -27,14 +31,17 @@
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
-                                    {{-- <form action="{{ route('dashboard.orders.destroy', 'delete') }}" method="post"
+                                        <a class="btn btn-primary mb-2" href="{{ route('dashboard.export-orders') }}">
+                                            @lang('site.export')
+                                        </a>
+                                    <form action="{{ route('dashboard.orders.destroy', 'delete') }}" method="post"
                                         style="display: inline;">
                                         {{ csrf_field() }}
                                         {{ method_field('delete') }}
                                         <input type="hidden" value="" name="mass_delete" id="mass-delete">
                                         <button type="submit" id="btn-mass-delete" class="btn btn-danger mb-2"
                                             disabled>{{ __('site.mass_delete') }}</button>
-                                    </form> --}}
+                                    </form>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -48,28 +55,24 @@
                                             <th scope="col">{{ __('site.total') }}</th>
                                             <th scope="col">{{ __('site.status') }}</th>
                                             <th scope="col">{{ __('site.date') }}</th>
-                                            <th scope="col">{{__('site.action')}}</th>
-                                            {{-- <th scope="col"><input type="checkbox" value=""
-                                                    id="check-box-delete-all"></th> --}}
+                                            <th scope="col">{{ __('site.action') }}</th>
+                                            <th scope="col"><input type="checkbox" value=""
+                                                    id="check-box-delete-all"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($orders as $index => $order)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>#{{$order->invoice_no}}</td>
-                                                <td>{{$order->user->first_name .' '. $order->user->last_name}}</td>
-                                                <td>{{$order->payment_method ? __('site.online') : __('site.cash')}}</td>
-                                                <td>${{number_format($order->total_price,2)}}</td>
-                                                @if ($order->payment_status == 1)
-                                                <td><span class="rounded-pill bg-success text-white px-3 py-2">@lang('site.paid')</span></td>
-                                                @elseif($order->payment_status == 2)
-                                                <td><span class="rounded-pill bg-warning text-white px-3 py-2">@lang('site.waiting')</span></td>
-                                                @elseif($order->payment_status == 3)
-                                                <td><span class="rounded-pill bg-danger text-white px-3 py-2">@lang('site.unpaid')</span></td>
-                                                @else
-                                                @endif
-                                                <td>{{$order->updated_at->format('M d, Y')}}</td>
+                                                <td>#{{ $order->invoice_no }}</td>
+                                                <td>{{ $order->user->first_name . ' ' . $order->user->last_name }}</td>
+                                                <td>{{ $order->method }}</td>
+                                                <td>${{ number_format($order->total_price, 2) }}</td>
+                                                <td>
+                                                    <span
+                                                    class="rounded-pill {{($order->payment_status == 1 ? 'bg-success' : ($order->payment_status == 2 ? 'bg-warning' : 'bg-danger'))}} text-white px-3 py-2">{{$order->status}}</span>
+                                                </td>
+                                                <td>{{ $order->updated_at->format('M d, Y') }}</td>
                                                 <td>
                                                     <span>
                                                         <a href="{{ route('dashboard.orders.show', $order->id) }}"
@@ -84,12 +87,12 @@
                                                                 class="fa fa-pencil color-muted"></i> </a>
                                                     </span>
                                                 </td>
-                                                {{-- <td>
+                                                <td>
                                                     <span>
                                                         <input type="checkbox" value="{{ $order->id }}"
                                                             class="check-box-delete">
                                                     </span>
-                                                </td> --}}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -97,7 +100,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{$orders->appends(request()->query())->links("pagination::bootstrap-4")}}
+                            {{ $orders->appends(request()->query())->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>
@@ -120,6 +123,33 @@
                             <input type="text" class="form-control" name="search" placeholder="@lang('site.search')"
                                 value="{{ request()->search }}">
                         </div>
+                        <div class="form-group">
+                            <select name="status" class="form-control">
+                                <option disabled selected>@lang('site.select') @lang('site.status')</option>
+                                <option value="1" {{ request()->status == 1 ? 'selected' : '' }}>@lang('site.paid')
+                                </option>
+                                <option value="2" {{ request()->status == 2 ? 'selected' : '' }}>@lang('site.pending')
+                                </option>
+                                <option value="3" {{ request()->status == 3 ? 'selected' : '' }}>@lang('site.unpaid')
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select name="payment" class="form-control">
+                                <option disabled selected>@lang('site.select') @lang('site.payment')</option>
+                                <option value="0" {{ request()->payment == 0 ? 'selected' : '' }}>@lang('site.cash')
+                                </option>
+                                <option value="1" {{ request()->payment == 1 ? 'selected' : '' }}>@lang('site.online')
+                                </option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>@lang('site.date')</label>
+                                    <input class="form-control input-daterange-datepicker" type="text" name="daterange">
+                                </div>
+                            </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -133,5 +163,11 @@
     </div>
 @endpush
 @push('js')
-    {{-- <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script> --}}
+    <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script>
+    <!-- Daterangepicker -->
+    <!-- momment js is must -->
+    <script src="{{ asset('dashboard/assets/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <!-- Daterangepicker -->
+    <script src="{{ asset('dashboard/assets/js/plugins-init/bs-daterange-picker-init.js') }}"></script>
 @endpush

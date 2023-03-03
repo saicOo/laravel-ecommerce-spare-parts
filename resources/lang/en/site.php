@@ -15,7 +15,8 @@ return [
     'home' => 'Home',
     'profile' => 'Profile',
     'my_account' => 'My Account',
-    'settings' => 'settings',
+    'settings' => 'Settings',
+    'reports' => 'Reports',
 
     //  messages
     'added_successfully' => 'added successfully',
@@ -170,6 +171,7 @@ return [
     'paid' => 'paid',
     'unpaid' => 'unpaid',
     'waiting' => 'Waiting',
+    'pending' => 'Pending',
     'online' => 'Online',
     'cash' => 'Cash',
     'remaining_amount' => 'remaining amount',
@@ -198,6 +200,8 @@ return [
     'products' => 'products',
     'product' => 'product',
     'stock' => 'stock',
+    'Out Of Stock' => 'Out Of Stock',
+    'In Stock' => 'In Stock',
     'attention_stock' => 'attention stock',
     'wholesale_unit' => 'wholesale unit',
     'retail_unit' => 'retail unit',

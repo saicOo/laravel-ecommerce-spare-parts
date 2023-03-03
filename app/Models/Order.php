@@ -9,6 +9,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $appends = ['status','method'];
 
     public function user()
     {
@@ -26,6 +27,25 @@ class Order extends Model
     public function transaction()
     {
         return $this->hasOne(Transaction::class);
+    }
+
+    public function getStatusAttribute(){
+        switch ($this->payment_status) {
+            case 1:
+                return __('site.paid');
+                break;
+            case 2:
+                return __('site.pending');
+                break;
+
+            default:
+            return __('site.unpaid');
+                break;
+        };
+    }
+
+    public function getMethodAttribute(){
+        return $this->payment_method == 0 ?  __('site.cash') : __('site.online');
     }
 
 }

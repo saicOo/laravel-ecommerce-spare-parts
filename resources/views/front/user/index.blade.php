@@ -80,14 +80,7 @@
                                                 <tr>
                                                     <td>#{{$order->invoice_no}}</td>
                                                     <td>{{$order->updated_at->format('M d, Y')}}</td>
-                                                    @if ($order->payment_status == 1)
-                                                    <td class="alert-success">@lang('site.paid')</td>
-                                                    @elseif($order->payment_status == 2)
-                                                    <td class="alert-warning">@lang('site.waiting')</td>
-                                                    @elseif($order->payment_status == 3)
-                                                    <td class="alert-danger">@lang('site.unpaid')</td>
-                                                    @else
-                                                    @endif
+                                                    <td class="{{($order->payment_status == 1 ? 'alert-success' : ($order->payment_status == 2 ? 'alert-warning' : 'alert-danger'))}}">{{$order->status}}</td>
                                                     <td>{{$order->payment_method ? __('site.online') : __('site.cash')}}</td>
                                                     <td>${{number_format($order->total_price,2)}}</td>
                                                     <td class="text-center"><a class="view" href="{{route('orders.show',$order->id)}}"><u>View</u></a>
