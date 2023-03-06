@@ -14,7 +14,7 @@ class SupplierController extends Controller
         $this->middleware('auth:admin');
 
     }
-    
+
     public function index(Request $request)
     {
         $this->authorize('check-permissions', 'read_users');
@@ -37,8 +37,15 @@ class SupplierController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             "phone"=>"required|digits:11",
+            "account_status"=>"required|in:1,2,3",
+            "current_account"=>"numeric|max:1000000",
         ]);
-        $supplier = Supplier::create($request->all());
+        $request_data = $request->all();
+        if($request->exists('current_account') && $request->account_status == 1){
+            $request_data['current_account'] = 0 - $request->current_account;
+        }
+        // dd($request_data['current_account']);
+        $supplier = Supplier::create($request_data);
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.suppliers.index');
     }
@@ -64,7 +71,18 @@ class SupplierController extends Controller
             'name' => ['required', 'string', 'max:255'],
             "phone"=>"required|digits:11",
         ]);
-        $supplier->update($request->all());
+        $request_data = $request->all();
+        if($request->exists('amount_paid')){
+            $request_data = $request->except(['amount_paid','account_status']);
+            $supplier->start_account = $supplier->current_account;
+            if($request->account_status == 1){
+                $supplier->current_account -= $request->amount_paid;
+            }else{
+                $supplier->current_account += $request->amount_paid;
+            }
+            $request_data['account_status'] = ($supplier->current_account == 0 ? 3 : ($supplier->current_account > 0 ? 2 : 1));
+        }
+        $supplier->update($request_data);
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.suppliers.index');
     }

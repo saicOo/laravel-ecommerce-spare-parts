@@ -36,6 +36,23 @@
                                             <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $supplier->phone }}">
                                         </div>
                                     </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>@lang('site.status')</label>
+                                            <select class="form-control @error('account_status') is-invalid @enderror"
+                                                name="account_status" id="account-status">
+                                                <option disabled selected>@lang('site.select') @lang('site.status')</option>
+                                                <option value="2">@lang('site.debit')</option>
+                                                <option value="1">@lang('site.credit')</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>@lang('site.amount_paid')</label>
+                                            <input type="numebr" class="form-control @error('amount_paid') is-invalid @enderror" id="current-account" name="amount_paid" value="{{ old('amount_paid') }}" disabled>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="form-group text-center">
                                             <button type="submit" class="btn btn-rounded btn-primary">@lang('site.update')</button>
@@ -52,19 +69,13 @@
 @endsection
 @push('js')
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("body").on("change", "#checkbox-password", function() {
-            let deleteId = $(this).val();
-            if ($(this).prop("checked")) {
-                $(".disabled-password").each(function(index) {
-                    $(this).attr("disabled", false);
-                });
-            } else {
-                $(".disabled-password").each(function(index) {
-                    $(this).attr("disabled", true);
-                });
-            }
-        }); //end of inputs check box change
-    });
+    $(document).on('change', '#account-status', function() {
+        var accountStatus = $(this).val();
+        if(accountStatus == 1 || accountStatus == 2){
+            $("#current-account").attr("disabled", false);
+        }else{
+            $("#current-account").attr("disabled", true);
+        }
+    }); // change car
 </script>
 @endpush

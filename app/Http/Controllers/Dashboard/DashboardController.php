@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -37,14 +38,16 @@ class DashboardController extends Controller
           )->whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
           ->groupBy('month', 'year')->where('payment_status',3)->get();
 
-        $total_sales = Order::where('payment_status',1)->sum('total_price');
+          $reports = Report::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->get();
+
+          $total_sales = Order::where('payment_status',1)->sum('total_price');
         $orders_count = Order::count();
         $categories_count = Category::count();
         $brands_count = Brand::count();
         $products_count = Product::count();
         $clients_count = User::count();
         $admins_count = Admin::count();
-        return view('dashboard.index',compact('admins_count','clients_count','products_count'
+        return view('dashboard.index',compact('reports','admins_count','clients_count','products_count'
         ,'categories_count','orders_count','total_sales','brands_count','sales_amount_paid','sales_amount_unpaid'));
     }
 }

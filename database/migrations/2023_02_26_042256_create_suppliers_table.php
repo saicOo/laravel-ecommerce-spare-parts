@@ -17,6 +17,9 @@ class CreateSuppliersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone');
+            $table->double('start_account', 10, 2)->nullable();
+            $table->double('current_account', 10, 2)->nullable();
+            $table->boolean('account_status')->default(3)->comment('1=>credit ,2=>debit,3=>balanced');
             $table->timestamps();
         });
     }

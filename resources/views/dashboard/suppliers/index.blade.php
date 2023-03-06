@@ -45,6 +45,9 @@
                                             <th scope="col">#</th>
                                             <th scope="col">{{ __('site.name') }}</th>
                                             <th scope="col">{{ __('site.phone') }}</th>
+                                            <th scope="col">{{ __('site.status') }}</th>
+                                            <th scope="col">{{ __('site.start_account') }}</th>
+                                            <th scope="col">{{ __('site.current_account') }}</th>
                                             <th scope="col">{{__('site.action')}}</th>
                                             <th scope="col"><input type="checkbox" value=""
                                                     id="check-box-delete-all"></th>
@@ -56,6 +59,9 @@
                                                 <td>{{ $index + 1 }}</td>
                                                 <td><a href="#">{{ $supplier->name }}</a></td>
                                                 <td>{{ $supplier->phone }}</td>
+                                                <td>{{ $supplier->status }}</td>
+                                                <td>${{ number_format($supplier->start_account, 2)  }}</td>
+                                                <td>${{ number_format($supplier->current_account, 2)  }}</td>
                                                 <td>
                                                     <span>
                                                         <a href="{{ route('dashboard.suppliers.edit', $supplier->id) }}"

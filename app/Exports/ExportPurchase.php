@@ -22,7 +22,7 @@ class ExportPurchase implements FromCollection, WithHeadings, WithMapping
         return [
             $purchases->invoice_no,
             $purchases->total_price,
-            $purchases->type_method,
+            $purchases->type,
             $purchases->amount_paid,
             $purchases->status,
             $purchases->supplier->name,

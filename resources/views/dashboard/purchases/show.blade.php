@@ -27,7 +27,7 @@
                                 <h4 class="text-uppercase">@lang('site.invoice')</h4>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.invoice_no'):</span><span class="ml-1">#{{ $purchase->invoice_no }}</span></div>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.date'):</span><span class="ml-1">{{ $purchase->updated_at->format('M d, Y') }}</span></div>
-                                <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.type'):</span><span class="ml-1">{{ $purchase->type_method }}</span></div>
+                                <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.type'):</span><span class="ml-1">{{ $purchase->type }}</span></div>
                                 <div class="billed"><span class="font-weight-bold text-uppercase">@lang('site.status'):</span><span class="ml-1">{{ $purchase->status }}</span></div>
                             </div>
                             <div class="col-md-3">

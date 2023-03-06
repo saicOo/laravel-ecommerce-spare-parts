@@ -71,10 +71,10 @@
                                                 <td>${{ number_format($purchase->total_price, 2) }}</td>
                                                 <td>
                                                     <span
-                                                        class="rounded-pill {{($purchase->payment_status == 1 ? 'bg-success' : ($purchase->payment_status == 2 ? 'bg-warning' : 'bg-danger'))}} text-white px-3 py-2">{{$purchase->status}}</span>
+                                                        class="rounded-pill {{$purchase->payment_status == 1 ? 'bg-success' : 'bg-warning'}} text-white px-3 py-2">{{$purchase->status}}</span>
                                                 </td>
                                                 <td>
-                                                    {{$purchase->type_method}}
+                                                    {{$purchase->type}}
                                                 </td>
                                                 <td>{{ $purchase->updated_at->format('M d, Y') }}</td>
                                                 <td>
@@ -84,12 +84,14 @@
                                                             title="" data-original-title="Show"><i
                                                                 class="fa fa-external-link color-muted"></i> </a>
                                                     </span>
+                                                    @if ($purchase->active == 0)
                                                     <span>
                                                         <a href="{{ route('dashboard.purchases.edit', $purchase->id) }}"
                                                             class="mr-4" data-toggle="tooltip" data-placement="top"
-                                                            title="" data-original-title="Edit"><i
-                                                                class="fa fa-pencil color-muted"></i> </a>
+                                                            title="" data-original-title="اعتماد"><i
+                                                                class="fa fa-chevron-circle-down color-muted"></i> </a>
                                                     </span>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <span>
@@ -137,11 +139,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select name="type" class="form-control">
+                            <select name="payment_type" class="form-control">
                                 <option disabled selected>@lang('site.select') @lang('site.type')</option>
-                                <option value="1" {{ request()->type == 1 ? 'selected' : '' }}>@lang('site.new')
+                                <option value="1" {{ request()->payment_type == 1 ? 'selected' : '' }}>@lang('site.new')
                                 </option>
-                                <option value="2" {{ request()->type == 2 ? 'selected' : '' }}>@lang('site.return')
+                                <option value="2" {{ request()->payment_type == 2 ? 'selected' : '' }}>@lang('site.return')
                                 </option>
                             </select>
                         </div>

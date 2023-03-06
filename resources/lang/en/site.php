@@ -174,7 +174,13 @@ return [
     'pending' => 'Pending',
     'online' => 'Online',
     'cash' => 'Cash',
+    'defrred' => 'Defrred',
+    'credit' => 'credit',
+    'debit' => 'debit',
+    'balanced' => 'balanced',
     'remaining_amount' => 'remaining amount',
+    'start_account' => 'start account',
+    'current_account' => 'current account',
     // information products
     'cars' => 'Cars',
     'car' => 'Car',

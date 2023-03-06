@@ -45,10 +45,20 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.type')</label>
-                                            <select class="form-control @error('type') is-invalid @enderror"
-                                                name="type">
+                                            <select class="form-control @error('payment_type') is-invalid @enderror"
+                                                name="payment_type">
                                                 <option value="1">@lang('site.new')</option>
                                                 <option value="2">@lang('site.return')</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label>@lang('site.status')</label>
+                                            <select class="form-control @error('payment_status') is-invalid @enderror"
+                                                name="payment_status">
+                                                <option value="1">@lang('site.cash')</option>
+                                                <option value="2">@lang('site.defrred')</option>
                                             </select>
                                         </div>
                                     </div>

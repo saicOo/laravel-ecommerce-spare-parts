@@ -37,11 +37,12 @@ class PurchaseController extends Controller
             return $query->where('name','Like','%'.$request->search.'%');
         })->when($request->status,function ($query) use ($request){
             return $query->where('payment_status',$request->status);
-        })->when($request->type,function ($query) use ($request){
-            return $query->where('type',$request->type);
+        })->when($request->payment_type,function ($query) use ($request){
+            return $query->where('payment_type',$request->payment_type);
         })->when($request->daterange,function ($query) use ($request){
             return $query->whereBetween('created_at',[$request->daterange[0],$request->daterange[1]]);
         })->latest()->paginate(10);
+
         return view('dashboard.purchases.index', compact('purchases'));
     }
 
@@ -71,7 +72,8 @@ class PurchaseController extends Controller
             'products.*.price' => 'required|numeric',
             'products' => 'required|array',
             'products.*' => 'required',
-            'type' => 'required',
+            'payment_type' => 'required',
+            'payment_status' => 'required',
         ]);
         $nextInvoiceNumber = $this->PurchaseInvoiceIncrement();
         $purchase = Purchase::create([
@@ -81,37 +83,21 @@ class PurchaseController extends Controller
         $purchase->products()->attach($request->products);
         $total_price = 0;
         // start foreach
-        foreach ($request->products as $id => $purchase_product) {
-
-            $product = Product::FindOrFail($id);
-            if($request->type == 1){
-                $this->ReportPurchaseIncrement($purchase_product['price'] * $purchase_product['quantity'],$purchase_product['quantity']);
-                // pricing policy
-                $balance_value = $product->stock * $product->purchase_price;
-                $new_balance_value = $purchase_product['quantity'] * $purchase_product['price'];
-                $total_balance_value = $balance_value + $new_balance_value;
-                $total_quantity = $purchase_product['quantity'] + $product->stock;
-                // end
-                $product->update([
-                        'stock' => $product->stock + $purchase_product['quantity'],
-                        'purchase_price' => $total_balance_value / $total_quantity,
-                                ]);
-            }else{
-                $product->update([
-                    'stock' => $product->stock - $purchase_product['quantity'],
-                            ]);
-            }
-
+        foreach ($request->products as $purchase_product) {
             $total_price +=  $purchase_product['price'] * $purchase_product['quantity'];
         }//end foreach
+        if($request->payment_status == 1){ // if purchase payment status cash
+            $request->amount_paid = $total_price;
+        }
+
         // start update purchases data table
-        $status = ($request->type == 2 ? 3 : ($total_price > $request->amount_paid ? 2 : 1));
         $purchase->update([
             'total_price' => $total_price,
-            'amount_paid' => $request->type == 2 ? 0 : $request->amount_paid,
-            'payment_status' => $status,
-            'type' => $request->type,
+            'amount_paid' => $request->amount_paid,
+            'payment_status' => $request->payment_status,
+            'payment_type' => $request->payment_type,
         ]);// start update purchases data table
+
 
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.purchases.index');
@@ -136,7 +122,50 @@ class PurchaseController extends Controller
      */
     public function edit(Purchase $purchase)
     {
-        //
+
+        // start stock area
+        foreach ($purchase->products as $index => $product) {
+
+            if($purchase->payment_type == 1){ // if purchase payment type new
+                // update daily report
+                $this->ReportPurchaseIncrement($product->pivot->price * $product->pivot->quantity,$product->pivot->quantity);
+                // pricing policy
+                $balance_value = $product->stock * $product->purchase_price;
+                $new_balance_value = $product->pivot->quantity * $product->pivot->price;
+                $total_balance_value = $balance_value + $new_balance_value;
+                $total_quantity = $product->pivot->quantity + $product->stock;
+                // end
+                $product->update([
+                        'stock' => $product->stock + $product->pivot->quantity,
+                        'purchase_price' => $total_balance_value / $total_quantity,
+                                ]);
+            }else{ // if purchase payment type return
+                $product->update([
+                    'stock' => $product->stock - $product->pivot->quantity,
+                        ]);
+            }
+        }// end stock area
+        // start supplier area
+        $current_account = $purchase->supplier->current_account;
+        if($purchase->payment_type == 1){ // if purchase payment type new
+            $append_account = $purchase->total_price - $purchase->amount_paid;
+            $current_account = $current_account -= $append_account; //هنقص من حساب المورد
+
+        }else{  // if purchase payment type return
+            $current_account = $current_account += $purchase->amount_paid; //هزود من حساب المورد
+        }
+        $account_status = ($current_account == 0 ? 3 : ($current_account > 0 ? 2 : 1));
+        $purchase->supplier()->update([
+            'start_account' => $purchase->supplier->current_account,
+            'current_account' => $current_account,
+            'account_status' => $account_status,
+        ]);
+        $purchase->update([
+            'active'=> 1,
+        ]);
+        // end supplier area
+        session()->flash('success', __('site.added_successfully'));
+        return redirect()->route('dashboard.purchases.index');
     }
 
     /**
@@ -148,7 +177,7 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, Purchase $purchase)
     {
-        //
+
     }
 
     /**
