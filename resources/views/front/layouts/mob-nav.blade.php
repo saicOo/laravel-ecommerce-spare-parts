@@ -23,7 +23,7 @@
         @else
         <li class="lvl1"><a href="{{ route('users.index') }}">@lang('site.my_account')</a></li>
         <li class="lvl1"><a href="{{ route('logout') }}" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();"> @lang('site.logout')<form id="logout-form" action="{{ route('logout') }}" method="POST"
+            document.getElementById('logout-mob').submit();"> @lang('site.logout')<form id="logout-mob" action="{{ route('logout') }}" method="POST"
             style="display: none;">
             @csrf
         </form></a></li>

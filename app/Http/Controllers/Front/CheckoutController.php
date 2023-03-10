@@ -83,7 +83,6 @@ class CheckoutController extends Controller
             $nextInvoiceNumber = date('Y').date('m').str_pad($newInvoiceNo,6,0,STR_PAD_LEFT);
         }
         }
-    // dd($nextInvoiceNumber);
 
         $order = $user->orders()->create([
             'invoice_no' => $nextInvoiceNumber,
@@ -113,7 +112,7 @@ class CheckoutController extends Controller
             'sub_total' => $sub_total,
             'total_price' => $total_price,
             'payment_method' => $payment_method == "online" ? 1 : 0,
-            'address' => $user->state.', '.$user->city.', '.$user->street,
+            'address' => $user->governorate.', '.$user->city.', '.$user->street,
             'building' => $user->building,
             'apartment' => $user->apartment,
             'floor' => $user->floor,
@@ -173,7 +172,7 @@ class CheckoutController extends Controller
             }
 
             return redirect()->route('users.index');
-            // return view('state',compact('id','order_id','success','pending','hmac'));
+            // return view('governorate',compact('id','order_id','success','pending','hmac'));
         }
     }
 

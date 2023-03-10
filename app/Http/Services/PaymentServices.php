@@ -100,7 +100,7 @@ class PaymentServices
                 "city"=> $user->city,
                 "country"=> "Egypt",
                 "last_name"=> $user->last_name,
-                "state"=> $user->state
+                "governorate"=> $user->governorate
             ],
             "currency"=> "EGP",
             "integration_id"=> $this->setting->payment_integration_id

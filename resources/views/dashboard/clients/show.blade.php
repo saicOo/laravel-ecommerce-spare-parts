@@ -34,7 +34,7 @@
                                 </div>
 
                                 <h4>@lang('site.address')</h4>
-                                <p class="text-muted">{{ $client->state . ', ' . $client->city . ', ' . $client->street }} |
+                                <p class="text-muted">{{ $client->governorate . ', ' . $client->city . ', ' . $client->street }} |
                                     {{ __('site.building') . ': ' . $client->building . ', ' . __('site.apartment') . ': ' . $client->apartment . ', ' . __('site.floor') . ': ' . $client->floor }}
                                 </p>
                                 <ul class="card-profile__info">

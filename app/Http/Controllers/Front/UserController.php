@@ -61,7 +61,7 @@ class UserController extends Controller
     private function validatorAddress($request)
     {
         return Validator::make($request, [
-            'state' => ['required', 'string', 'max:255'],
+            'governorate' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'street' => ['required', 'string', 'max:255'],
             'building' => ['required', 'integer', 'max:1000'],
@@ -89,7 +89,7 @@ class UserController extends Controller
     private function updateAddress(array $data)
     {
         auth()->user()->update( [
-            'state' => $data['state'],
+            'governorate' => $data['governorate'],
             'city' => $data['city'],
             'street' => $data['street'],
             'building' => $data['building'],

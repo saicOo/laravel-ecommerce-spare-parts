@@ -2,7 +2,7 @@ $(document).ready(function() {
     $("#product-ajax").select2({
         placeholder: "Select Product",
         // minimumInputLength: 2,
-        // templateResult: formatState,
+        // templateResult: formatGovernorate,
         ajax: {
             url: $("#product-ajax").data("url-products"),
             dataType: 'json',

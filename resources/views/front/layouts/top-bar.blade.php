@@ -23,8 +23,8 @@
                             <li><a href="{{ route('users.index') }}">@lang('site.my_account')</a></li>
                             <li><a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();">@lang('site.logout')</a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          document.getElementById('logout-bar').submit();">@lang('site.logout')</a>
+                                <form id="logout-bar" action="{{ route('logout') }}" method="POST"
                                 style="display: none;">
                                 @csrf
                             </form></li>

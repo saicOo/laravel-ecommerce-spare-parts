@@ -93,7 +93,7 @@ return [
     'supplier' => 'supplier',
     'phone' => 'phone',
     'address' => 'address',
-    'state' => 'state',
+    'governorate' => 'governorate',
     'city' => 'city',
     'street' => 'street',
     'building' => 'building',

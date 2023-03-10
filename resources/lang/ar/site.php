@@ -92,7 +92,7 @@ return [
     'supplier' => 'المورد',
     'phone' => 'التلفون',
     'address' => 'العنوان',
-    'state' => 'محافظة',
+    'governorate' => 'محافظة',
     'city' => 'مدينة',
     'street' => 'شارع',
     'building' => 'مبني',
