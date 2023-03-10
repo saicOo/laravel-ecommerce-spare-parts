@@ -234,7 +234,7 @@
                                                 <label for="address_governorate" class="form-label">@lang('site.governorate')
                                                     <span class="required">*</span></label>
                                                     <input type="hidden" name="governorate" id="inputGovernorate" value="{{$user->governorate}}">
-                                                <select id="address_governorate"  data-default="United governorates"
+                                                <select id="address_governorate"
                                                     class="form-control  @error('governorate') is-invalid @enderror">
                                                 </select>
                                                 @error('governorate')
@@ -246,7 +246,7 @@
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
                                                 <label for="address_city" class="form-label">@lang('site.city') <span
                                                         class="required">*</span></label>
-                                                <select id="address_city" name="city" data-default=""
+                                                <select id="address_city" name="city"
                                                     class="form-control @error('city') is-invalid @enderror">
                                                 </select>
                                                 @error('city')

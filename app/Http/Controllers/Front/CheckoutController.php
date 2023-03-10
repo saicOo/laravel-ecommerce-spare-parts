@@ -41,11 +41,22 @@ class CheckoutController extends Controller
     {
         $request->validate([
             'selector' => 'required|in:cash,online',
+            'governorate' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'street' => 'required|string|max:255',
+            'building' => 'required|integer|max:1000',
+            'apartment' => 'required|integer|max:100',
+            'floor' => 'required|integer|max:50',
+            "phone"=>   'required|digits:11',
         ]);
         $user = auth()->user();
-        if(!$user->phone || !$user->city){
-            return redirect()->back()->withErrors(["missing_data" => __('site.missing_data')])->withInput();
-        }
+        $user->governorate = $request->governorate;
+        $user->city = $request->city;
+        $user->street = $request->street;
+        $user->building = $request->building;
+        $user->apartment = $request->apartment;
+        $user->floor = $request->floor;
+        $user->phone = $request->phone;
         $checkStock = true;
         foreach ($user->products as $product) {
             $checkStock = $product->stock < $product->pivot->quantity;
