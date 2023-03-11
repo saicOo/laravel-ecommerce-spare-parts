@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <div class="row justify-content-between mb-3">
                 <div class="col-12 ">
-                  
+
                 </div>
             </div>
             <div class="row">
@@ -99,7 +99,7 @@
                                 <div class="col-lg-4 col-sm-5"></div>
                             </div>
                         </div>
-                        <div class="text-right mb-3"><button class="btn btn-primary btn-sm mr-5" type="button">@lang('site.print')</button></div>
+                        <div class="text-right mb-3"><a class="btn btn-primary btn-sm mr-5" href="{{route('dashboard.export-invoice-order',['id'=>$order->id])}}">@lang('site.print')</a></div>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@ use App\Traits\InvoiceTrait;
 // Exel Purchase
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportPurchase;
+use App\Exports\ExportPurchaseInvoice;
 // ./
 use Illuminate\Http\Request;
 
@@ -198,5 +199,10 @@ class PurchaseController extends Controller
     public function exportPurchases(Request $request){
         $this->authorize('check-permissions', 'create_admins');
         return Excel::download(new ExportPurchase, 'purchases.xlsx');
+    }
+
+    public function exportInvoicePurchase($id)
+    {
+        return Excel::download(new ExportPurchaseInvoice($id), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF);
     }
 }

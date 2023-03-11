@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 // Exel Order
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportOrder;
+use App\Exports\ExportOrderInvoice;
 // ./
 use Illuminate\Http\Request;
 
@@ -104,5 +105,10 @@ class OrderController extends Controller
     public function exportOrders(Request $request){
         $this->authorize('check-permissions', 'create_admins');
         return Excel::download(new ExportOrder, 'orders.xlsx');
+    }
+
+    public function exportInvoiceOrder($id)
+    {
+        return Excel::download(new ExportOrderInvoice($id), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF);
     }
 }

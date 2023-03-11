@@ -77,7 +77,7 @@ return [
     'list' => 'قائمة',
     'count' => 'عدد',
     'choose' => 'اختر',
-    'add_to_cart' => 'أضف الي عربة التسوق',
+    'add_to_cart' => 'أضف الي العربة',
     'cart' => 'العربة',
     'sold_out' => 'نفذ',
     'showing' => 'عرض',
@@ -227,4 +227,13 @@ return [
     'Log in Your Account' => 'تسجيل الدخول إلى حسابك',
 
     'Select Your Vehicle' => 'اختر سيارتك',
+
+    'home_delivery' => 'توصيل للمنزل',
+    'home_delivery_p' => 'اسرع خدمة توصيل',
+    'secure_payment' => 'دفع امن',
+    'secure_payment_p' => 'نحن نضمن الدفع الآمن',
+    'money_back_guarantee' => 'ضمان استعادة الاموال',
+    'money_back_guarantee_p' => 'أي عودة في غضون 30 يومًا',
+
+
 ];

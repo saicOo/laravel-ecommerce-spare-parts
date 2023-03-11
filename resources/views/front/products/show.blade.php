@@ -169,22 +169,22 @@
                                         <div class="col-12 d-flex align-items-center item">
                                             <div class="icons"><i class="cp cp-truck"></i></div>
                                             <div class="detail">
-                                                <b>Free Shipping &amp; Returns</b>
-                                                <p>For all orders over $99</p>
+                                                <b>@lang('site.home_delivery')</b>
+                                                <p>@lang('site.home_delivery_p')</p>
                                             </div>
                                         </div>
                                         <div class="col-12 d-flex align-items-center item">
                                             <div class="icons"><i class="cp cp-lock"></i></div>
                                             <div class="detail">
-                                                <b>Secure Payment</b>
-                                                <p>We ensure secure payment</p>
+                                                <b>@lang('site.secure_payment')</b>
+                                                <p>@lang('site.secure_payment_p')</p>
                                             </div>
                                         </div>
                                         <div class="col-12 d-flex align-items-center item">
                                             <div class="icons"><i class="cp cp-hand-holding-usd"></i></div>
                                             <div class="detail">
-                                                <b>Money Back Guarantee</b>
-                                                <p>Any back within 30 days</p>
+                                                <b>@lang('site.money_back_guarantee')</b>
+                                                <p>@lang('site.money_back_guarantee_p')</p>
                                             </div>
                                         </div>
                                     </div>

@@ -54,8 +54,8 @@ class CategoryController extends Controller
     {
         $this->authorize('check-permissions', 'create_categories');
         $rules = [
-            'name_ar' => 'required|max:50|unique:categories,name_ar',
-            'name_en' => 'required|max:50|unique:categories,name_en',
+            'name_ar' => 'required|string|max:50|unique:categories,name_ar',
+            'name_en' => 'required|string|max:50|unique:categories,name_en',
             'category_type' => 'required|in:sub_category,primary_category',
         ];
         if($request->category_type === 'sub_category'){
@@ -88,8 +88,8 @@ class CategoryController extends Controller
     {
         $this->authorize('check-permissions', 'update_categories');
         $request->validate([
-            'name_ar' => 'required|max:50|unique:categories,name_ar,' . $category->id,
-            'name_en' => 'required|max:50|unique:categories,name_ar,' . $category->id,
+            'name_ar' => 'required|string|max:50|unique:categories,name_ar,' . $category->id,
+            'name_en' => 'required|string|max:50|unique:categories,name_ar,' . $category->id,
         ]);
         $category->update($request->all());
         session()->flash('success', __('site.added_successfully'));

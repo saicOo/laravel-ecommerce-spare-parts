@@ -28,7 +28,7 @@
                 <div class="col-xxl-12 col-xl-12">
                     <div class="card">
                         <div class="card-header pb-0">
-                            <h4 class="card-title">@lang('site.create') @lang('site.product')</h4>
+                            <h4 class="card-title">@lang('site.edit') @lang('site.product')</h4>
                         </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('dashboard.products.update',$product->id) }}"

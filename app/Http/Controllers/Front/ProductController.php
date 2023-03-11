@@ -20,7 +20,7 @@ class ProductController extends Controller
         $factoryCars = FactoryCar::all();
         $products = Product::with(['category','brand'])
         ->when($request->search,function ($query) use ($request){ // if search
-            return $query->whereFullText('name_en',$request->search)->orWhereFullText('name_ar',$request->search);
+            return $query->where('name_en','Like','%'.$request->search.'%')->OrWhere('name_ar','Like','%'.$request->search.'%');
         })->when($request->car_id,function ($query) use ($request){ // if car
             return $query->where('car_id',$request->car_id)->where('start_year','<=',$request->year)->where('end_year','>=',$request->year);
         })->when($request->max_price,function ($q) use ($request){ // if price

@@ -10,7 +10,7 @@
     <title>{{$setting->name}}</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('dashboard/assets/images/favicon.png') }}">
-    
+
     <link href="{{ asset('dashboard/assets/css/style.css') }}" rel="stylesheet">
     @if (app()->getLocale() == 'ar')
         <style>

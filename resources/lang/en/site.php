@@ -229,4 +229,10 @@ return [
     'Log in Your Account' => 'Log in Your Account',
     'Select Your Vehicle' => 'Select Your Vehicle',
 
+    'home_delivery' => 'Home Delivery',
+    'home_delivery_p' => 'The fastest delivery service',
+    'secure_payment' => 'Secure Payment',
+    'secure_payment_p' => 'We ensure secure payment',
+    'money_back_guarantee' => 'Money Back Guarantee',
+    'money_back_guarantee_p' => 'Any back within 30 days',
 ];

@@ -53,8 +53,8 @@ class FactoryCarController extends Controller
     {
         $this->authorize('check-permissions', 'create_cars');
         $request->validate([
-            'name_ar' => 'required|max:50|unique:factory_cars,name_ar',
-            'name_en' => 'required|max:50|unique:factory_cars,name_en',
+            'name_ar' => 'required|string|max:50|unique:factory_cars,name_ar',
+            'name_en' => 'required|string|max:50|unique:factory_cars,name_en',
         ]);
         FactoryCar::create($request->all());
         session()->flash('success', __('site.added_successfully'));
@@ -78,8 +78,8 @@ class FactoryCarController extends Controller
     {
         $this->authorize('check-permissions', 'update_cars');
         $request->validate([
-            'name_ar' => 'required|max:50|unique:factory_cars,name_ar,' . $factoryCar->id,
-            'name_en' => 'required|max:50|unique:factory_cars,name_en,' . $factoryCar->id,
+            'name_ar' => 'required|string|max:50|unique:factory_cars,name_ar,' . $factoryCar->id,
+            'name_en' => 'required|string|max:50|unique:factory_cars,name_en,' . $factoryCar->id,
         ]);
         $factoryCar->update($request->all());
         session()->flash('success', __('site.added_successfully'));

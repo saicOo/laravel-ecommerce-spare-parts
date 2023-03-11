@@ -53,8 +53,8 @@ class BrandController extends Controller
     {
         $this->authorize('check-permissions', 'create_brands');
         $request->validate([
-            'name_ar' => 'required|max:50|unique:brands,name_ar',
-            'name_en' => 'required|max:50|unique:brands,name_en',
+            'name_ar' => 'required|string|max:50|unique:brands,name_ar',
+            'name_en' => 'required|string|max:50|unique:brands,name_en',
         ]);
         Brand::create($request->all());
         session()->flash('success', __('site.added_successfully'));
@@ -122,7 +122,7 @@ class BrandController extends Controller
 
     public function exportBrands(Request $request){
         $this->authorize('check-permissions', 'create_brands');
-        return Excel::download(new ExportBrand, 'brands.xlsx');
+        return Excel::download(new ExportBrand, 'brands.pdf', \Maatwebsite\Excel\Excel::MPDF);
     }
 
 }

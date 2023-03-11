@@ -42,11 +42,13 @@ function(){
         //routes purchases
         Route::resource('purchases', 'PurchaseController');
         Route::get('/export-purchases','PurchaseController@exportPurchases')->name('export-purchases');
+        Route::get('/export-invoice-purchase/{id}','PurchaseController@exportInvoicePurchase')->name('export-invoice-purchase');
         //routes users
         Route::resource('clients', 'ClientController')->only(['index','show']);
         // routes orders
         Route::resource('orders', 'OrderController');
         Route::get('/export-orders','OrderController@exportOrders')->name('export-orders');
+        Route::get('/export-invoice-order/{id}','OrderController@exportInvoiceOrder')->name('export-invoice-order');
         // factory cars routes
         Route::resource('factory-cars', 'FactoryCarController')->except('show');
         Route::post('/import-factoryCars','FactoryCarController@import')->name('import-factoryCars');

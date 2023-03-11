@@ -27,8 +27,8 @@ class ImportBrand implements ToModel, WithValidation,WithHeadingRow
     public function rules(): array
     {
         return [
-            'name_ar' => 'required|string|max:50',
-            'name_en' => 'required|string|max:50',
+            'name_ar' => 'required|string|max:50|unique:brands,name_ar',
+            'name_en' => 'required|string|max:50|unique:brands,name_en',
         ];
     }
 }
