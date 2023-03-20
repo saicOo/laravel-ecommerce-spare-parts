@@ -206,7 +206,7 @@
                     @endforeach
                 ],
                 datasets: [{
-                        label: '# purchases',
+                        label: '# {{__('site.purchases')}}',
                         data: [
                             @foreach ($reports as $report)
                                 {{ $report->purchases_count }},
@@ -217,7 +217,7 @@
                         borderWidth: 1
                     },
                     {
-                        label: '# orders',
+                        label: '# {{__('site.orders')}}',
                         data: [
                             @foreach ($reports as $report)
                                 {{ $report->orders_count }},
@@ -250,7 +250,7 @@
                     @endforeach
                 ],
                 datasets: [{
-                        label: '# purchases',
+                        label: '# {{__('site.purchases')}}',
                         data: [
                             @foreach ($reports as $report)
                                 {{ $report->purchases_amount }},
@@ -261,7 +261,7 @@
                         borderWidth: 1
                     },
                     {
-                        label: '# orders',
+                        label: '# {{__('site.orders')}}',
                         data: [
                             @foreach ($reports as $report)
                                 {{ $report->orders_amount }},

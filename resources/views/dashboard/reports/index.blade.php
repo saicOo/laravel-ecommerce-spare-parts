@@ -46,10 +46,10 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">{{ __('site.orders_amount') }}</th>
-                                            <th scope="col">{{ __('site.orders_count') }}</th>
-                                            <th scope="col">{{ __('site.purchases_amount') }}</th>
-                                            <th scope="col">{{ __('site.purchases_count') }}</th>
+                                            <th scope="col">@lang('site.amount') @lang('site.orders')</th>
+                                            <th scope="col">@lang('site.count') @lang('site.orders')</th>
+                                            <th scope="col">@lang('site.amount') @lang('site.purchases')</th>
+                                            <th scope="col">@lang('site.count') @lang('site.purchases')</th>
                                             <th scope="col">{{ __('site.created_at') }}</th>
                                             <th scope="col">{{ __('site.updated_at') }}</th>
                                             <th scope="col"><input type="checkbox" value=""

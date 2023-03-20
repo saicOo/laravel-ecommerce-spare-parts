@@ -168,6 +168,7 @@ return [
     'sales' => 'sales',
     'sale_price' => 'Sale Price',
     'amount_paid' => 'amount paid',
+    'amount' => 'Amount',
     'paid' => 'paid',
     'unpaid' => 'unpaid',
     'waiting' => 'Waiting',
