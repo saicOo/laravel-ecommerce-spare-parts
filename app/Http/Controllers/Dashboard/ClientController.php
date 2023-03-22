@@ -13,7 +13,8 @@ class ClientController extends Controller
     {
         $this->authorize('check-permissions', 'read_users');
         $clients = User::with('orders')->when($request->search,function ($query) use ($request){
-            return $query->where('name','Like','%'.$request->search.'%');
+            return $query->where('first_name','Like','%'.$request->search.'%')->orWhere('last_name','Like','%'.$request->search.'%')
+            ->orWhere('email','Like','%'.$request->search.'%')->orWhere('phone','Like','%'.$request->search.'%');
         })->latest()->paginate(10);
         return view('dashboard.clients.index', compact('clients'));
     }

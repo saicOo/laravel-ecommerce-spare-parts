@@ -54,7 +54,7 @@ class UserController extends Controller
         return Validator::make($request, [
             'first_name' => ['required', 'string', 'max:255','regex:/^\S*$/u'],
             'last_name' => ['required', 'string', 'max:255','regex:/^\S*$/u'],
-            "phone"=>   ['required','digits:11'],
+            "phone"=>   ['required','digits:11','unique:users'],
         ]);
     }
 

@@ -235,6 +235,10 @@ return [
     'secure_payment_p' => 'نحن نضمن الدفع الآمن',
     'money_back_guarantee' => 'ضمان استعادة الاموال',
     'money_back_guarantee_p' => 'أي عودة في غضون 30 يومًا',
-
+    'selector' => 'الاختيار',
+    'tax'=>'الضريبة المضافة',
+    'shipping' => 'الشحن',
+    'current_account' => 'الرصيد الحالي',
+    'role' => 'الدور',
 
 ];

@@ -14,7 +14,7 @@ class ExportPurchase implements FromCollection, WithHeadings, WithMapping
     */
     public function collection()
     {
-        return Purchase::select('invoice_no','total_price','type','amount_paid','payment_status','supplier_id','created_at')->get();
+        return Purchase::select('invoice_no','total_price','payment_type','amount_paid','payment_status','supplier_id','created_at')->get();
     }
 
     public function map($purchases) : array {
@@ -22,7 +22,7 @@ class ExportPurchase implements FromCollection, WithHeadings, WithMapping
         return [
             $purchases->invoice_no,
             $purchases->total_price,
-            $purchases->type,
+            $purchases->payment_type,
             $purchases->amount_paid,
             $purchases->status,
             $purchases->supplier->name,

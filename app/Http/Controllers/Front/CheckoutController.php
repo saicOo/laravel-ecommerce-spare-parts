@@ -57,6 +57,7 @@ class CheckoutController extends Controller
         $user->apartment = $request->apartment;
         $user->floor = $request->floor;
         $user->phone = $request->phone;
+        $user->update();
         $checkStock = true;
         foreach ($user->products as $product) {
             $checkStock = $product->stock < $product->pivot->quantity;
