@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
         integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <!-- Select 2 -->
+    <!-- Select 2 -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/select2/css/select2.min.css') }}">
 @endpush
 @section('content')
@@ -31,7 +31,7 @@
                             <h4 class="card-title">@lang('site.edit') @lang('site.product')</h4>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('dashboard.products.update',$product->id) }}"
+                            <form method="POST" action="{{ route('dashboard.products.update', $product->id) }}"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 {{ method_field('put') }}
@@ -52,47 +52,51 @@
                                                 value="{{ $product->name_en }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.stock')</label>
                                             <input type="number" class="form-control @error('stock') is-invalid @enderror"
                                                 name="stock" value="{{ $product->stock }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.purchase_price')</label>
-                                            <input type="number" class="form-control @error('purchase_price') is-invalid @enderror"
+                                            <input type="number"
+                                                class="form-control @error('purchase_price') is-invalid @enderror"
                                                 name="purchase_price" value="{{ $product->purchase_price }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.sale_price')</label>
                                             <input type="number" class="form-control @error('price') is-invalid @enderror"
                                                 name="price" value="{{ $product->price }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>@lang('site.country')</label>
-                                            <input type="text"
-                                                class="form-control @error('country') is-invalid @enderror" name="country"
-                                                value="{{ $product->country }}">
+                                            <select class="single-select @error('country') is-invalid @enderror"
+                                                name="country" id="country">
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>@lang('site.category')</label>
-                                            <select  name="category_id" class="dropdown-groups @error('category_id') is-invalid @enderror">
+                                            <select name="category_id"
+                                                class="dropdown-groups @error('category_id') is-invalid @enderror">
                                                 <option value="" disabled>@lang('site.choose') @lang('site.category')...
-                                                @foreach ($primary_categories as $primary_category)
-                                                <optgroup label="{{ $primary_category->name }}">
-                                                    @foreach ($primary_category->subCategories as $sub_category)
-                                                    <option value="{{$sub_category->id}}" {{ $product->category->id  == $sub_category->id ? 'selected':''}}>{{ $sub_category->name }}</option>
+                                                    @foreach ($primary_categories as $primary_category)
+                                                        <optgroup label="{{ $primary_category->name }}">
+                                                            @foreach ($primary_category->subCategories as $sub_category)
+                                                                <option value="{{ $sub_category->id }}"
+                                                                    {{ $product->category->id == $sub_category->id ? 'selected' : '' }}>
+                                                                    {{ $sub_category->name }}</option>
+                                                            @endforeach
+                                                        </optgroup>
                                                     @endforeach
-                                                </optgroup>
-                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -104,61 +108,32 @@
                                                 <option value="" disabled>@lang('site.choose') @lang('site.brand')...
                                                 </option>
                                                 @foreach ($brands as $brand)
-                                                    <option value="{{ $brand->id }}" {{$product->brand->id === $brand->id ?'selected':''}}>{{ $brand->name }}</option>
+                                                    <option value="{{ $brand->id }}"
+                                                        {{ $product->brand->id === $brand->id ? 'selected' : '' }}>
+                                                        {{ $brand->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 mt-2">
-                                        <div class="form-group">
-                                            <div class="form-check">
-                                                <input id="checkbox-car" type="checkbox">
-                                                <label for="checkbox-car" class="form-check-label">@lang('site.add')
-                                                    @lang('site.car')</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
+
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>@lang('site.choose') @lang('site.car')</label>
-                                            <select name="car_id" class="dropdown-groups disabled-car" id="t_model" disabled>
-                                                <option value="" disabled selected>@lang('site.choose') @lang('site.car')...
+                                            <select name="car_id" class="dropdown-groups" id="t_model">
+                                                <option value="" disabled selected>@lang('site.choose')
+                                                    @lang('site.car')...
                                                 </option>
                                                 @foreach ($factory_cars as $factory_car)
-                                                <optgroup label="{{ $factory_car->name }}">
-                                                    @foreach ($factory_car->cars as $car)
-                                                    <option value="{{$car->id}}">{{ $car->name }}</option>
-                                                    @endforeach
-                                                </optgroup>
+                                                    <optgroup label="{{ $factory_car->name }}">
+                                                        @foreach ($factory_car->cars as $car)
+                                                            <option value="{{ $car->id }}">{{ $car->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </optgroup>
                                                 @endforeach
                                             </select>
-
                                         </div>
                                     </div>
-
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>@lang('site.start_year')</label>
-                                            <select
-                                                class="single-select car-year @error('start_year') is-invalid @enderror"
-                                                name="start_year" disabled>
-                                                <option value="" disabled selected>@lang('site.choose') @lang('site.year')...
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>@lang('site.end_year')</label>
-                                            <select
-                                                class="single-select car-year @error('end_year') is-invalid @enderror"
-                                                name="end_year" disabled>
-                                                <option value="" disabled selected>@lang('site.choose') @lang('site.year')...
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
                                     <div class="col-sm-12 col-md-6">
                                         <div class="form-group">
                                             <label>@lang('site.ar.description')</label>
@@ -204,6 +179,8 @@
 @push('js')
     <!-- Summernote -->
     <script src="{{ asset('dashboard/assets/plugins/summernote/js/summernote.min.js') }}"></script>
+    <!-- Summernote init -->
+    <script src="{{ asset('dashboard/assets/js/custom-init/summernote-init.js') }}"></script>
     <!-- Dropify -->
     <script src="{{ asset('dashboard/assets/plugins/dropify/dist/js/dropify.min.js') }}"></script>
     <!-- Dropify init -->
@@ -212,55 +189,26 @@
     <script src="{{ asset('dashboard/assets/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- Select 2 init -->
     <script src="{{ asset('dashboard/assets/js/plugins-init/select2-init.js') }}"></script>
-    <script>
-        $(".single-select").select2({});
-    </script>
+    <script src="{{ asset('dashboard/assets/js/custom-init/select2-init.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $("body").on("change", "#checkbox-car", function() {
-                let deleteId = $(this).val();
-                if ($(this).prop("checked")) {
-                    $(".disabled-car").each(function(index) {
-                        $(this).attr("disabled", false);
-                    });
-                } else {
-                    $(".disabled-car").each(function(index) {
-                        $(this).attr("disabled", true);
-                    });
-                }
-            }); //end of inputs check box change
-        });
-    </script>
-    <script type="text/javascript">
-        $('#summernote-description-ar').summernote({
-            height: 200
-        });
-        $('#summernote-description-en').summernote({
-            height: 200
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).on('change', '#t_model', function() {
-            var carId = $(this).val();
-            console.log(carId);
-            var url = `{{ route('api-car.show', ':carId') }}`;
-            url = url.replace(':carId', carId);
+
+            // ajax get countries
             $.ajax({
-                url: url,
+                url: 'https://restcountries.com/v3.1/all',
                 dataType: "json",
                 method: "get",
                 success: function(data) {
-                    console.log(data);
-                    var years =
-                        '<option value="" disabled selected>{{ __('site.choose') }} {{ __('site.year') }}...</option>';
-                    var arr = data;
-                    for (var i = arr.end_year; i > arr.start_year; i--) {
-                        years += '<option value="' + i + '">' + i + '</option>';
+                    var countries = [];
+                    countries +=
+                        `<option value="{{ $product->country }}" selected >{{ $product->country }}</option>`;
+                    for (var i = 0; i < data.length; i++) {
+                        countries += '<option value="' + data[i].name.common + '" >' + data[i].name
+                            .common + '</option>';
                     }
-                    $(".car-year").html(years);
-                    $(".car-year").attr("disabled", false);
+                    $("#country").html(countries);
                 }
-            });
-        }); // change car
+            }); // end ajax get countries
+        });
     </script>
 @endpush

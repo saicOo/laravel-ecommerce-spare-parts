@@ -203,6 +203,6 @@ class PurchaseController extends Controller
 
     public function exportInvoicePurchase($id)
     {
-        return Excel::download(new ExportPurchaseInvoice($id), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF);
+        return Excel::download(new ExportPurchaseInvoice($id), 'invoices.xlsx');
     }
 }

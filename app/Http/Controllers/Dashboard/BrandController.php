@@ -122,7 +122,7 @@ class BrandController extends Controller
 
     public function exportBrands(Request $request){
         $this->authorize('check-permissions', 'create_brands');
-        return Excel::download(new ExportBrand, 'brands.pdf', \Maatwebsite\Excel\Excel::MPDF);
+        return Excel::download(new ExportBrand, 'brands.xlsx');
     }
 
 }

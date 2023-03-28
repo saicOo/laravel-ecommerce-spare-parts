@@ -58,8 +58,6 @@
                                             <th scope="col">{{ __('site.sale_price') }}</th>
                                             <th scope="col">{{ __('site.stock') }}</th>
                                             <th scope="col">{{ __('site.country') }}</th>
-                                            <th scope="col">{{ __('site.start_year') }}</th>
-                                            <th scope="col">{{ __('site.end_year') }}</th>
                                             <th scope="col">{{ __('site.action') }}</th>
                                             <th scope="col"><input type="checkbox" value=""
                                                     id="check-box-delete-all"></th>
@@ -76,8 +74,6 @@
                                                 <td>${{number_format($product->price,2)}}</td>
                                                 <td>{{ $product->stock }}</td>
                                                 <td>{{ $product->country }}</td>
-                                                <td>{{ $product->start_year }}</td>
-                                                <td>{{ $product->end_year }}</td>
                                                 <td>
                                                     <span>
                                                         <a href="{{ route('dashboard.products.edit', $product->id) }}"

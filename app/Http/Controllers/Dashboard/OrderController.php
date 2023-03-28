@@ -109,6 +109,6 @@ class OrderController extends Controller
 
     public function exportInvoiceOrder($id)
     {
-        return Excel::download(new ExportOrderInvoice($id), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF);
+        return Excel::download(new ExportOrderInvoice($id), 'invoices.xlsx');
     }
 }

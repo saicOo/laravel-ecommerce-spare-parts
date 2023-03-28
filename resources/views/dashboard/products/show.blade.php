@@ -29,8 +29,8 @@
                             <div class="col-lg-5">
                                 <div class="owl-carousel offer_card_carousel" id="offer_card_carousel">
                                     @foreach ($product->images as $image)
-                                        <img src="{{ asset('uploads/products') . '/' . $image }}" class="img-fluid" style="height: 450px"
-                                            alt="{{ $image }}">
+                                        <img src="{{ asset('uploads/products') . '/' . $image }}" class="img-fluid"
+                                            style="height: 450px" alt="{{ $image }}">
                                     @endforeach
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                                 <div class="col-12 border-bottom pt-4 pb-2"><strong
                                                         class="float-left text-dark">@lang('site.car'):</strong>
                                                     <span
-                                                        class="pull-right">{{ $product->car->name . '(' . $product->start_year . '-' . $product->end_year . ')' }}</span>
+                                                        class="pull-right">{{ $product->car->name . '(' . $product->car->start_year . '-' . $product->car->end_year . ')' }}</span>
                                                 </div>
                                             @endif
 

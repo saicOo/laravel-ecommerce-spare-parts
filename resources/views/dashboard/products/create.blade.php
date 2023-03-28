@@ -51,37 +51,32 @@
                                                 value="{{ old('name_en') }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.stock')</label>
                                             <input type="number" class="form-control @error('stock') is-invalid @enderror"
                                                 name="stock" value="{{ old('stock') }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.purchase_price')</label>
                                             <input type="number" class="form-control @error('purchase_price') is-invalid @enderror"
                                                 name="purchase_price" value="{{ old('purchase_price') }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>@lang('site.sale_price')</label>
                                             <input type="number" class="form-control @error('price') is-invalid @enderror"
                                                 name="price" value="{{ old('price') }}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
-                                            {{-- <label>@lang('site.country')</label>
-                                            <input type="text"
-                                                class="form-control @error('country') is-invalid @enderror" name="country"
-                                                value="{{ old('country') }}"> --}}
                                             <label>@lang('site.country')</label>
                                             <select class="single-select @error('country') is-invalid @enderror"
                                                 name="country" id="country">
-                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -120,20 +115,10 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 mt-2">
-                                        <div class="form-group">
-                                            <div class="form-check">
-                                                <input id="checkbox-car" type="checkbox">
-                                                <label for="checkbox-car" class="form-check-label">@lang('site.add')
-                                                    @lang('site.car')</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>@lang('site.choose') @lang('site.car')</label>
-                                            <select name="car_id" class="dropdown-groups disabled-car" id="t_model"
-                                                disabled>
+                                            <select name="car_id" class="dropdown-groups" id="t_model">
                                                 <option value="" disabled selected>@lang('site.choose')
                                                     @lang('site.car')...
                                                 </option>
@@ -149,30 +134,6 @@
 
                                         </div>
                                     </div>
-
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>@lang('site.start_year')</label>
-                                            <select class="single-select car-year @error('start_year') is-invalid @enderror"
-                                                name="start_year" disabled>
-                                                <option value="" disabled selected>@lang('site.choose')
-                                                    @lang('site.year')...
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>@lang('site.end_year')</label>
-                                            <select class="single-select car-year @error('end_year') is-invalid @enderror"
-                                                name="end_year" disabled>
-                                                <option value="" disabled selected>@lang('site.choose')
-                                                    @lang('site.year')...
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
                                     <div class="col-sm-12 col-md-6">
                                         <div class="form-group">
                                             <label>@lang('site.ar.description')</label>
@@ -231,18 +192,6 @@
     <script src="{{ asset('dashboard/assets/js/custom-init/select2-init.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $("body").on("change", "#checkbox-car", function() {
-                let deleteId = $(this).val();
-                if ($(this).prop("checked")) {
-                    $(".disabled-car").each(function(index) {
-                        $(this).attr("disabled", false);
-                    });
-                } else {
-                    $(".disabled-car").each(function(index) {
-                        $(this).attr("disabled", true);
-                    });
-                }
-            }); //end of inputs check box change
             // ajax get countries
             $.ajax({
                 url: 'https://restcountries.com/v3.1/all',
@@ -258,29 +207,5 @@
                 }
             }); // end ajax get countries
         });
-    </script>
-    <script type="text/javascript">
-        $(document).on('change', '#t_model', function() {
-            var carId = $(this).val();
-            console.log(carId);
-            var url = `{{ route('api-car.show', ':carId') }}`;
-            url = url.replace(':carId', carId);
-            $.ajax({
-                url: url,
-                dataType: "json",
-                method: "get",
-                success: function(data) {
-                    console.log(data);
-                    var years =
-                        '<option value="" disabled selected>{{ __('site.choose') }} {{ __('site.year') }}...</option>';
-                    var arr = data;
-                    for (var i = arr.end_year; i > arr.start_year; i--) {
-                        years += '<option value="' + i + '">' + i + '</option>';
-                    }
-                    $(".car-year").html(years);
-                    $(".car-year").attr("disabled", false);
-                }
-            });
-        }); // change car
     </script>
 @endpush

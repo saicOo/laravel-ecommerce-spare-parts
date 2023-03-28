@@ -54,7 +54,7 @@ class ProductController extends Controller
     {
         $this->authorize('check-permissions', 'create_products');
 
-        $rules= [
+        $request->validate([
             'name_en' => 'required|max:50',
             'name_ar' => 'required|max:50',
             'description_en' => 'required|max:20000',
@@ -67,15 +67,8 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'images' => 'array|max:4',
             'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg',
-        ];
-        if(isset($request->car_id) || isset($request->start_year) || isset($request->end_year)){
-            $rules += [
-                'car_id' => 'required',
-                'start_year' => 'required|digits:4|integer|min:1900|max:'.$request->end_year,
-                'end_year' => 'required|digits:4|integer|min:1900'
-            ];
-        }
-        $request->validate($rules);
+        ]);
+
 
     $request_data = $request->all();
     if($request->images){
@@ -118,7 +111,7 @@ class ProductController extends Controller
     {
         $this->authorize('check-permissions', 'update_products');
 
-        $rules= [
+        $request->validate([
             'name_en' => 'required|max:50',
             'name_ar' => 'required|max:50',
             'description_en' => 'required|max:20000',
@@ -131,16 +124,10 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'images' => 'array|max:4',
             'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg',
-        ];
-        if(isset($request->car_id) || isset($request->start_year) || isset($request->end_year)){
-            $rules += [
-                'car_id' => 'required',
-                'start_year' => 'required|digits:4|integer|min:1900|max:'.$request->end_year,
-                'end_year' => 'required|digits:4|integer|min:1900'
-            ];
-        }
-        $request->validate($rules);
+        ]);
+
         $request_data = $request->all();
+
     if ($request->images) {
     $images = [];
     foreach($product->images as $imageName){

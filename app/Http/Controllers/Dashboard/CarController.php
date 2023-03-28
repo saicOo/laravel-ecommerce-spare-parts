@@ -106,7 +106,7 @@ class CarController extends Controller
      */
     public function destroy($test,Request $request)
     {
-        $this->authorize('check-permissions', 'delete_admins');
+        $this->authorize('check-permissions', 'delete_cars');
         $cars_arr = explode(",",$request->mass_delete);
         $cars_in = Car::whereIn('id', $cars_arr);
         $cars = $cars_in->with('products')->get();
@@ -122,7 +122,7 @@ class CarController extends Controller
     }
 
     public function import(Request $request){
-        $this->authorize('check-permissions', 'create_admins');
+        $this->authorize('check-permissions', 'create_cars');
         $request->validate([
             'file' => 'required|mimes:xlsx',
         ]);
@@ -132,7 +132,7 @@ class CarController extends Controller
     }
 
     public function exportCars(Request $request){
-        $this->authorize('check-permissions', 'create_admins');
+        $this->authorize('check-permissions', 'create_cars');
         return Excel::download(new ExportCar, 'cars.xlsx');
     }
 }

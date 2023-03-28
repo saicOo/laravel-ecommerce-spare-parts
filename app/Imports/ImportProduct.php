@@ -2,9 +2,10 @@
 
 namespace App\Imports;
 
+use App\Models\Car;
+use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Brand;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -27,11 +28,13 @@ class ImportProduct implements ToModel, WithValidation,WithHeadingRow
             'description_ar' => $row['description_ar'],
             'country' => $row['country'],
             'purchase_price' => $row['purchase_price'],
-            'price' => $row['price'],
+            'price' => $row['sale_price'],
             'stock' => $row['stock'],
-            'category_id' => Category::where('name_en','Like','%'.$row['category_id'].'%')->orWhere('name_ar','Like','%'.$row['category_id'].'%')->orWhere('id',$row['category_id'])->pluck('id')->first(),
-            'brand_id' => Brand::where('name_en','Like','%'.$row['brand_id'].'%')->orWhere('name_ar','Like','%'.$row['brand_id'].'%')->orWhere('id',$row['brand_id'])->pluck('id')->first(),
+            'category_id' => Category::where('name_en','Like','%'.$row['category'].'%')->orWhere('name_ar','Like','%'.$row['category'].'%')->orWhere('id',$row['category'])->pluck('id')->first(),
+            'brand_id' => Brand::where('name_en','Like','%'.$row['brand'].'%')->orWhere('name_ar','Like','%'.$row['brand'].'%')->orWhere('id',$row['brand'])->pluck('id')->first(),
+            'car_id' => Car::where('name_en','Like','%'.$row['car'].'%')->orWhere('name_ar','Like','%'.$row['car'].'%')->orWhere('id',$row['car'])->pluck('id')->first(),
         ]);
+        // ["name ar", "name en","purchase price","sale price","stock","country","category","brand","car","description en","description ar"]
     }
 
     public function rules(): array
@@ -42,10 +45,10 @@ class ImportProduct implements ToModel, WithValidation,WithHeadingRow
             'description_en' => 'required|max:20000',
             'description_ar' => 'required|max:20000',
             'country' => 'required',
-            'category_id' => 'required',
-            'brand_id' => 'required',
+            'category' => 'required',
+            'brand' => 'required',
             'purchase_price' => 'required|numeric|max:100000',
-            'price' => 'required|numeric|max:100000',
+            'sale_price' => 'required|numeric|max:100000',
             'stock' => 'required|integer',
         ];
     }

@@ -14,21 +14,22 @@ class ExportProduct implements FromCollection, WithHeadings, WithMapping
     */
     public function collection()
     {
-        return Product::select('name_ar','name_en','description_en','description_ar','country','purchase_price','price','stock','category_id','brand_id')->get();
+        return Product::select('name_ar','name_en','description_en','description_ar','country','purchase_price','price','stock','category_id','brand_id','car_id')->get();
     }
 
     public function map($products) : array {
         return [
             $products->name_ar,
             $products->name_en,
-            $products->description_en,
-            $products->description_ar,
-            $products->country,
             $products->purchase_price,
             $products->price,
             $products->stock,
+            $products->country,
             $products->category->name_en,
             $products->brand->name_en,
+            $products->car->name_en,
+            $products->description_en,
+            $products->description_ar,
         ] ;
 
 
@@ -36,7 +37,7 @@ class ExportProduct implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return ["name_ar", "name_en","description_en","description_ar","country","purchase_price","price","stock","category_id","brand_id"];
+        return ["name_ar", "name_en","purchase_price","sale_price","stock","country","category","brand","car","description_en","description_ar"];
     }
 
 }

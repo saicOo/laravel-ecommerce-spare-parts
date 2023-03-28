@@ -31,8 +31,6 @@ class ProductTableSeeder extends Seeder
                 'purchase_price' => rand(20,500),
                 'stock' => rand(20,200),
                 'country' => $country[rand(0,2)],
-                'start_year' => 2000,
-                'end_year' => 2020,
                 'category_id' => Category::where('category_type','sub_category')->inRandomOrder()->first()->id,
                 'brand_id' => Brand::inRandomOrder()->first()->id,
                 'car_id' => Car::inRandomOrder()->first()->id,

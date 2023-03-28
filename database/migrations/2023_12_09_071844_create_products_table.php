@@ -17,14 +17,14 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name_en');
             $table->string('name_ar');
-            $table->text('description_en');
-            $table->text('description_ar');
+            $table->text('description_en')->nullable();
+            $table->text('description_ar')->nullable();
             $table->string('country');
             $table->float('purchase_price', 8, 2);
             $table->float('price', 8, 2);
             $table->integer('stock');
-            $table->year('start_year')->nullable();
-            $table->year('end_year')->nullable();
+            // $table->year('start_year')->nullable();
+            // $table->year('end_year')->nullable();
             $table->text('images')->default('["default.png"]');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
