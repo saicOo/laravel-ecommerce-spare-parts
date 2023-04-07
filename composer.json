@@ -13,7 +13,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "maatwebsite/excel": "^3.1",
+        "maatwebsite/excel": "*",
         "mcamara/laravel-localization": "^1.7",
         "mpdf/mpdf": "^8.1"
     },
