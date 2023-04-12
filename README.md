@@ -25,7 +25,7 @@ php artisan key:generate
 ```
 Run the database migrations (Set the database connection in .env before migrating)
 ```
-php artisan migrate --seed
+php artisan migrate:fresh --seed
 ```
 Start the local development server
 ```
