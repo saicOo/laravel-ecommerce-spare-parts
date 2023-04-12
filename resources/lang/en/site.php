@@ -85,6 +85,7 @@ return [
     'joined' => 'Joined',
     'import' => 'Import',
     'export' => 'Export',
+    'approval' => 'Approval',
     // information users
     'clients' => 'clients',
     'client' => 'client',

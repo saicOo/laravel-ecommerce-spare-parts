@@ -22,7 +22,9 @@ class ProductController extends Controller
         ->when($request->search,function ($query) use ($request){ // if search
             return $query->where('name_en','Like','%'.$request->search.'%')->OrWhere('name_ar','Like','%'.$request->search.'%');
         })->when($request->car_id,function ($query) use ($request){ // if car
-            return $query->where('car_id',$request->car_id)->where('start_year','<=',$request->year)->where('end_year','>=',$request->year);
+            return $query->whereHas('car', function ($query) use ($request) {
+                $query->where('id',$request->car_id)->where('start_year','<=',$request->year)->where('end_year','>=',$request->year);
+            });
         })->when($request->max_price,function ($q) use ($request){ // if price
             return $q->whereBetween('price',[$request->min_price,$request->max_price]);
         })->when($request->category_id,function ($q) use ($request){ // if category

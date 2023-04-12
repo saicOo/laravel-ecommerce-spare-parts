@@ -29,7 +29,6 @@ $(document).ready(function () {
             method: "get",
             success: function (data) {
                 var existent = false;
-
                 $("#purchaseList .inputProduct").each(function (index) {
                     if (data.id == $(this).val()) {
                         existent = true;
@@ -42,7 +41,7 @@ $(document).ready(function () {
                 } else {
                     $("#purchaseList").append(`
                 <tr>
-                    <td>${data.name}
+                    <td>${data.name} #${data.id}
                         </td>
                     <td>${price}
                         <input type="hidden" class="form-control product-price" name="products[${data.id}][price]"

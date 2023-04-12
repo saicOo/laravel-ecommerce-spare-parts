@@ -35,18 +35,18 @@ class CategoriesTableSeeder extends Seeder
             ]);
         }
     }
-    
+
     private function primary_categories()
     {
             $primary_categories = [
                 [
-                'name_en' => 'accessories',
-                'name_ar' => 'اكسسوارات',
+                'name_en' => 'Motor parts',
+                'name_ar' => 'اجزاء الموتور',
                 'category_type' => 'primary_category',
             ],
                 [
-                'name_en' => 'spare parts',
-                'name_ar' => 'قطع غيار',
+                'name_en' => 'Luggage parts',
+                'name_ar' => 'اجزاء العفشة',
                 'category_type' => 'primary_category',
             ]
         ];
@@ -57,20 +57,20 @@ class CategoriesTableSeeder extends Seeder
     {
             $sub_categories = [
                 [
-                'name_en' => 'headphones',
-                'name_ar' => 'سماعات',
+                'name_en' => 'Sababat',
+                'name_ar' => 'صبابات',
                 'category_type' => 'sub_category',
                 'category_id' => 1,
             ],
                 [
-                'name_en' => 'Monitor',
-                'name_ar' => 'شاشة',
+                'name_en' => 'Walks',
+                'name_ar' => 'سيور',
                 'category_type' => 'sub_category',
                 'category_id' => 1,
             ],
                 [
-                'name_en' => 'thongs',
-                'name_ar' => 'السيور',
+                'name_en' => 'Grinding',
+                'name_ar' => 'بطاحات',
                 'category_type' => 'sub_category',
                 'category_id' => 2,
             ]

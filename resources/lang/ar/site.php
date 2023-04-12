@@ -84,6 +84,7 @@ return [
     'joined' => 'انضممت في',
     'import' => 'استرداد',
     'export' => 'تصدير',
+    'approval' => 'أعتماد',
     // information users
     'clients' => 'العملاء',
     'client' => 'عميل',

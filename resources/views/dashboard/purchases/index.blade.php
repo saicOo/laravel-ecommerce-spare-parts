@@ -81,15 +81,15 @@
                                                     <span>
                                                         <a href="{{ route('dashboard.purchases.show', $purchase->id) }}"
                                                             class="mr-4" data-toggle="tooltip" data-placement="top"
-                                                            title="" data-original-title="Show"><i
+                                                            title="" data-original-title="{{__('site.show')}}"><i
                                                                 class="fa fa-external-link color-muted"></i> </a>
                                                     </span>
                                                     @if ($purchase->active == 0)
                                                     <span>
                                                         <a href="{{ route('dashboard.purchases.edit', $purchase->id) }}"
                                                             class="mr-4" data-toggle="tooltip" data-placement="top"
-                                                            title="" data-original-title="اعتماد"><i
-                                                                class="fa fa-chevron-circle-down color-muted"></i> </a>
+                                                            title="" data-original-title="{{__('site.approval')}}"><i
+                                                                class="fa fa-chevron-circle-down color-muted"></i> {{__('site.approval')}}</a>
                                                     </span>
                                                     @endif
                                                 </td>

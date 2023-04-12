@@ -19,7 +19,7 @@ class ProductTableSeeder extends Seeder
     public function run()
     {
         $faker = Factory::create();
-        $country = ['japan','china','germany'];
+        // $country = ['japan','china','germany'];
 
         for ($i=0; $i < 30; $i++) {
             Product::create([
@@ -30,12 +30,25 @@ class ProductTableSeeder extends Seeder
                 'price' => rand(50,800),
                 'purchase_price' => rand(20,500),
                 'stock' => rand(20,200),
-                'country' => $country[rand(0,2)],
+                'country' => 'South Korea',
                 'category_id' => Category::where('category_type','sub_category')->inRandomOrder()->first()->id,
                 'brand_id' => Brand::inRandomOrder()->first()->id,
                 'car_id' => Car::inRandomOrder()->first()->id,
             ]);
         }
+        // Product::create([
+        //     'name_en' => $faker->sentence(2),
+        //     'name_ar' => $faker->sentence(2),
+        //     'description_en' => $faker->sentence(20),
+        //     'description_ar' => $faker->sentence(20),
+        //     'price' => rand(50,800),
+        //     'purchase_price' => rand(20,500),
+        //     'stock' => rand(20,200),
+        //     'country' => $country[rand(0,2)],
+        //     'category_id' => Category::where('category_type','sub_category')->inRandomOrder()->first()->id,
+        //     'brand_id' => Brand::inRandomOrder()->first()->id,
+        //     'car_id' => Car::inRandomOrder()->first()->id,
+        // ]);
 
     }
 }

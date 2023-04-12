@@ -11,8 +11,10 @@ class ProductController extends Controller
     {
         if(isset($request['term']['term'])){
 
-            $products = Product::when($request['term']['term'],function ($query) use ($request){
-               return $query->where('name_en','Like','%'.$request['term']['term'].'%')->orWhere('name_ar','Like','%'.$request['term']['term'].'%');
+            $products = Product::with('car')->when($request['term']['term'],function ($query) use ($request){
+               return $query->where('name_en','Like','%'.$request['term']['term'].'%')
+               ->orWhere('name_ar','Like','%'.$request['term']['term'].'%')
+               ->orWhere('id','Like','%'.$request['term']['term'].'%');
            })->limit(10)->get();
            return response()->json($products);
         }

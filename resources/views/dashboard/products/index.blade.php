@@ -54,6 +54,7 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">{{ __('site.name') }}</th>
+                                            <th scope="col">SKU</th>
                                             <th scope="col">{{ __('site.purchase_price') }}</th>
                                             <th scope="col">{{ __('site.sale_price') }}</th>
                                             <th scope="col">{{ __('site.stock') }}</th>
@@ -68,8 +69,9 @@
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td><a
-                                                        href="{{ route('dashboard.products.show', $product->id) }}">{{ $product->name }}</a>
+                                                    href="{{ route('dashboard.products.show', $product->id) }}">{{ $product->name }}</a>
                                                 </td>
+                                                <td>#{{ $product->id }}</td>
                                                 <td>${{number_format($product->purchase_price,2)}}</td>
                                                 <td>${{number_format($product->price,2)}}</td>
                                                 <td>{{ $product->stock }}</td>

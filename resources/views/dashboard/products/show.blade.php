@@ -41,6 +41,10 @@
                                         <h6 class="text-muted">{{ $product->category->name }}</h6>
                                         <div class="row">
                                             <div class="col-12 border-bottom pt-4 pb-2"><strong
+                                                    class="float-left text-dark">SKU:</strong>
+                                                <span class="pull-right">#{{ $product->id }}</span>
+                                            </div>
+                                            <div class="col-12 border-bottom pt-4 pb-2"><strong
                                                     class="float-left text-dark">@lang('site.name'):</strong>
                                                 <span class="pull-right">{{ $product->name }}</span>
                                             </div>
