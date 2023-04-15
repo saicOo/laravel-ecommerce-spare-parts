@@ -15,8 +15,8 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->default('spare parts')->comment('company name');
-            $table->string('address')->default('street spare parts')->comment('company address');
+            $table->string('name')->default('el hinnawi')->comment('company name');
+            $table->string('address')->default('street el hinnawi')->comment('company address');
             $table->string('phone')->default('01157012640')->comment('company phone');
             $table->integer('tax')->default(14)->comment('tax order');
             $table->integer('shipping')->default(0)->comment('shipping order');
