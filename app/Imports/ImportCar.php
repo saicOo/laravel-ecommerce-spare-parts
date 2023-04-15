@@ -35,7 +35,7 @@ class ImportCar implements ToModel, WithValidation,WithHeadingRow
             'name_en' => 'required|string|max:50',
             'start_year' => 'required|digits:4|integer',
             'end_year' => 'required|digits:4|integer',
-            'factory_car' => 'required',
+            'factory_car' => 'required|exists:factory_cars,name_en',
         ];
     }
 }
