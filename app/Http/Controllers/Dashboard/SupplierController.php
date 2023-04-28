@@ -71,18 +71,8 @@ class SupplierController extends Controller
             'name' => ['required', 'string', 'max:255'],
             "phone"=>"required|digits:11",
         ]);
-        $request_data = $request->all();
-        if($request->exists('amount_paid')){
-            $request_data = $request->except(['amount_paid','account_status']);
-            $supplier->start_account = $supplier->current_account;
-            if($request->account_status == 1){
-                $supplier->current_account -= $request->amount_paid;
-            }else{
-                $supplier->current_account += $request->amount_paid;
-            }
-            $request_data['account_status'] = ($supplier->current_account == 0 ? 3 : ($supplier->current_account > 0 ? 2 : 1));
-        }
-        $supplier->update($request_data);
+
+        $supplier->update($request->all());
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.suppliers.index');
     }

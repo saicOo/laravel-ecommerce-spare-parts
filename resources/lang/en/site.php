@@ -121,7 +121,9 @@ return [
     'cash_on_delivery' => 'Cash On Delivery',
     'online_payment' => 'Online Payment',
     'payment_method' => 'Payment Method',
+    'payment' => 'Payment',
     'place_order' => 'Place order',
+    'draft' => 'Draft',
     // information company
     'company_name' => 'Company Name',
     'company_address' => 'Company Address',
@@ -223,6 +225,7 @@ return [
     // global site
     'shop_now' => 'Shop Now',
     'activity' => 'Activity',
+    'active' => 'Active',
     'our_Journey' => "It's Our Journey",
     'account?' => "Don't have an account?",
     'register_now' => 'Register Now',

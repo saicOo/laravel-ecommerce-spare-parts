@@ -25,6 +25,35 @@
                      <h2 class="page-heading">{{ __('site.invoice') }} {{ __('site.purchases') }}</h2>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header" >
+                        <div class="float-left">
+                            <div class="bootstrap-label">
+                                <span class="label label-{{$purchase->active == 1 ? 'success' : 'light'}}">{{$purchase->active == 0 ? __('site.draft') : __('site.active')}}</span>
+                                <span class="label label-{{$purchase->payment_status == 1 ? 'success' : 'danger'}}">{{$purchase->payment_status == 1 ? __('site.paid') : __('site.unpaid') }}</span>
+
+                            </div>
+                        </div>
+                        <div class="float-right">
+                            <div class="button-group">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-primary" onclick="printDiv()">{{__('site.print')}}</button>
+                                    @if ($purchase->active == 0)
+                                    <button type="submit" form="formPurchasesActive" class="btn btn-outline-primary" {{ $purchase->is_active == 1 ?'disabled' : ''}}>{{__('site.approval')}}</button>
+                                    @else
+                                    <a href="{{route('dashboard.purchases.edit',$purchase->id)}}" class="btn btn-outline-primary">{{__('site.payment')}}</a>
+                                    @endif
+                                </div>
+                            </div>
+                            <form action="{{route('dashboard.purchases.active', $purchase->id)}}" method="post" style="display: none" id="formPurchasesActive">
+                                @csrf
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             <div class="row" id="print">
                 <div class="col-12">
                     <div class="p-3 bg-white rounded">
@@ -114,9 +143,7 @@
                             </div>
                         </div>
                         <div class="text-right mb-3">
-                            {{-- <a class="btn btn-primary btn-sm mr-5"
-                                href="{{ route('dashboard.export-invoice-purchase', ['id' => $purchase->id]) }}">@lang('site.print')</a> --}}
-                                <button type="button" class="btn btn-primary btn-sm mr-5 btn-print" onclick="printDiv()">@lang('site.print')</button>
+
                         </div>
                     </div>
                 </div>

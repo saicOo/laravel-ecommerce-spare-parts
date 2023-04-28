@@ -62,7 +62,7 @@ return [
     'search' => 'بحث',
     'show' => 'عرض',
     'loading' => 'جاري التحميل',
-    'print' => 'طبع',
+    'print' => 'طباعة',
     'confirm_delete' => 'تاكيد الحذف',
     'yes' => 'نعم',
     'no' => 'لا',
@@ -120,7 +120,9 @@ return [
     'cash_on_delivery' => 'الدفع عند الاستلام' ,
     'online_payment' => 'الدفع بواسطة بطاقة الائتمان',
     'payment_method' => 'طريقة الدفع',
+    'payment' => 'دفع',
     'place_order' => 'اطلب',
+    'draft' => 'مسودة',
     // information company
     'company_name' => 'اسم الشركة',
     'company_address' => 'عنوان الشركة',
@@ -221,6 +223,7 @@ return [
     // global site
     'shop_now' => 'تسوق الان',
     'activity' => 'نشاط',
+    'active' => 'مفعل',
     'our_Journey' => "إنها رحلتنا",
     'account?' => "ليس لديك حساب؟",
     'register_now' => 'سجل الان',

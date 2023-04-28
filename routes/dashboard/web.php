@@ -41,6 +41,7 @@ function(){
         Route::resource('purchases', 'PurchaseController');
         Route::get('/report-purchases','PurchaseReportController@index')->name('report-purchases');
         Route::get('/export-purchases','PurchaseController@exportPurchases')->name('export-purchases');
+        Route::post('/purchases/{purchase}/active','PurchaseController@active')->name('purchases.active');
         Route::get('/export-invoice-purchase/{id}','PurchaseController@exportInvoicePurchase')->name('export-invoice-purchase');
         //routes users
         Route::resource('clients', 'ClientController')->only(['index','show']);

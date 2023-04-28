@@ -103,7 +103,7 @@ class PurchaseController extends Controller
 
 
         session()->flash('success', __('site.added_successfully'));
-        return redirect()->route('dashboard.purchases.index');
+        return redirect()->route('dashboard.purchases.show',$purchase->id);
     }
 
     /**
@@ -123,7 +123,7 @@ class PurchaseController extends Controller
      * @param  \App\Models\Purchase  $purchase
      * @return \Illuminate\Http\Response
      */
-    public function edit(Purchase $purchase)
+    public function active(Purchase $purchase)
     {
 
         // start stock area
@@ -150,12 +150,12 @@ class PurchaseController extends Controller
         }// end stock area
         // start supplier area
         $current_account = $purchase->supplier->current_account;
+        $append_account = $purchase->total_price - $purchase->amount_paid;
         if($purchase->payment_type == 1){ // if purchase payment type new
-            $append_account = $purchase->total_price - $purchase->amount_paid;
             $current_account = $current_account -= $append_account; //هنقص من حساب المورد
 
         }else{  // if purchase payment type return
-            $current_account = $current_account += $purchase->amount_paid; //هزود من حساب المورد
+            $current_account = $current_account += $append_account; //هزود من حساب المورد
         }
         $account_status = ($current_account == 0 ? 3 : ($current_account > 0 ? 2 : 1));
         $purchase->supplier()->update([
@@ -168,7 +168,7 @@ class PurchaseController extends Controller
         ]);
         // end supplier area
         session()->flash('success', __('site.added_successfully'));
-        return redirect()->route('dashboard.purchases.index');
+        return redirect()->route('dashboard.purchases.show',$purchase->id);
     }
 
     /**
@@ -178,9 +178,41 @@ class PurchaseController extends Controller
      * @param  \App\Models\Purchase  $purchase
      * @return \Illuminate\Http\Response
      */
+    public function edit(Purchase $purchase)
+    {
+        return view('dashboard.purchases.edit', compact('purchase'));
+    }
+
     public function update(Request $request, Purchase $purchase)
     {
+        $request->validate([
+            'amount_paid' => 'required|numeric|min:1|max:'.($purchase->total_price - $purchase->amount_paid),
+        ]);
+        $total_amount_paid = $purchase->amount_paid + $request->amount_paid;
+        if($total_amount_paid == $purchase->total_price){
+            $payment_status = 1;
+        }else{
+            $payment_status = 2;
+        }
+        $purchase->update([
+            'amount_paid' => $total_amount_paid,
+            'payment_status' => $payment_status,
+        ]);// start update purchases data table
 
+        $current_account = $purchase->supplier->current_account;
+        if($purchase->payment_type == 1){ // if purchase payment type new
+        $current_account = $current_account += $request->amount_paid; //هنقص من حساب المورد
+        }else{  // if purchase payment type return
+            $current_account = $current_account -= $request->amount_paid; //هزود من حساب المورد
+        }
+        $account_status = ($current_account == 0 ? 3 : ($current_account > 0 ? 2 : 1));
+        $purchase->supplier()->update([
+            'start_account' => $purchase->supplier->current_account,
+            'current_account' => $current_account,
+            'account_status' => $account_status,
+        ]);
+        session()->flash('success', __('site.added_successfully'));
+        return redirect()->route('dashboard.purchases.show',$purchase->id);
     }
 
     /**
