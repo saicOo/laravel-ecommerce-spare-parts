@@ -11,6 +11,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)"> {{ __('site.dashboard') }}</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)"> {{ __('site.purchases') }}</a></li>
                     <li class="breadcrumb-item active"><a href="javascript:void(0)"> {{ __('site.reports') }}</a></li>
                 </ol>
             </div>
@@ -19,7 +20,7 @@
         <div class="container-fluid">
             <div class="row justify-content-between mb-3">
                 <div class="col-12 ">
-                    <h2 class="page-heading">{{ __('site.list') }} {{ __('site.reports') }}</h2>
+                    <h2 class="page-heading">{{ __('site.list') }} {{ __('site.reports') }} {{ __('site.purchases') }}</h2>
                     <p class="mb-0">{{ __('site.count') }} {{ __('site.reports') }} : {{ $reports->total() }}</p>
                 </div>
             </div>
@@ -31,14 +32,6 @@
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
-                                    <form action="{{ route('dashboard.reports.destroy', 'delete') }}" method="post"
-                                        style="display: inline;">
-                                        {{ csrf_field() }}
-                                        {{ method_field('delete') }}
-                                        <input type="hidden" value="" name="mass_delete" id="mass-delete">
-                                        <button type="submit" id="btn-mass-delete" class="btn btn-danger mb-2"
-                                            disabled>{{ __('site.mass_delete') }}</button>
-                                    </form>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -46,33 +39,22 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">@lang('site.amount') @lang('site.orders')</th>
-                                            <th scope="col">@lang('site.count') @lang('site.orders')</th>
                                             <th scope="col">@lang('site.amount') @lang('site.purchases')</th>
                                             <th scope="col">@lang('site.count') @lang('site.purchases')</th>
                                             <th scope="col">{{ __('site.created_at') }}</th>
                                             <th scope="col">{{ __('site.updated_at') }}</th>
-                                            <th scope="col"><input type="checkbox" value=""
-                                                    id="check-box-delete-all"></th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($reports as $index => $report)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>${{ number_format($report->orders_amount, 2) }}</td>
-                                                <td>{{ $report->orders_count }}</td>
                                                 <td>${{ number_format($report->purchases_amount, 2) }}</td>
                                                 <td>{{ $report->purchases_count }}</td>
                                                 <td>{{ $report->created_at->format('M d, Y') }}</td>
                                                 <td>{{ $report->updated_at->format('M d, Y') }}</td>
-
-                                                <td>
-                                                    <span>
-                                                        <input type="checkbox" value="{{ $report->id }}"
-                                                            class="check-box-delete">
-                                                    </span>
-                                                </td>
+                                                <td><a href="{{route('dashboard.purchases.index',['date'=> $report->created_at->format('Y-m-d')])}}">@lang('site.show')</a></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -116,7 +98,6 @@
     </div>
 @endpush
 @push('js')
-    <script src="{{ asset('dashboard/assets/js/massDelete.js') }}"></script>
     <!-- Daterangepicker -->
     <!-- momment js is must -->
     <script src="{{ asset('dashboard/assets/plugins/moment/moment.min.js') }}"></script>

@@ -42,6 +42,8 @@ class PurchaseController extends Controller
             return $query->where('payment_type',$request->payment_type);
         })->when($request->daterange,function ($query) use ($request){
             return $query->whereBetween('created_at',[$request->daterange[0],$request->daterange[1]]);
+        })->when($request->date,function ($query) use ($request){
+            return $query->whereDate('created_at',$request->date);
         })->latest()->paginate(10);
 
         return view('dashboard.purchases.index', compact('purchases'));

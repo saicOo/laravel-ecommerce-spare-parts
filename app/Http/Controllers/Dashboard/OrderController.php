@@ -37,6 +37,8 @@ class OrderController extends Controller
             return $query->where('payment_method',$request->payment);
         })->when($request->daterange,function ($query) use ($request){
             return $query->whereBetween('created_at',[$request->daterange[0],$request->daterange[1]]);
+        })->when($request->date,function ($query) use ($request){
+            return $query->whereDate('created_at',$request->date);
         })->latest()->paginate(10);
         return view('dashboard.orders.index', compact('orders'));
     }

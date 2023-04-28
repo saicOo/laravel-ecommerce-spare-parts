@@ -6,9 +6,6 @@
             @can('check-permissions','read_admins')
             <li><a href="{{route('dashboard.settings.index')}}" aria-expanded="false"><i class="icon-settings"></i> <span class="nav-text">{{__('site.settings')}}</span></a></li>
             @endcan
-            @can('check-permissions','read_admins')
-            <li><a href="{{route('dashboard.reports.index')}}" aria-expanded="false"><i class="icon-settings"></i> <span class="nav-text">{{__('site.reports')}}</span></a></li>
-            @endcan
             <li class="nav-label">{{__('site.users')}}</li>
             @can('check-permissions','read_admins')
             <li><a href="{{route('dashboard.admins.index')}}" aria-expanded="false"><i class="icon-user"></i> <span class="nav-text">{{__('site.admins')}}</span></a></li>
@@ -23,9 +20,15 @@
             @can('check-permissions','read_orders')
             <li><a href="{{route('dashboard.purchases.index')}}" aria-expanded="false"><i class="icon-basket"></i> <span class="nav-text">{{__('site.purchases')}}</span></a></li>
             @endcan
+            @can('check-permissions','read_admins')
+            <li><a href="{{route('dashboard.report-purchases')}}" aria-expanded="false"><i class="icon-doc"></i> <span class="nav-text">{{__('site.reports')}} {{__('site.purchases')}}</span></a></li>
+            @endcan
             <li class="nav-label">{{__('site.orders')}}</li>
             @can('check-permissions','read_orders')
             <li><a href="{{route('dashboard.orders.index')}}" aria-expanded="false"><i class="icon-basket"></i> <span class="nav-text">{{__('site.orders')}}</span></a></li>
+            @endcan
+            @can('check-permissions','read_admins')
+            <li><a href="{{route('dashboard.report-orders')}}" aria-expanded="false"><i class="icon-doc"></i> <span class="nav-text">{{__('site.reports')}} {{__('site.orders')}}</span></a></li>
             @endcan
             <li class="nav-label">{{__('site.categories')}}</li>
             @can('check-permissions','read_categories')

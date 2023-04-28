@@ -35,12 +35,11 @@ function(){
         Route::resource('admins', 'AdminController');
         // routes settings
         Route::resource('settings', 'SettingController')->only(['index','update']);
-        // routes reports
-        Route::resource('reports', 'ReportController')->only(['index','destroy']);
         //routes suppliers
         Route::resource('suppliers', 'SupplierController')->except(['show']);
         //routes purchases
         Route::resource('purchases', 'PurchaseController');
+        Route::get('/report-purchases','PurchaseReportController@index')->name('report-purchases');
         Route::get('/export-purchases','PurchaseController@exportPurchases')->name('export-purchases');
         Route::get('/export-invoice-purchase/{id}','PurchaseController@exportInvoicePurchase')->name('export-invoice-purchase');
         //routes users
@@ -48,6 +47,7 @@ function(){
         // routes orders
         Route::resource('orders', 'OrderController');
         Route::get('/export-orders','OrderController@exportOrders')->name('export-orders');
+        Route::get('/report-orders','OrderReportController@index')->name('report-orders');
         Route::get('/export-invoice-order/{id}','OrderController@exportInvoiceOrder')->name('export-invoice-order');
         // factory cars routes
         Route::resource('factory-cars', 'FactoryCarController')->except('show');

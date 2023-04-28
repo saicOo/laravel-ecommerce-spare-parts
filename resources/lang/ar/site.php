@@ -4,7 +4,7 @@ return [
     // auth
     'logout' => 'تسجيل الخروج',
     'login' => 'تسجيل الدخول',
-    'register' => 'تسجيل',
+    'register' => 'تسجيل جديد',
     'remember_me' => 'تذكرني',
     'password' => 'كلمه المرور',
     'password_confirmation' => 'تاكيد كلمه المرور',
