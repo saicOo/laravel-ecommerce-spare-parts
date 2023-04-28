@@ -80,7 +80,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('dashboard.reports.index') }}" method="GET" id="filter-form">
+                    <form action="{{ route('dashboard.report-purchases') }}" method="GET" id="filter-form">
                         <div class="form-group">
                             <label>@lang('site.date')</label>
                             <input class="form-control input-daterange-datepicker" type="text" name="daterange">
