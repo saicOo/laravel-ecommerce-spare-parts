@@ -102,6 +102,10 @@
                                             </div>
                                             <div class="brands mb-1"><b>@lang('site.brand'):</b> {{ $product->brand->name }}
                                             </div>
+                                            <div class="cars mb-1"><b>@lang('site.car'):</b> {{ $product->car->name.' ('.$product->car->start_year.'-'.$product->car->end_year.')' }}
+                                            </div>
+                                            <div class="cars mb-1"><b>@lang('site.country'):</b> {{ $product->country }}
+                                            </div>
                                             <div class="price-box">
                                                 <span class="visually-hidden">Regular price</span>
                                                 <span class="sale-price">${{ number_format($product->price, 2) }}</span>
@@ -255,7 +259,7 @@
                                 <div class="product-details d-flex">
                                     <div class="product-details-in">
                                         <div class="h3"><a
-                                                href="{{ route('products.show', $product_silder->id) }}">{{ $product_silder->name }}</a>
+                                                href="{{ route('products.show', $product_silder->id) }}">{{ $product_silder->name }} {{ $product_silder->car->name.' ('.$product_silder->car->start_year.'-'.$product_silder->car->end_year.')' }}</a>
                                         </div>
                                         <div class="price-box"><span
                                                 class="price">${{ number_format($product_silder->price, 2) }}</span>

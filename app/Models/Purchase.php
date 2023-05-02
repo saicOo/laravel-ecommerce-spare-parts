@@ -23,7 +23,7 @@ class Purchase extends Model
     }//end of products
 
     public function getStatusAttribute(){
-        return $this->payment_status == 1 ? __('site.cash') : __('site.defrred');
+        return ($this->payment_status == 1 ? __('site.unpaid') : ($this->payment_status == 2 ? __('site.partially_paid') : __('site.paid')));
     }
 
     public function getTypeAttribute(){

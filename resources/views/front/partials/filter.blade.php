@@ -2,7 +2,7 @@
     <div class="closeFilter d-block"><i class="cps cp-times"></i></div>
     <div class="sidebar-filters">
         <div class="shopby-title text-uppercase">
-            <h3>@lang('site.shop')</h3>
+            <h3>{{$setting->name}}</h3>
         </div>
         <!--Category Block-->
         <div class="block clearfix block-categories">

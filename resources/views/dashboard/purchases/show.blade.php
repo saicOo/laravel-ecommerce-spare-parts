@@ -14,7 +14,8 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)"> {{ __('site.dashboard') }}</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> {{ __('site.purchases') }}</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)"> {{ __('site.purchases') }}</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> {{ __('site.invoice') }}</a></li>
                 </ol>
             </div>
         </div>
@@ -31,7 +32,7 @@
                         <div class="float-left">
                             <div class="bootstrap-label">
                                 <span class="label label-{{$purchase->active == 1 ? 'success' : 'light'}}">{{$purchase->active == 0 ? __('site.draft') : __('site.active')}}</span>
-                                <span class="label label-{{$purchase->payment_status == 1 ? 'success' : 'danger'}}">{{$purchase->payment_status == 1 ? __('site.paid') : __('site.unpaid') }}</span>
+                                <span class="label label-{{$purchase->payment_status == 3 ? 'success' : 'danger'}}">{{ $purchase->status }}</span>
 
                             </div>
                         </div>
@@ -59,7 +60,7 @@
                     <div class="p-3 bg-white rounded">
                         <div class="row">
                             <div class="col-md-3">
-                                <h4 class="text-uppercase">@lang('site.invoice')</h4>
+                                <h4 class="text-uppercase">@lang('site.invoice') @lang('site.purchases')</h4>
                                 <div class="billed"><span
                                         class="font-weight-bold text-uppercase">@lang('site.invoice_no'):</span><span
                                         class="ml-1">#{{ $purchase->invoice_no }}</span></div>
@@ -104,6 +105,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>SKU</th>
                                             <th>@lang('site.product')</th>
                                             <th>@lang('site.price')</th>
                                             <th>@lang('site.quantity')</th>
@@ -113,6 +115,7 @@
                                     <tbody>
                                         @foreach ($purchase->products as $index => $product)
                                             <tr>
+                                                <td>#{{ $product->id }}</td>
                                                 <td><a
                                                         href="{{ route('dashboard.products.show', $product->id) }}">{{ $product->name }}</a>
                                                 </td>

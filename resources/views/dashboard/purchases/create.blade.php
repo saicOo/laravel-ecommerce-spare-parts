@@ -46,7 +46,7 @@
                                         <div class="form-group">
                                             <label>@lang('site.type')</label>
                                             <select class="form-control @error('payment_type') is-invalid @enderror"
-                                                name="payment_type">
+                                                name="payment_type" id="payment-type">
                                                 <option value="1">@lang('site.new')</option>
                                                 <option value="2">@lang('site.return')</option>
                                             </select>
@@ -68,7 +68,8 @@
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="form-group">
                                             <label>@lang('site.product')</label>
-                                            <select id="product-ajax" data-url-products="{{ route('api-product.index') }}" data-url-show="{{ route('api-product.show', ':productId') }}"></select>
+                                            <select id="product-ajax" data-url-products="{{ route('api-product.index') }}"
+                                                data-url-show="{{ route('api-product.show', ':productId') }}"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-6">
@@ -89,8 +90,9 @@
                                     </div>
                                     <div class="col-lg-2 col-sm-6 text-center">
                                         <div class="form-group">
-                                            <input type="button" value="{{__('site.add')}}" class="btn btn-rounded btn-primary mt-4"
-                                                id="add-product" data-url="{{ route('api-product.show', ':productId') }}">
+                                            <input type="button" value="{{ __('site.add') }}"
+                                                class="btn btn-rounded btn-primary mt-4" id="add-product"
+                                                data-url="{{ route('api-product.show', ':productId') }}">
                                         </div>
                                     </div>
 
@@ -120,16 +122,11 @@
                                 <div class="form-row">
                                     <div class="col-sm-4">
                                         <h5>@lang('site.total'): $<span id="total-price">0.00</span></h5>
-                                        <div class="form-group">
-                                            <label>@lang('site.amount_paid')</label>
-                                            <input type="number" id="amount-paid" class="form-control @error('amount_paid') is-invalid @enderror"
-                                                name="amount_paid" value="{{ old('amount_paid') }}">
-                                        </div>
                                     </div>
                                     <div class="col-12 pt-3">
                                         <div class="form-group text-center">
-                                            <button type="submit" id="add-form-btn"
-                                                class="btn btn-rounded btn-primary " disabled>@lang('site.add')</button>
+                                            <button type="submit" id="add-form-btn" class="btn btn-rounded btn-primary "
+                                                disabled>@lang('site.add')</button>
                                         </div>
                                     </div>
                                 </div>
@@ -160,5 +157,4 @@
             max: null,
         });
     </script>
-
 @endpush

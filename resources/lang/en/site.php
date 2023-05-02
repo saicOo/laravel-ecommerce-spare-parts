@@ -241,4 +241,6 @@ return [
     'secure_payment_p' => 'We ensure secure payment',
     'money_back_guarantee' => 'Money Back Guarantee',
     'money_back_guarantee_p' => 'Any back within 30 days',
+    'cost_orders_and_purchases' => 'Cost of orders & purchases',
+    'count_orders_and_purchases' => 'Count of orders & purchases',
 ];

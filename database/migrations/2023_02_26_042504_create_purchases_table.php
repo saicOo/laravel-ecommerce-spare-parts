@@ -20,7 +20,7 @@ class CreatePurchasesTable extends Migration
             $table->double('total_price', 8, 2)->nullable();
             $table->double('amount_paid', 8, 2)->nullable()->default(0);
             $table->boolean('payment_type')->default(1)->comment('1=>new ,2=>return');
-            $table->boolean('payment_status')->default(1)->comment('1=>cash ,2=>defrred,3=>return');
+            $table->boolean('payment_status')->default(1)->comment('1=>unpaid ,2=>Partially paid,3=>paid');
             $table->boolean('active')->default(0)->comment('0=>not active ,1=>active');
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->timestamps();

@@ -245,5 +245,7 @@ return [
     'shipping' => 'الشحن',
     'current_account' => 'الرصيد الحالي',
     'role' => 'الدور',
+    'cost_orders_and_purchases' => 'تكلفة الطلبات & المشتريات',
+    'count_orders_and_purchases' => 'عدد الطلبات & المشتريات',
 
 ];

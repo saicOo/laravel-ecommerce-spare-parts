@@ -159,7 +159,7 @@
                 <div class="col-xl-6 col-xxl-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">@lang('site.amount')</h4>
+                            <h4 class="card-title mb-4">@lang('site.cost_orders_and_purchases')</h4>
                             <canvas id="amountChart"></canvas>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                 <div class="col-xl-6 col-xxl-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">@lang('site.count')</h4>
+                            <h4 class="card-title mb-4">@lang('site.count_orders_and_purchases')</h4>
                             <canvas id="countChart"></canvas>
                         </div>
                     </div>
@@ -251,7 +251,7 @@
                             @endforeach
                         ],
                         borderColor: '#fa5c7c',
-                        backgroundColor: '#fa5c7c7d',
+                        backgroundColor: '#fa5c7c',
                         borderWidth: 1
                     },
                     {
@@ -262,7 +262,7 @@
                             @endforeach
                         ],
                         borderColor: '#0acf97',
-                        backgroundColor: '#0acf976b',
+                        backgroundColor: '#0acf97',
                         borderWidth: 1
                     },
 

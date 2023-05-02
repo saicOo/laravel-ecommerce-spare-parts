@@ -89,15 +89,15 @@ class PurchaseController extends Controller
         foreach ($request->products as $purchase_product) {
             $total_price +=  $purchase_product['price'] * $purchase_product['quantity'];
         }//end foreach
-        if($request->payment_status == 1){ // if purchase payment status cash
-            $request->amount_paid = $total_price;
+        $amount_paid = 0;
+        if($request->payment_status == 1 || $request->payment_type == 2){ // if purchase payment status cash
+            $amount_paid = $total_price;
         }
 
         // start update purchases data table
         $purchase->update([
             'total_price' => $total_price,
-            'amount_paid' => $request->amount_paid,
-            'payment_status' => $request->payment_status,
+            'amount_paid' => $amount_paid,
             'payment_type' => $request->payment_type,
         ]);// start update purchases data table
 
@@ -163,8 +163,10 @@ class PurchaseController extends Controller
             'current_account' => $current_account,
             'account_status' => $account_status,
         ]);
+
         $purchase->update([
             'active'=> 1,
+            'payment_status'=> $purchase->total_price == $purchase->amount_paid ? 3 : 1,
         ]);
         // end supplier area
         session()->flash('success', __('site.added_successfully'));

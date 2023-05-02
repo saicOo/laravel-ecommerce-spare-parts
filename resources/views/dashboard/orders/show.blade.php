@@ -2,8 +2,10 @@
 @push('css')
     <style>
         @media print {
-            button.btn-print {display: none;}
-      }
+            button.btn-print {
+                display: none;
+            }
+        }
     </style>
 @endpush
 @section('content')
@@ -14,7 +16,8 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)"> {{ __('site.dashboard') }}</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> {{ __('site.orders') }}</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)"> {{ __('site.orders') }}</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> {{ __('site.invoice') }}</a></li>
                 </ol>
             </div>
         </div>
@@ -22,15 +25,15 @@
         <div class="container-fluid">
             <div class="row justify-content-between mb-3">
                 <div class="col-12 ">
-                    <h2 class="page-heading">{{ __('site.invoice') }} {{ __('site.orders') }}</h2>
-               </div>
+                    <h2 class="page-heading">{{ __('site.invoice') }} {{ __('site.order') }}</h2>
+                </div>
             </div>
-            <div class="row"  id="print">
+            <div class="row" id="print">
                 <div class="col-12">
                     <div class="p-3 bg-white rounded">
                         <div class="row">
                             <div class="col-md-3">
-                                <h4 class="text-uppercase">@lang('site.invoice')</h4>
+                                <h4 class="text-uppercase">@lang('site.invoice') @lang('site.order')</h4>
                                 <div class="billed"><span
                                         class="font-weight-bold text-uppercase">@lang('site.invoice_no'):</span><span
                                         class="ml-1">#{{ $order->invoice_no }}</span></div>
@@ -88,6 +91,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>SKU</th>
                                             <th>@lang('site.product')</th>
                                             <th>@lang('site.price')</th>
                                             <th>@lang('site.quantity')</th>
@@ -97,6 +101,7 @@
                                     <tbody>
                                         @foreach ($order->products as $index => $product)
                                             <tr>
+                                                <td>{{ $product->id }}</td>
                                                 <td><a
                                                         href="{{ route('dashboard.products.show', $product->id) }}">{{ $product->name }}</a>
                                                 </td>
@@ -138,7 +143,8 @@
                         <div class="text-right mb-3">
                             {{-- <a class="btn btn-primary btn-sm mr-5"
                                 href="{{ route('dashboard.export-invoice-order', ['id' => $order->id]) }}">@lang('site.print')</a> --}}
-                                <button type="button" class="btn btn-primary btn-sm mr-5 btn-print" onclick="printDiv()">@lang('site.print')</button>
+                            <button type="button" class="btn btn-primary btn-sm mr-5 btn-print"
+                                onclick="printDiv()">@lang('site.print')</button>
                         </div>
                     </div>
                 </div>
