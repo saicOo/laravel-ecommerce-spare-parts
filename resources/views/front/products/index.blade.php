@@ -49,7 +49,9 @@
                                                     class="btn rounded btn-filter d-block me-2 me-sm-3"><span
                                                         class="hidden">Filter</span></button>
                                                 <div class="filters-toolbar__item mx-2">
-                                                    <span class="filters-toolbar__product-count d-none d-sm-block">@lang('site.showing') @lang('site.products') :
+                                                    <span
+                                                        class="filters-toolbar__product-count d-none d-sm-block">@lang('site.showing')
+                                                        @lang('site.products') :
                                                         {{ $products->total() }} </span>
                                                 </div>
                                             </div>
@@ -68,7 +70,8 @@
                                             <div class="item">
                                                 <!--Product Image-->
                                                 <div class="product-image">
-                                                    <a href="{{ route('products.show',$product->id) }}" class="rounded-3 product-thumb">
+                                                    <a href="{{ route('products.show', $product->id) }}"
+                                                        class="rounded-3 product-thumb">
                                                         <!--Image-->
                                                         <img class="primary blur-up lazyload rounded-3"
                                                             data-src="{{ asset('uploads/products') . '/' . $product->images[0] }}"
@@ -89,8 +92,8 @@
                                                     <!--Button Action-->
                                                     <div class="button-hover">
                                                         <a class="btn pro-addtocart-popup rounded btn-cart btn-primary"
-                                                            href="{{ route('products.show',$product->id) }}" title="Add To Cart"><i
-                                                                class="cps cp-shopping-cart"></i></a>
+                                                            href="{{ route('products.show', $product->id) }}"
+                                                            title="Add To Cart"><i class="cps cp-shopping-cart"></i></a>
                                                     </div>
                                                     <!--End Button Action-->
                                                 </div>
@@ -98,9 +101,12 @@
                                                 <!--Product Detail-->
                                                 <div class="product-details d-flex">
                                                     <div class="product-details-in">
-                                                        <div class="h3"><a href="{{ route('products.show',$product->id) }}">{{ $product->name }}</a></div>
+                                                        <div class="h3"><a
+                                                                href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a>
+                                                        </div>
                                                         <div class="price-box"><span
-                                                                class="price">${{ number_format($product->price,2) }}</span></div>
+                                                                class="price">${{ number_format($product->price, 2) }}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <!--End Product Detail-->
@@ -130,6 +136,6 @@
 
         </main>
     @endsection
-@push('js')
-<script src="{{ asset('front/assets/js/custom-filter.js') }}"></script>
-@endpush
+    @push('js')
+        <script src="{{ asset('front/assets/js/custom-filter.js') }}"></script>
+    @endpush

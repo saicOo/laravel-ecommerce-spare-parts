@@ -35,7 +35,7 @@ class SupplierController extends Controller
     {
         $this->authorize('check-permissions', 'create_users');
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:50'],
             "phone"=>"required|digits:11",
             "account_status"=>"required|in:1,2,3",
             "current_account"=>"numeric|max:1000000",
@@ -68,7 +68,7 @@ class SupplierController extends Controller
     {
         $this->authorize('check-permissions', 'update_users');
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:50'],
             "phone"=>"required|digits:11",
         ]);
 

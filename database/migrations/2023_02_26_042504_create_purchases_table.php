@@ -16,7 +16,7 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('supplier_id');
-            $table->string('invoice_no')->unique();
+            $table->string('invoice_no',50)->unique();
             $table->double('total_price', 8, 2)->nullable();
             $table->double('amount_paid', 8, 2)->nullable()->default(0);
             $table->boolean('payment_type')->default(1)->comment('1=>new ,2=>return');

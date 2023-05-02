@@ -15,13 +15,13 @@ class CreateAdminsTable extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name',50);
+            $table->string('email',50)->unique();
             $table->enum('role', ['suber_admin', 'accountant','customer_service','data_entry']);
-            $table->string('phone');
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('phone',15);
+            $table->string('password',255);
+            // $table->timestamps();
+            // $table->rememberToken();
         });
     }
 

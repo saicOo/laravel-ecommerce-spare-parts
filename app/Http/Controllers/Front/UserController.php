@@ -52,8 +52,8 @@ class UserController extends Controller
     private function validatorProfile($request)
     {
         return Validator::make($request, [
-            'first_name' => ['required', 'string', 'max:255','regex:/^\S*$/u'],
-            'last_name' => ['required', 'string', 'max:255','regex:/^\S*$/u'],
+            'first_name' => ['required', 'string', 'max:50','regex:/^\S*$/u'],
+            'last_name' => ['required', 'string', 'max:50','regex:/^\S*$/u'],
             "phone"=>   ['required','digits:11','unique:users'],
         ]);
     }
@@ -61,9 +61,9 @@ class UserController extends Controller
     private function validatorAddress($request)
     {
         return Validator::make($request, [
-            'governorate' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'street' => ['required', 'string', 'max:255'],
+            'governorate' => ['required', 'string', 'max:50'],
+            'city' => ['required', 'string', 'max:50'],
+            'street' => ['required', 'string', 'max:50'],
             'building' => ['required', 'integer', 'max:1000'],
             'apartment' => ['required', 'integer', 'max:100'],
             'floor' => ['required', 'integer', 'max:50'],

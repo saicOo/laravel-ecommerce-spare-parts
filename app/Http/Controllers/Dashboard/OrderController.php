@@ -66,7 +66,7 @@ class OrderController extends Controller
         $request->validate([
             'payment_status' => 'required|in:1,2,3',
             'tracking' => 'required|in:1,2,3,4,5',
-            'address' => 'required|string|max:255',
+            'address' => 'required|string|max:50',
             'building' => 'required|integer|max:1000',
             'apartment' => 'required|integer|max:100',
             'floor' => 'required|integer|max:50',

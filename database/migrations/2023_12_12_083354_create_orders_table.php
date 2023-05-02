@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_no')->unique();
+            $table->string('invoice_no',50)->unique();
             $table->float('total_price', 8, 2)->nullable();
             $table->float('sub_total', 8, 2)->nullable();
             $table->float('tax')->nullable();
@@ -23,9 +23,9 @@ class CreateOrdersTable extends Migration
             $table->boolean('payment_status')->default(2)->comment('1=>paid ,2=>pending ,3=>unpaid');
             $table->boolean('payment_method')->default(0)->comment('0=>cash ,1=>online');
             $table->smallInteger('tracking')->default(1)->comment('1=>Ordered ,2=>Pending ,3=>Accept ,4=>Delivery ,5=>Received');
-            $table->string('building')->nullable();
-            $table->string('apartment')->nullable();
-            $table->string('floor')->nullable();
+            $table->string('building',50)->nullable();
+            $table->string('apartment',50)->nullable();
+            $table->string('floor',50)->nullable();
             $table->text('address')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

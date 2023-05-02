@@ -41,9 +41,9 @@ class CheckoutController extends Controller
     {
         $request->validate([
             'selector' => 'required|in:cash,online',
-            'governorate' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'street' => 'required|string|max:255',
+            'governorate' => 'required|string|max:50',
+            'city' => 'required|string|max:50',
+            'street' => 'required|string|max:50',
             'building' => 'required|integer|max:1000',
             'apartment' => 'required|integer|max:100',
             'floor' => 'required|integer|max:50',

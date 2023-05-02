@@ -15,10 +15,10 @@ class CreateSuppliersTable extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('phone');
-            $table->double('start_account', 10, 2)->nullable();
-            $table->double('current_account', 10, 2)->nullable();
+            $table->string('name',50);
+            $table->string('phone',15);
+            $table->double('start_account', 10, 2)->default(0);
+            $table->double('current_account', 10, 2)->default(0);
             $table->boolean('account_status')->default(3)->comment('1=>credit ,2=>debit,3=>balanced');
             $table->timestamps();
         });

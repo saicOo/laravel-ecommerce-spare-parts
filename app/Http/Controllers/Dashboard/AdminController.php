@@ -19,7 +19,7 @@ class AdminController extends Controller
         $this->authorize('check-permissions', 'read_admins');
         $admins = Admin::when($request->search,function ($query) use ($request){
             return $query->where('name','Like','%'.$request->search.'%');
-        })->latest()->paginate(10);
+        })->latest('id')->paginate(10);
         return view('dashboard.admins.index', compact('admins'));
     }
 
@@ -44,11 +44,11 @@ class AdminController extends Controller
     {
         $this->authorize('check-permissions', 'create_admins');
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
+            'name' => ['required', 'string', 'max:50'],
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:admins'],
             "phone"=>"required|digits:11",
             'role' => ['required', 'string', 'in:suber_admin,accountant,customer_service,data_entry'],
-            'password' => ['required', 'string', 'min:8','max:20', 'confirmed'],
+            'password' => ['required', 'string', 'min:8','max:50', 'confirmed'],
         ]);
         $request_data = $request->except(['password','password_confirmation']);
         $request_data['password'] = bcrypt($request->password);
@@ -91,7 +91,7 @@ class AdminController extends Controller
     {
         $this->authorize('check-permissions', 'update_admins');
         $rules = [
-            'name' => ['required', 'string', 'max:255','regex:/^\S*$/u'],
+            'name' => ['required', 'string', 'max:50','regex:/^\S*$/u'],
             "phone"=>"required|digits:11",
             'role' => ['string', 'in:suber_admin,accountant,customer_service,data_entry'],
         ];

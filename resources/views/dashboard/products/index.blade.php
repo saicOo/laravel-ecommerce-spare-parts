@@ -31,13 +31,13 @@
                                 <div class="col-md-6">
                                     <a href="{{ route('dashboard.products.create') }}"
                                         class="btn btn-primary mb-2">{{ __('site.create') }}</a>
-                                        {{-- btn-filter --}}
+                                    {{-- btn-filter --}}
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#filterModal">{{ __('site.filter') }}</button>
-                                        {{-- btn-excel --}}
+                                    {{-- btn-excel --}}
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                                         data-target="#excelModal">Excel</button>
-                                        {{-- btn-mass-delete --}}
+                                    {{-- btn-mass-delete --}}
                                     <form action="{{ route('dashboard.products.destroy', 'delete') }}" method="post"
                                         style="display: inline;">
                                         {{ csrf_field() }}
@@ -69,11 +69,11 @@
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td><a
-                                                    href="{{ route('dashboard.products.show', $product->id) }}">{{ $product->name }}</a>
+                                                        href="{{ route('dashboard.products.show', $product->id) }}">{{ $product->name }}</a>
                                                 </td>
                                                 <td>#{{ $product->id }}</td>
-                                                <td>${{number_format($product->purchase_price,2)}}</td>
-                                                <td>${{number_format($product->price,2)}}</td>
+                                                <td>${{ number_format($product->purchase_price, 2) }}</td>
+                                                <td>${{ number_format($product->price, 2) }}</td>
                                                 <td>{{ $product->stock }}</td>
                                                 <td>{{ $product->country }}</td>
                                                 <td>
@@ -136,11 +136,9 @@
                             </select>
                         </div>
                     </form>
-
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">{{ __('site.close') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('site.close') }}</button>
                     <button type="button" class="btn btn-primary"
                         onclick="event.preventDefault();
                 document.getElementById('filter-form').submit();">{{ __('site.filter') }}</button>
@@ -159,10 +157,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('dashboard.import-products') }}" method="POST" enctype="multipart/form-data" id="excel-form">
+                    <form action="{{ route('dashboard.import-products') }}" method="POST" enctype="multipart/form-data"
+                        id="excel-form">
                         @csrf
                         <div class="form-group">
-                            <input type="file" name="file" class="form-control mb-2 @error('file') is-invalid @enderror">
+                            <input type="file" name="file"
+                                class="form-control mb-2 @error('file') is-invalid @enderror">
                         </div>
                     </form>
 
@@ -173,9 +173,9 @@
                     <button type="button" class="btn btn-primary"
                         onclick="event.preventDefault();
                 document.getElementById('excel-form').submit();">@lang('site.import')</button>
-                <a class="btn btn-warning" href="{{ route('dashboard.export-products') }}">
-                    @lang('site.export')
-                </a>
+                    <a class="btn btn-warning" href="{{ route('dashboard.export-products') }}">
+                        @lang('site.export')
+                    </a>
                 </div>
             </div>
         </div>

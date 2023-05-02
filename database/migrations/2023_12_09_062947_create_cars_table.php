@@ -15,8 +15,8 @@ class CreateCarsTable extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->string('name_en');
-            $table->string('name_ar');
+            $table->string('name_en',50);
+            $table->string('name_ar',50);
             $table->year('start_year');
             $table->year('end_year');
             $table->unsignedBigInteger('factory_car_id');
