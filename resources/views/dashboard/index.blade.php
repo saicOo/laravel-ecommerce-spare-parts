@@ -1,14 +1,10 @@
 @extends('dashboard.layouts.app')
 @push('css')
-    {{-- <!-- Custom Stylesheet -->
-<link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/owl.carousel/dist/css/owl.carousel.min.css') }}">
-<link href="{{ asset('dashboard/assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet') }}"> --}}
     <!-- Chartist -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/chartist/css/chartist.min.css') }}">
 @endpush
 @section('content')
     <div class="content-body">
-
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
             </div>
@@ -19,9 +15,7 @@
             </div>
         </div>
         <!-- row -->
-
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
                     <div class="row">
@@ -206,7 +200,7 @@
                     @endforeach
                 ],
                 datasets: [{
-                        label: '# {{__('site.purchases')}}',
+                        label: '# {{ __('site.purchases') }}',
                         data: [
                             @foreach ($reports as $report)
                                 {{ $report->purchases_count }},
@@ -217,7 +211,7 @@
                         borderWidth: 1
                     },
                     {
-                        label: '# {{__('site.orders')}}',
+                        label: '# {{ __('site.orders') }}',
                         data: [
                             @foreach ($reports as $report)
                                 {{ $report->orders_count }},
@@ -250,7 +244,7 @@
                     @endforeach
                 ],
                 datasets: [{
-                        label: '# {{__('site.purchases')}}',
+                        label: '# {{ __('site.purchases') }}',
                         data: [
                             @foreach ($reports as $report)
                                 {{ $report->purchases_amount }},
@@ -261,7 +255,7 @@
                         borderWidth: 1
                     },
                     {
-                        label: '# {{__('site.orders')}}',
+                        label: '# {{ __('site.orders') }}',
                         data: [
                             @foreach ($reports as $report)
                                 {{ $report->orders_amount }},

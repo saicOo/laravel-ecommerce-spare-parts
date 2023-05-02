@@ -38,8 +38,6 @@
                     <div class="drop-down dropdown-profile animated flipInX">
                         <div class="dropdown-content-body">
                             <ul>
-                                <li><a href="javascript:void()"><i class="icon-user"></i> <span>My Profile</span></a>
-                                </li>
                                 <li><a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                   document.getElementById('logout-form').submit();"><i

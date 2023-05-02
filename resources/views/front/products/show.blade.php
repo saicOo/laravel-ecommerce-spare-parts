@@ -31,6 +31,14 @@
             <div class="section">
                 <div class="container">
                     <div class="product-single product-single-style3">
+                        @if (session('success'))
+                            <div class="alert alert-success" role="alert"><i class="cp cp-lg cp-check-circle"></i> <span
+                                    class="mx-2">{{ session('success') }}</span></div>
+                        @endif
+                        @error('product_id')
+                        <div class="alert alert-danger" role="alert"><i class="cp cp-lg cp-check-circle"></i> <span
+                            class="mx-2">{{ $message }}</span></div>
+                        @enderror
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-8 col-lg-9">
                                 <div class="row">
@@ -250,7 +258,8 @@
                                                 href="{{ route('products.show', $product_silder->id) }}">{{ $product_silder->name }}</a>
                                         </div>
                                         <div class="price-box"><span
-                                                class="price">${{ number_format($product_silder->price, 2) }}</span></div>
+                                                class="price">${{ number_format($product_silder->price, 2) }}</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <!--End Product Detail-->

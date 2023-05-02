@@ -41,6 +41,7 @@ class CartController extends Controller
              })
         ]);
         auth()->user()->products()->attach($request->product_id,['quantity' => $request->quantity]);
+        session()->flash('success', __('site.updated_successfully'));
         return redirect()->back();
     }
 

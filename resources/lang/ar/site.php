@@ -24,6 +24,7 @@ return [
     'archive_successfully' => 'تم ارشفة البيانات بنجاح',
     'restore_successfully' => 'تم استرجاع البيانات بنجاح',
     'order_successfully' => 'تهانينا ، لقد تم إرسال طلبك بنجاح',
+    'added_cart_successfully' => 'تم اضافة المنتج الي عربة التسوق بنجاح',
     'order_wrong' => 'حدث خطأ ، ولم يكتمل طلبك',
     'oops' => 'للأسف!',
     'good_job' => 'عمل جيد!',

@@ -24,6 +24,7 @@ return [
     'deleted_successfully' => 'deleted successfully',
     'archive_successfully' => 'archive successfully',
     'restore_successfully' => 'restore successfully',
+    'added_cart_successfully' => 'The product has been added to the shopping cart successfully',
     'order_successfully' => 'Congratulations, your order has been sent successfully',
     'order_wrong' => 'An error occurred, your Order was not completed',
     'oops' => 'Oops!',

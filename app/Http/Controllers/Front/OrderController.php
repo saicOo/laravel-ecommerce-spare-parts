@@ -16,7 +16,6 @@ class OrderController extends Controller
     {
         $checkOrder = auth()->user()->orders()->find($order->id)->get();
         if($checkOrder){
-            // $products = $order->with('products')->products()->get();
             return view('front.orders.show', compact('order'));
         }
     }

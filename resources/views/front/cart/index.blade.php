@@ -17,7 +17,8 @@
                                 <ol class="breadcrumb justify-content-center mb-0">
                                     <li class="breadcrumb-item"><a href="{{ url('/') }}">@lang('site.home')</a> <span><i
                                                 class="cps cp-caret-right"></i></span></li>
-                                    <li class="breadcrumb-item active" aria-current="page">@lang('site.shopping') @lang('site.cart')</li>
+                                    <li class="breadcrumb-item active" aria-current="page">@lang('site.shopping')
+                                        @lang('site.cart')</li>
                                 </ol>
                             </nav>
                             <!--End Breadcrums-->
@@ -33,8 +34,8 @@
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-8">
                             <!-- Cart Table-->
-                            {{-- <div class="alert alert-success" role="alert"><i class="cp cp-lg cp-check-circle"></i> <span class="mx-2">Your cart is saved for the next 4m34s</span></div> --}}
-                            <form action="{{ route('carts.update', Auth::user()->id) }}" method="post" class="cart my-4 mt-0">
+                            <form action="{{ route('carts.update', Auth::user()->id) }}" method="post"
+                                class="cart my-4 mt-0">
                                 {{ csrf_field() }}
                                 {{ method_field('put') }}
                                 <table class="table cart-products mb-4">
@@ -55,7 +56,7 @@
                                                 <td class="product-remove">
                                                     <a href="#" class="btn-default text-large remove"><i
                                                             class="cp cp-times"></i></a>
-                                                    <input type="hidden" name="products[]" value="{{$product->id}}">
+                                                    <input type="hidden" name="products[]" value="{{ $product->id }}">
                                                 </td>
                                                 <td class="product-thumbnail"><a
                                                         href="{{ route('products.show', $product->id) }}"><img
@@ -96,11 +97,14 @@
                                 </table>
                                 <div class="d-flex justify-content-between button-set-bottom">
                                     <a href="{{ route('products.index') }}"
-                                        class="btn btn-secondary rounded-3 cart-continue">@lang('site.continue') @lang('site.shopping')</a>
+                                        class="btn btn-secondary rounded-3 cart-continue">@lang('site.continue')
+                                        @lang('site.shopping')</a>
                                     <button type="submit" name="clear"
-                                        class="btn btn-border rounded-3 small--hide mx-4">@lang('site.clear') @lang('site.shopping') @lang('site.cart')</button>
+                                        class="btn btn-border rounded-3 small--hide mx-4">@lang('site.clear')
+                                        @lang('site.shopping') @lang('site.cart')</button>
                                     <button type="submit" name="update"
-                                        class="btn btn-border rounded-3 cart-continue">@lang('site.update') @lang('site.shopping') @lang('site.cart')</button>
+                                        class="btn btn-border rounded-3 cart-continue">@lang('site.update') @lang('site.shopping')
+                                        @lang('site.cart')</button>
                                 </div>
                             </form>
                             <!--End Cart Table-->
@@ -119,7 +123,8 @@
                                 </div>
                                 <div class="row border-bottom pb-2 pt-2">
                                     <span class="col-6 col-sm-6 text-uppercase"><b>@lang('site.shipping')</b></span>
-                                    <span class="col-6 col-sm-6 text-end small text-uppercase">{{$setting->shipping > 0 ? '$'.$setting->shipping : __('site.free') .' '.__('site.shipping')}}</span>
+                                    <span
+                                        class="col-6 col-sm-6 text-end small text-uppercase">{{ $setting->shipping > 0 ? '$' . $setting->shipping : __('site.free') . ' ' . __('site.shipping') }}</span>
                                 </div>
                                 <div class="row pb-2 pt-2">
                                     <span
@@ -127,10 +132,12 @@
                                     <span
                                         class="col-6 col-sm-6 cart__subtotal-title cart__subtotal text-end"><b>${{ number_format($total_price, 2) }}</b></span>
                                 </div>
-                                <a href="{{route('checkout.create')}}"
+                                <a href="{{ route('checkout.create') }}"
                                     class="btn btn-lg btn-primary rounded-pill my-4 checkout w-100">@lang('site.proceed_to_checkout')</a>
-                                <p><img class="blur-up lazyloaded" src="{{asset('front/assets/images/garauntee-img.png')}}"
-                                        data-src="{{asset('front/assets/images/garauntee-img.png')}}" alt="Guaranteed Safe Checkout"></p>
+                                <p><img class="blur-up lazyloaded"
+                                        src="{{ asset('front/assets/images/garauntee-img.png') }}"
+                                        data-src="{{ asset('front/assets/images/garauntee-img.png') }}"
+                                        alt="Guaranteed Safe Checkout"></p>
                             </div>
                         </div>
                     </div>
@@ -147,41 +154,47 @@
                     </div>
                     <div class="productSlider grid-products products-grid">
                         @foreach ($products_silder as $product_silder)
-                        <!--Product Item-->
-                        <div class="item">
-                            <!--Product Image-->
-                            <div class="product-image">
-                                <a href="{{ route('products.show',$product_silder->id) }}" class="rounded-3 product-thumb">
-                                    <!--Image-->
-                                    <img class="primary blur-up lazyload rounded-3"
-                                        data-src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
-                                        src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}" alt="{{$product_silder->name}}" title="{{$product_silder->name}}" />
-                                    <!--End Image-->
-                                    <!--Hover Image-->
-                                    <img class="hover blur-up lazyload rounded-3"
-                                        data-src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
-                                        src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}" alt="{{$product_silder->name}}" title="{{$product_silder->name}}" />
-                                    <!--End Hover Image-->
-                                </a>
-                                <!--Button Action-->
-                                <div class="button-hover">
-                                    <a class="btn pro-addtocart-popup rounded btn-cart btn-primary"
-                                        href="{{ route('products.show',$product_silder->id) }}" title="{{__('site.add_to_cart')}}"><i
-                                            class="cps cp-shopping-cart"></i></a>
+                            <!--Product Item-->
+                            <div class="item">
+                                <!--Product Image-->
+                                <div class="product-image">
+                                    <a href="{{ route('products.show', $product_silder->id) }}"
+                                        class="rounded-3 product-thumb">
+                                        <!--Image-->
+                                        <img class="primary blur-up lazyload rounded-3"
+                                            data-src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
+                                            src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
+                                            alt="{{ $product_silder->name }}" title="{{ $product_silder->name }}" />
+                                        <!--End Image-->
+                                        <!--Hover Image-->
+                                        <img class="hover blur-up lazyload rounded-3"
+                                            data-src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
+                                            src="{{ asset('uploads/products') . '/' . $product_silder->images[0] }}"
+                                            alt="{{ $product_silder->name }}" title="{{ $product_silder->name }}" />
+                                        <!--End Hover Image-->
+                                    </a>
+                                    <!--Button Action-->
+                                    <div class="button-hover">
+                                        <a class="btn pro-addtocart-popup rounded btn-cart btn-primary"
+                                            href="{{ route('products.show', $product_silder->id) }}"
+                                            title="{{ __('site.add_to_cart') }}"><i class="cps cp-shopping-cart"></i></a>
+                                    </div>
+                                    <!--End Button Action-->
                                 </div>
-                                <!--End Button Action-->
-                            </div>
-                            <!--End Product Image-->
-                            <!--Product Detail-->
-                            <div class="product-details d-flex">
-                                <div class="product-details-in">
-                                    <div class="h3"><a href="{{ route('products.show',$product_silder->id) }}">{{$product_silder->name}}</a></div>
-                                    <div class="price-box"><span class="price">${{number_format($product_silder->price,2)}}</span></div>
+                                <!--End Product Image-->
+                                <!--Product Detail-->
+                                <div class="product-details d-flex">
+                                    <div class="product-details-in">
+                                        <div class="h3"><a
+                                                href="{{ route('products.show', $product_silder->id) }}">{{ $product_silder->name }}</a>
+                                        </div>
+                                        <div class="price-box"><span
+                                                class="price">${{ number_format($product_silder->price, 2) }}</span></div>
+                                    </div>
                                 </div>
+                                <!--End Product Detail-->
                             </div>
-                            <!--End Product Detail-->
-                        </div>
-                        <!--End Product Item-->
+                            <!--End Product Item-->
                         @endforeach
                     </div>
                 </div>
@@ -191,12 +204,12 @@
 
         </main>
     @endsection
-@push('js')
-<script>
-    $(document).ready(function(){
-  $(".remove").click(function(){
-    $(this).closest("tr").remove();
-  });
-});
-</script>
-@endpush
+    @push('js')
+        <script>
+            $(document).ready(function() {
+                $(".remove").click(function() {
+                    $(this).closest("tr").remove();
+                });
+            });
+        </script>
+    @endpush

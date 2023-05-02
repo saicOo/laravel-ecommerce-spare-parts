@@ -34,6 +34,10 @@
 
             <div class="section login-page-in">
                 <div class="container">
+                    @if (session('success'))
+                            <div class="alert alert-success" role="alert"><i class="cp cp-lg cp-check-circle"></i> <span
+                                    class="mx-2">{{ session('success') }}</span></div>
+                        @endif
                     <div class="row justify-content-between">
                         <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                             <div class="nav-box mb-4">
