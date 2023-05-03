@@ -74,8 +74,9 @@ class PurchaseController extends Controller
         foreach ($request->products as $purchase_product) {
             $total_price +=  $purchase_product['price'] * $purchase_product['quantity'];
         }//end foreach
+        // || $request->payment_type == 2
         $amount_paid = 0;
-        if($request->payment_status == 1 || $request->payment_type == 2){ // if purchase payment status cash
+        if($request->payment_status == 1){ // if purchase payment status cash
             $amount_paid = $total_price;
         }
 
