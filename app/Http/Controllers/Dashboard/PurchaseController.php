@@ -18,11 +18,7 @@ use Illuminate\Http\Request;
 class PurchaseController extends Controller
 {
     use InvoiceTrait,ReportTrait;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $this->authorize('check-permissions', 'read_users');
@@ -49,11 +45,6 @@ class PurchaseController extends Controller
         return view('dashboard.purchases.index', compact('purchases'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $this->authorize('check-permissions', 'create_users');
@@ -61,12 +52,6 @@ class PurchaseController extends Controller
         return view('dashboard.purchases.create',compact('suppliers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -106,26 +91,13 @@ class PurchaseController extends Controller
         return redirect()->route('dashboard.purchases.show',$purchase->id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
     public function show(Purchase $purchase)
     {
         return view('dashboard.purchases.show', compact('purchase'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
     public function active(Purchase $purchase)
     {
-
         // start stock area
         foreach ($purchase->products as $index => $product) {
 
@@ -137,7 +109,7 @@ class PurchaseController extends Controller
                 $new_balance_value = $product->pivot->quantity * $product->pivot->price;
                 $total_balance_value = $balance_value + $new_balance_value;
                 $total_quantity = $product->pivot->quantity + $product->stock;
-                // end
+                // pricing policy end
                 $product->update([
                         'stock' => $product->stock + $product->pivot->quantity,
                         'purchase_price' => $total_balance_value / $total_quantity,
@@ -163,23 +135,17 @@ class PurchaseController extends Controller
             'current_account' => $current_account,
             'account_status' => $account_status,
         ]);
-
+        // end supplier area
+        // purchase area
         $purchase->update([
             'active'=> 1,
             'payment_status'=> $purchase->total_price == $purchase->amount_paid ? 3 : 1,
         ]);
-        // end supplier area
+        // end purchase area
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.purchases.show',$purchase->id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Purchase $purchase)
     {
         return view('dashboard.purchases.edit', compact('purchase'));
@@ -190,22 +156,25 @@ class PurchaseController extends Controller
         $request->validate([
             'amount_paid' => 'required|numeric|min:1|max:'.($purchase->total_price - $purchase->amount_paid),
         ]);
-        $total_amount_paid = $purchase->amount_paid + $request->amount_paid;
-        if($total_amount_paid == $purchase->total_price){
-            $payment_status = 1;
-        }else{
-            $payment_status = 2;
-        }
+
+        $amount_paid = $request->amount_paid;
+        $total_amount = $purchase->amount_paid + $amount_paid;
+        $total_price = $purchase->total_price;
+        // Payment Status
+        $payment_status = ($total_amount == $total_price ? 3
+        : ($total_amount > 0 && $total_amount < $total_price ? 2 : 1));
+        // End Payment Status
+
         $purchase->update([
-            'amount_paid' => $total_amount_paid,
+            'amount_paid' => $total_amount,
             'payment_status' => $payment_status,
         ]);// start update purchases data table
 
         $current_account = $purchase->supplier->current_account;
         if($purchase->payment_type == 1){ // if purchase payment type new
-        $current_account = $current_account += $request->amount_paid; //هنقص من حساب المورد
+        $current_account = $current_account += $amount_paid; //هنقص من حساب المورد
         }else{  // if purchase payment type return
-            $current_account = $current_account -= $request->amount_paid; //هزود من حساب المورد
+            $current_account = $current_account -= $amount_paid; //هزود من حساب المورد
         }
         $account_status = ($current_account == 0 ? 3 : ($current_account > 0 ? 2 : 1));
         $purchase->supplier()->update([
@@ -217,12 +186,6 @@ class PurchaseController extends Controller
         return redirect()->route('dashboard.purchases.show',$purchase->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($test,Request $request)
     {
         $purchases_arr = explode(",",$request->mass_delete);

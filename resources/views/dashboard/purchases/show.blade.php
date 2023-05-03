@@ -32,7 +32,9 @@
                         <div class="float-left">
                             <div class="bootstrap-label">
                                 <span class="label label-{{$purchase->active == 1 ? 'success' : 'light'}}">{{$purchase->active == 0 ? __('site.draft') : __('site.active')}}</span>
-                                <span class="label label-{{$purchase->payment_status == 3 ? 'success' : 'danger'}}">{{ $purchase->status }}</span>
+                                @if ($purchase->active == 1)
+                                <span class="label label-{{($purchase->payment_status == 3 ? 'success' : ($purchase->payment_status == 2 ? 'warning' : 'danger'))}}">{{$purchase->status}}</span>
+                                @endif
 
                             </div>
                         </div>

@@ -57,7 +57,7 @@
                                             <th scope="col">{{ __('site.status') }}</th>
                                             <th scope="col">{{ __('site.type') }}</th>
                                             <th scope="col">{{ __('site.date') }}</th>
-                                            <th scope="col">{{ __('site.action') }}</th>
+                                            {{-- <th scope="col">{{ __('site.action') }}</th> --}}
                                             <th scope="col"><input type="checkbox" value=""
                                                     id="check-box-delete-all"></th>
                                         </tr>
@@ -66,25 +66,33 @@
                                         @foreach ($purchases as $index => $purchase)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>#{{ $purchase->invoice_no }}</td>
+                                                <td>#
+                                                    <a href="{{ route('dashboard.purchases.show', $purchase->id) }}">
+                                                        {{ $purchase->invoice_no }}
+                                                    </a>
+                                                </td>
                                                 <td>{{ $purchase->supplier->name }}</td>
                                                 <td>${{ number_format($purchase->total_price, 2) }}</td>
                                                 <td>
                                                     <span
-                                                        class="rounded-pill {{$purchase->payment_status == 1 ? 'bg-success' : 'bg-warning'}} text-white px-3 py-2">{{$purchase->status}}</span>
+                                                        class="rounded-pill {{ $purchase->payment_status == 3 ? 'bg-success' : ($purchase->payment_status == 2 ? 'bg-warning' : 'bg-danger') }} text-white px-3 py-2">
+                                                        {{ $purchase->status }}
+                                                    </span>
                                                 </td>
                                                 <td>
-                                                    {{$purchase->type}}
+                                                    <span class="{{ $purchase->payment_type == 1 ? 'text-success' : 'text-warning' }}">
+                                                        {{ $purchase->type }}
+                                                    </span>
                                                 </td>
                                                 <td>{{ $purchase->updated_at->format('M d, Y') }}</td>
-                                                <td>
+                                                {{-- <td>
                                                     <span>
                                                         <a href="{{ route('dashboard.purchases.show', $purchase->id) }}"
                                                             class="mr-4" data-toggle="tooltip" data-placement="top"
-                                                            title="" data-original-title="{{__('site.show')}}"><i
+                                                            title="" data-original-title="{{ __('site.show') }}"><i
                                                                 class="fa fa-external-link color-muted"></i> </a>
                                                     </span>
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <span>
                                                         <input type="checkbox" value="{{ $purchase->id }}"
@@ -133,9 +141,11 @@
                         <div class="form-group">
                             <select name="payment_type" class="form-control">
                                 <option disabled selected>@lang('site.select') @lang('site.type')</option>
-                                <option value="1" {{ request()->payment_type == 1 ? 'selected' : '' }}>@lang('site.new')
+                                <option value="1" {{ request()->payment_type == 1 ? 'selected' : '' }}>
+                                    @lang('site.new')
                                 </option>
-                                <option value="2" {{ request()->payment_type == 2 ? 'selected' : '' }}>@lang('site.return')
+                                <option value="2" {{ request()->payment_type == 2 ? 'selected' : '' }}>
+                                    @lang('site.return')
                                 </option>
                             </select>
                         </div>

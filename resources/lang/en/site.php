@@ -175,6 +175,7 @@ return [
     'amount' => 'Amount',
     'paid' => 'paid',
     'unpaid' => 'unpaid',
+    'partially_paid' => 'Partially Paid',
     'waiting' => 'Waiting',
     'pending' => 'Pending',
     'online' => 'Online',

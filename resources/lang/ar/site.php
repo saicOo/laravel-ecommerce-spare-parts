@@ -173,6 +173,7 @@ return [
     'amount' => 'قيمة',
     'paid' => 'تم الدفع',
     'unpaid' => 'غير مدفوع',
+    'partially_paid' => 'مدفوع جزئيا',
     'waiting' => 'أنتظار',
     'pending' => 'قيد الانتظار',
     'online' => 'اون لاين',
