@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.app')
 @push('css')
-        <!-- Select 2 -->
+    <!-- Select 2 -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/select2/css/select2.min.css') }}">
 @endpush
 @section('content')
@@ -47,13 +47,15 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>@lang('site.start_year')</label>
-                                            <select
-                                                class="single-select @error('start_year') is-invalid @enderror"
+                                            <select class="single-select @error('start_year') is-invalid @enderror"
                                                 name="start_year">
-                                                <option value="" disabled selected>@lang('site.choose') @lang('site.year')...
+                                                <option value="" disabled selected>@lang('site.choose')
+                                                    @lang('site.year')...
                                                 </option>
-                                                @for ($i = date("Y"); $i > 1900; $i--)
-                                                <option value="{{$i}}" {{ $i == old('start_year') ? 'selected': ''}}>{{$i}}</option>
+                                                @for ($i = date('Y'); $i > 1900; $i--)
+                                                    <option value="{{ $i }}"
+                                                        {{ $i == old('start_year') ? 'selected' : '' }}>{{ $i }}
+                                                    </option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -61,13 +63,15 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>@lang('site.end_year')</label>
-                                            <select
-                                                class="single-select @error('end_year') is-invalid @enderror"
+                                            <select class="single-select @error('end_year') is-invalid @enderror"
                                                 name="end_year">
-                                                <option value="" disabled selected>@lang('site.choose') @lang('site.year')...
+                                                <option value="" disabled selected>@lang('site.choose')
+                                                    @lang('site.year')...
                                                 </option>
-                                                @for ($i = date("Y"); $i > 1900; $i--)
-                                                <option value="{{$i}}" {{ $i == old('end_year') ? 'selected': ''}} >{{$i}}</option>
+                                                @for ($i = date('Y'); $i > 1900; $i--)
+                                                    <option value="{{ $i }}"
+                                                        {{ $i == old('end_year') ? 'selected' : '' }}>{{ $i }}
+                                                    </option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -75,11 +79,14 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>@lang('site.factory') @lang('site.car')</label>
-                                            <select name="factory_car_id" class="single-select"  >
-                                                <option value="" disabled selected>@lang('site.choose') @lang('site.factory') @lang('site.car')...
+                                            <select name="factory_car_id" class="single-select">
+                                                <option value="" disabled selected>@lang('site.choose')
+                                                    @lang('site.factory') @lang('site.car')...
                                                 </option>
                                                 @foreach ($factory_cars as $factory_car)
-                                                    <option value="{{$factory_car->id}}" {{ $factory_car->id == old('factory_car_id') ? 'selected': ''}}>{{ $factory_car->name }}</option>
+                                                    <option value="{{ $factory_car->id }}"
+                                                        {{ $factory_car->id == old('factory_car_id') ? 'selected' : '' }}>
+                                                        {{ $factory_car->name }}</option>
                                                 @endforeach
                                             </select>
 

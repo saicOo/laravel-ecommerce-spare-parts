@@ -57,7 +57,6 @@
                                             <th scope="col">{{ __('site.status') }}</th>
                                             <th scope="col">{{ __('site.type') }}</th>
                                             <th scope="col">{{ __('site.date') }}</th>
-                                            {{-- <th scope="col">{{ __('site.action') }}</th> --}}
                                             <th scope="col"><input type="checkbox" value=""
                                                     id="check-box-delete-all"></th>
                                         </tr>
@@ -74,10 +73,18 @@
                                                 <td>{{ $purchase->supplier->name }}</td>
                                                 <td>${{ number_format($purchase->total_price, 2) }}</td>
                                                 <td>
+                                                    @if ($purchase->active == 0)
+
+                                                    <span
+                                                        class="rounded-pill bg-light px-3 py-2">
+                                                        {{ __('site.draft') }}
+                                                    </span>
+                                                    @else
                                                     <span
                                                         class="rounded-pill {{ $purchase->payment_status == 3 ? 'bg-success' : ($purchase->payment_status == 2 ? 'bg-warning' : 'bg-danger') }} text-white px-3 py-2">
                                                         {{ $purchase->status }}
                                                     </span>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <span class="{{ $purchase->payment_type == 1 ? 'text-success' : 'text-warning' }}">
@@ -85,14 +92,6 @@
                                                     </span>
                                                 </td>
                                                 <td>{{ $purchase->updated_at->format('M d, Y') }}</td>
-                                                {{-- <td>
-                                                    <span>
-                                                        <a href="{{ route('dashboard.purchases.show', $purchase->id) }}"
-                                                            class="mr-4" data-toggle="tooltip" data-placement="top"
-                                                            title="" data-original-title="{{ __('site.show') }}"><i
-                                                                class="fa fa-external-link color-muted"></i> </a>
-                                                    </span>
-                                                </td> --}}
                                                 <td>
                                                     <span>
                                                         <input type="checkbox" value="{{ $purchase->id }}"
