@@ -15,9 +15,9 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-
         $brands = Brand::all();
         $factoryCars = FactoryCar::all();
+        $countries = Product::select('country')->groupBy('country')->pluck('country');
         $products = Product::with(['category','brand'])
         ->when($request->search,function ($query) use ($request){ // if search
             return $query->where('name_en','Like','%'.$request->search.'%')->OrWhere('name_ar','Like','%'.$request->search.'%');
@@ -31,8 +31,10 @@ class ProductController extends Controller
             return $q->where('category_id', $request->category_id);
         })->when($request->brand_id,function ($q) use ($request){ // if brand
             return $q->whereIn('brand_id', json_decode($request->brand_id));
+        })->when($request->country,function ($q) use ($request){ // if country
+            return $q->whereIn('country', json_decode($request->country));
         })->latest()->paginate(12);
-        return view('front.products.index', compact('products','brands','factoryCars'));
+        return view('front.products.index', compact('products','brands','factoryCars','countries'));
     }
 
     public function show(Product $product)

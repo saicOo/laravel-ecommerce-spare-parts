@@ -62,6 +62,22 @@
             </div>
         </div>
         <!--End Brand Block-->
+        <!--country Block-->
+        <div class="block filterBox filter-widget size-swacthes country-filter">
+            <div class="block-title">
+                <h3 class="mb-0">@lang('site.country')</h3>
+            </div>
+            <div class="filterDD" style="">
+                <ul class="clearfix">
+                    @foreach ($countries as $country)
+                        <li><input type="checkbox" class="filter-country" value="{{ $country }}" id="{{ 'filter-country-'.$country }}"><label
+                                for="{{ 'filter-country-'.$country }}"><span></span>{{ $country }}</label></li>
+                    @endforeach
+
+                </ul>
+            </div>
+        </div>
+        <!--End country Block-->
 
         <div class="block mb-0">
             <div class="block-title">
@@ -74,6 +90,7 @@
                         <input type="hidden" id="max_price" name="max_price" value="{{request()->max_price}}">
                         <input type="hidden" id="min_price" name="min_price" value="{{request()->min_price}}">
                         <input type="hidden" id="brand_id" name="brand_id" value="{{request()->brand_id}}">
+                        <input type="hidden" id="country" name="country" value="{{request()->country}}">
                         <input type="hidden" id="f_car_id" name="car_id" value="{{request()->car_id}}">
                         <input type="hidden" id="f_year" name="year" value="{{request()->year}}">
                         <button class="btn btn--small rounded">@lang('site.filter')</button>
