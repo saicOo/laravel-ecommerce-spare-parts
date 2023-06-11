@@ -101,10 +101,11 @@ class PurchaseController extends Controller
     {
         // start stock area
         foreach ($purchase->products as $index => $product) {
-
+            $products_qyt = $product->pivot->quantity;
+            $products_price = $product->pivot->price * $products_qyt;
             if($purchase->payment_type == 1){ // if purchase payment type new
                 // update daily report
-                $this->ReportPurchaseIncrement($product->pivot->price * $product->pivot->quantity,$product->pivot->quantity);
+                $this->ReportPurchaseIncrement($products_price,$products_qyt);
                 // pricing policy
                 $balance_value = $product->stock * $product->purchase_price;
                 $new_balance_value = $product->pivot->quantity * $product->pivot->price;
@@ -116,7 +117,9 @@ class PurchaseController extends Controller
                         'purchase_price' => $total_balance_value / $total_quantity,
                                 ]);
             }else{ // if purchase payment type return
-                $product->update([
+                // update daily report
+                $this->ReportPurchaseIncrement(-$products_price,-$products_qyt);
+                 $product->update([
                     'stock' => $product->stock - $product->pivot->quantity,
                         ]);
             }

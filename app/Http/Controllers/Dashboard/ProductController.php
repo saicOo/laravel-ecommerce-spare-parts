@@ -30,7 +30,7 @@ class ProductController extends Controller
 
         $primary_categories = Category::where('category_type','primary_category')->with('subCategories')->get();
         $products = Product::with('category')->when($request->search,function ($query) use ($request){
-            return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%');
+            return $query->where('name_en','Like','%'.$request->search.'%')->orWhere('name_ar','Like','%'.$request->search.'%')->orWhere('id','Like','%'.$request->search.'%');
         })->when($request->category_id,function ($q) use ($request){
             return $q->where('category_id', $request->category_id);
         })->latest()->paginate(10);

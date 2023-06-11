@@ -40,8 +40,16 @@ class CartController extends Controller
                    ->where('user_id', auth()->user()->id);
              })
         ]);
+        $checkStock = true;
+        $product = Product::find($request->product_id);
+            $checkStock = $product->stock < $request->quantity;
+
+        if($checkStock){
+            return redirect()->back()->withErrors(["product_available" => __('site.product_available')])->withInput();
+        }
+
         auth()->user()->products()->attach($request->product_id,['quantity' => $request->quantity]);
-        session()->flash('success', __('site.updated_successfully'));
+        session()->flash('success', __('site.added_successfully'));
         return redirect()->back();
     }
 

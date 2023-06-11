@@ -30,6 +30,7 @@ $(document).ready(function () {
             success: function (data) {
                 var existent = false;
                 $("#purchaseList .inputProduct").each(function (index) {
+                    console.log(index);
                     if (data.id == $(this).val()) {
                         existent = true;
                         return false;
@@ -41,15 +42,16 @@ $(document).ready(function () {
                 } else {
                     $("#purchaseList").append(`
                 <tr>
-                    <td>${data.name} #${data.id}
+                    <td>
+                    <input type="hidden" class="inputProduct" value="${data.id}">
+                    ${data.name} #${data.id}
                         </td>
                     <td>${price}
-                        <input type="hidden" class="form-control product-price" name="products[${data.id}][price]"
+                        <input type="hidden" class="product-price" name="products[${data.id}][price]"
                             value="${price}">
                     </td>
                     <td>${qyt}
-                    <input name="products[${data.id}][quantity]" type="hidden" value="${qyt}"
-                            class="form-control"></td>
+                    <input name="products[${data.id}][quantity]" type="hidden" value="${qyt}"></td>
                     <td class="product-subTotal">${price * qyt}</td>
                     <td><span><a href="javascript:void()" data-toggle="tooltip" class="remove-product-btn" data-id="${
                         data.id

@@ -39,6 +39,10 @@
                         <div class="alert alert-danger" role="alert"><i class="cp cp-lg cp-check-circle"></i> <span
                             class="mx-2">{{ $message }}</span></div>
                         @enderror
+                        @error('product_available')
+                        <div class="alert alert-danger" role="alert"><i class="cp cp-lg cp-check-circle"></i> <span
+                            class="mx-2">{{ $message }}</span></div>
+                        @enderror
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-8 col-lg-9">
                                 <div class="row">

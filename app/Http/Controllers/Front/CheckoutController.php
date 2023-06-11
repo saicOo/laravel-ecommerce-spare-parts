@@ -102,17 +102,19 @@ class CheckoutController extends Controller
         $sub_total = 0;
          // start foreach
          foreach ($user->products as $product) {
-            $this->ReportSaleIncrement($product->price * $product->pivot->quantity,$product->pivot->quantity);
-            $order->products()->attach($product->id,['quantity' => $product->pivot->quantity,
+            $products_qyt = $product->pivot->quantity;
+            $products_price = $product->price * $products_qyt;
+            $this->ReportSaleIncrement($products_price,$products_qyt);
+            $order->products()->attach($product->id,['quantity' => $products_qyt,
             'price' => $product->price ]);
 
             if($success){
                 $product->update([
-                    'stock' => $product->stock - $product->pivot->quantity,
+                    'stock' => $product->stock - $products_qyt,
                             ]);
             }
 
-        $sub_total +=  $product->price * $product->pivot->quantity;
+        $sub_total +=  $products_price;
         } // end foeach
         $setting = Setting::first();
         $tax_amount = $sub_total * ($setting->tax / 100);

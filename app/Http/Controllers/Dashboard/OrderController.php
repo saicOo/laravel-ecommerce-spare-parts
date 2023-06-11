@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Illuminate\Support\Facades\Validator;
-// Exel Order
-use Maatwebsite\Excel\Facades\Excel;
+use App\Traits\ReportTrait;
 use App\Exports\ExportOrder;
-use App\Exports\ExportOrderInvoice;
-// ./
+// Exel Order
 use Illuminate\Http\Request;
+use App\Exports\ExportOrderInvoice;
+use App\Http\Controllers\Controller;
+// ./
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-
+    use ReportTrait;
     public function index(Request $request)
     {
         $this->authorize('check-permissions', 'read_orders');
@@ -85,6 +86,9 @@ class OrderController extends Controller
                     $order->products()->updateExistingPivot($product->id,[
                         'return_status' => true,
                     ]);
+                    $products_qyt = $product->pivot->quantity;
+                    $products_price = $product->pivot->price * $products_qyt;
+                    $this->ReportSaleIncrement(-$products_price,-$products_qyt);
                     $product->update([
                         'stock' => $product->stock +  $product->pivot->quantity,
                     ]);
