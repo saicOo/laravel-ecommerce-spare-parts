@@ -251,7 +251,7 @@
                             @endforeach
                         ],
                         borderColor: '#fa5c7c',
-                        backgroundColor: '#fa5c7c',
+                        backgroundColor: '#fa5c7c7d',
                         borderWidth: 1
                     },
                     {
@@ -262,7 +262,7 @@
                             @endforeach
                         ],
                         borderColor: '#0acf97',
-                        backgroundColor: '#0acf97',
+                        backgroundColor: '#0acf976b',
                         borderWidth: 1
                     },
 
